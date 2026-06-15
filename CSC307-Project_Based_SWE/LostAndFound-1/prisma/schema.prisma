@@ -1,0 +1,92 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+//not sure if we still want a user model or to just use the Account as the main model
+//model User {
+//  id Int @id@default(autoincrement())
+//  email String @unique
+//  name String?
+//}
+
+model Account {
+  id Int @id @default(autoincrement())
+  clerkId String @unique
+  createdAt DateTime @default(now())
+  //email String @unique
+  //password String
+  //name String @unique
+  ratings Int[]
+  moderator Boolean @default(false)
+
+  reportsMade Report[] @relation("reporter")
+  reportsRecieved Report[] @relation("reported")
+  chatUser1 Chat[] @relation("user1")
+  chatUser2 Chat[] @relation("user2")
+  messagesSent Message[] @relation("author")
+  itemsPosted Item[] @relation("owner")
+}
+
+model Report {
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  reportType String
+  description String?
+  images String[]
+
+  reporterId Int
+  reporter Account @relation("reporter", fields: [reporterId], references: [id])
+  reportedId Int
+  reported Account @relation("reported", fields: [reportedId], references: [id])
+}
+
+model Chat {
+  id Int @id @default(autoincrement())
+
+  user1Id Int
+  user1 Account @relation("user1", fields: [user1Id], references: [id])
+  user2Id Int
+  user2 Account @relation("user2", fields: [user2Id], references: [id])
+  messages Message[] @relation("chat")
+}
+
+model Message {
+  id Int @id @default(autoincrement())
+  content String 
+  createdAt DateTime @default(now())
+  readAt DateTime
+
+  chatId Int
+  chat Chat @relation("chat", fields: [chatId], references: [id])
+  authorId Int
+  author Account @relation("author", fields: [authorId], references: [id])
+}
+
+model Item {
+  id Int @id @default(autoincrement())
+  isLost Boolean
+  bounty Int @default(0)
+  date DateTime @default(now())
+  images String[]
+  name String
+  location Float[]
+  event String?
+  description String
+  tags String[]
+
+  foundMatches Item[] @relation("ItemMatches")
+  lostMatches Item[] @relation("ItemMatches")
+  ownerId Int
+  owner Account @relation("owner", fields: [ownerId], references: [id])
+}

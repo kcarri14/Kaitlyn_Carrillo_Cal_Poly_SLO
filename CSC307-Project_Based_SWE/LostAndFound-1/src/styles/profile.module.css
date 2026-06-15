@@ -1,0 +1,22 @@
+.profileWrapper {
+  padding: 1vw;
+  display: flex;
+}
+
+.profileWrapper div {
+  padding: 1vw;
+}
+
+.clerkImage {
+  border-radius: 50%;
+  height: 30vw;
+  width: 30vw;
+}
+
+.clerkContainer {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: fit-content;
+  text-align: center;
+}

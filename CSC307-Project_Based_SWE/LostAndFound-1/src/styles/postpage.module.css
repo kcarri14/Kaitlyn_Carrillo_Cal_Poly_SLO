@@ -1,0 +1,92 @@
+.title {
+  text-decoration: underline;
+  font-size: 50px;
+}
+
+.required {
+color: red;
+  font-weight: bold;
+}
+
+.description_textbox {
+  background-color: #639393;
+  color: #a7d9a1;
+  width: 615px;
+  height: 30px;
+  margin-left: 10px;
+  text-size-adjust: 20;
+  margin-bottom: 10px;
+  font-size: 15px;
+}
+
+.description_textbox::placeholder {
+  color: #a7d9a1; 
+}
+
+.lost_btn {
+  padding: 15px 25px;
+  box-shadow: 5px 5px 5px 2px rgba(0, 0, 0, 0.2);
+  border-radius: 16px;
+  margin: 4px;
+  cursor: pointer;
+  color: #a7d9a1;
+  font-size: 15px;
+
+}
+
+.bounty_textbox {
+  background-color: #639393;
+  color: #a7d9a1;
+  width: 300px;
+  height: 30px;
+  font-size: 15px;
+  margin-left: 10px;
+  font-size: 15px;
+
+}
+
+.bounty_textbox::placeholder {
+  color: #a7d9a1; 
+}
+
+.name_textbox {
+  background-color: #639393;
+  color: #a7d9a1;
+  width: 400px;
+  height: 30px;
+  font-size: 15px;
+
+}
+
+.name_textbox::placeholder {
+  color: #a7d9a1; 
+}
+
+.event_textbox {
+  background-color: #639393;
+  color: #a7d9a1;
+  width: 400px;
+  height: 30px;
+  margin-left: 10px;
+}
+
+.event_textbox::placeholder {
+  color: #a7d9a1; 
+}
+
+.dropdown {
+  width: 200px; 
+  height: 30px;
+  margin-bottom: 5px;
+  font-size: 15px;
+}
+
+.text {
+  font-size: 30px;
+}
+.switch{
+  width: 20px;
+  height: 20px;
+  margin-left: 10px;
+  margin-right: 10px;
+}

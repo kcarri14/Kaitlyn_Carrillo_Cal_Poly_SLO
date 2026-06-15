@@ -1,0 +1,38 @@
+.stars span:hover {
+  cursor: pointer;
+}
+
+.stars span,
+.stars-done span {
+  font-size: xxx-large;
+}
+
+.stars,
+.stars-done,
+.currentRating,
+.currentContainer,
+.rowForCurrent {
+  padding: 0 !important;
+}
+
+.currentRating {
+  display: flex;
+  align-items: center;
+}
+
+.currentRating {
+  font-size: x-large;
+}
+
+.rowForCurrent p {
+  margin: 0;
+  padding: 0;
+}
+
+.giveRating {
+  padding-left: 2vw !important;
+}
+
+.currentContainer {
+  padding-bottom: 2vh !important;
+}

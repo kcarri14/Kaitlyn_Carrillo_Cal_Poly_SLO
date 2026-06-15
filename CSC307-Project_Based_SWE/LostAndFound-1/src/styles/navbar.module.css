@@ -1,0 +1,67 @@
+.nav_wrapper {
+  background-color: var(--lf-light-blue);
+}
+
+.navbar_list {
+  padding-left: 0;
+  margin: 0;
+  list-style-type: none;
+  height: 8vh;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav_left,
+.nav_right {
+  display: flex;
+}
+
+.nav_left li {
+  font-size: 1.75rem;
+  margin: 0px 1vw;
+}
+
+.nav_left li a:hover,
+.nav_right li a:hover {
+  color: #525252;
+}
+
+.nav_left li a,
+.nav_right li a {
+  text-decoration: none;
+  color: var(--foreground);
+}
+
+.title {
+  font-family: "Montserrat", serif;
+  font-weight: bold;
+}
+
+.nav_right li {
+  padding-top: 4px;
+}
+
+.nav_right button {
+  background-color: var(--lf-light-blue);
+  border-width: 8px;
+  border-color: transparent transparent var(--lf-medium-blue) transparent;
+  color: #ffffff;
+}
+.nav_right button:disabled {
+  border-radius: 10px 10px 0px 0px;
+  background-color: var(--lf-medium-blue);
+  border-color: transparent;
+}
+
+.nav_left {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.centerProfileImage {
+  display: flex;
+  justify-content: center;
+}

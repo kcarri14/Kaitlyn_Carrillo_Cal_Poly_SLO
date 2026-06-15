@@ -1,0 +1,47 @@
+/* @import "~stream-chat-react/dist/css/v2/index.css"; */
+@import 'stream-chat-react/dist/css/v2/index.css';
+/* @import "~stream-chat-react/dist/scss/v2/index.scss"; */
+
+/* .str-chat {
+    flex-direction: row;
+} */
+/* flex-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+} */
+
+/* .str-chat__channel-list {
+    width: 30%;
+}
+
+.str-chat__channel {
+    width: 70%;
+} */
+
+/* .str-chat {
+    display: flex;
+    flex-direction: row;
+} */
+
+.str-chat__channel-list {
+    height: 92vh;
+    width: 20%;
+    /* background-color: white; */
+}
+
+.str-chat__channel {
+    width: 65%;
+    height: 92vh;
+    /* scroll-behavior: auto; */
+    /* overflow: scroll; */
+}
+
+.str-chat__thread {
+    width: 45%;
+}
+
+/* .str-chat__message-list {
+    overflow: scroll;
+} */
