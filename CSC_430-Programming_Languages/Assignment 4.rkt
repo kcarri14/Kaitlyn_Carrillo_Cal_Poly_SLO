@@ -1,0 +1,409 @@
+#lang typed/racket
+;Project is fully implemented and all tests passed
+
+(require typed/rackunit)
+
+;<expr> ::= <num>
+;         | <id>
+;         | <string>
+;         | {if <expr> <expr> <expr>
+;         | {let { [<id>=<expr>]*} in <expr> end }
+;         | {lambda ( <id>* ) : <expr> }
+;         | {<expr> <expr>*}
+(define-type ExprC (U NumC strC idC ifC lambdaC AppC ))
+
+(struct NumC ([n : Real]) #:transparent)
+(struct idC ([s : Symbol]) #:transparent)
+(struct strC ([str : String]) #:transparent)
+(struct ifC ([test : ExprC] [then : ExprC] [else : ExprC]) #:transparent)
+(struct lambdaC ([args : (Listof Symbol)] [body : ExprC]) #:transparent)
+(struct AppC ([func : ExprC] [args : (Listof ExprC)]) #:transparent)
+
+;; this function defines what the primops are so that symbols can be compared by them and
+;; be used to check that only primops are going through
+(define (primop? [a : Sexp]) : Boolean
+  (or (equal? a '+) (equal? a '-) (equal? a '*) (equal? a '/)
+      (equal? a '<=) (equal? a 'substring) (equal? a 'strlen)
+      (equal? a 'equal?) (equal? a 'error)))
+ 
+
+;; this function defines what symbols can not be
+;; cnbt = can not be this
+(define (cnbt? s)
+  (or (equal? s 'if) (equal? s ':) (equal? s 'let) (equal? s '=) (equal? s 'in) (equal? s 'end)))
+
+
+;Values
+(define-type Value (U BoolV StrV NumV CloV PrimV))
+(struct NumV ([n : Real]) #:transparent)
+(struct BoolV ([b : Boolean]) #:transparent)
+(struct StrV ([s : String]) #:transparent)
+(struct CloV ([params : (Listof Symbol)] [body : ExprC] [env : Environment]) #:transparent)
+(struct PrimV ([name : Symbol]) #:transparent)
+
+
+;Environments
+(struct Binding ([name : Symbol] [val : Value]) #:transparent)
+(define-type Environment (Listof Binding))
+
+;the top environment that contains the 11 pre-exisiting bindings
+(define top-env : Environment
+  (list (Binding 'true (BoolV #t))
+        (Binding 'false (BoolV #f))
+        (Binding '+ (PrimV '+))
+        (Binding '- (PrimV '-))
+        (Binding '* (PrimV '*))
+        (Binding '/ (PrimV '/))
+        (Binding 'strlen (PrimV 'strlen))
+        (Binding '<= (PrimV '<=))
+        (Binding 'substring (PrimV 'substring))
+        (Binding 'equal? (PrimV 'equal?))
+        (Binding 'error (PrimV 'error))))
+    
+
+;accepts any SHEQ4 value and returns a string (double-quoted wrapped)
+(define (serialize [v : Value]) : String
+  (match v
+    [(NumV n) (~v n)]
+    [(BoolV bool) (if bool "true" "false")]
+    [(StrV str) (~v str)]
+    [(PrimV op) "#<primop>"]
+    [(CloV arg body env) "#<procedure>"]))
+
+;this function takes in a symbol and an environment to find the symbol's value in the environment
+(define (lookup [for : Symbol] [env : Environment]) : Value
+  (cond
+    [(empty? env) (error 'lookup "SHEQ: name not found")]
+    [else (cond
+            [(symbol=? for (Binding-name (first env)))
+             (Binding-val (first env))]
+            [else (lookup for (rest env))])]))
+
+
+;This function takes an s-expression and parses it and outputs an ExprC
+(define (parse [e : Sexp]) : ExprC
+  (match e
+    [(? real? n) (NumC n)]
+    [(? string? str) (strC str)]
+    [(? primop? (? symbol? op)) (idC op)]
+    [(? cnbt? (? symbol? s))
+     (error 'parse "SHEQ: cannot have ~e as an identifier name" s)]
+    [(? symbol? s) (idC s)]
+    [(list 'if test then else) (ifC (parse test) (parse then) (parse else))]
+    [(list 'lambda (list (? symbol? args) ...) ': body)
+     (if (checking-dups (cast args (Listof Symbol))) ; cast must succeed by definition of pattern above
+         (error 'parse "SHEQ: functions cannot have multiple paramaters with the same identifier")
+         ; cast must succeed by definition of pattern above
+         (lambdaC (cast args (Listof Symbol)) (parse body)))]
+    [(list 'let args 'in body 'end) (desugar args body)]
+    ; cast must succeed by definition of Sexp
+    [(cons op args) (AppC (parse op) (map parse (cast args (Listof Sexp))))] 
+    [x (error 'parse "SHEQ: Invalid s-expression ~e" x)]))
+
+;; desugar takes in the arguments and the body of a let statement and desugars it into an AppC
+(define (desugar [args : Sexp] [body : Sexp]) : ExprC
+  (match args
+    [(list (list (? symbol? var) '= rst) ...)
+     (define func (AppC (lambdaC (cast var (Listof Symbol)) (parse body))
+                        ; cast must succeed by definition of pattern above
+                        (map parse (cast rst (Listof Sexp)))))         
+     (match func
+       [(AppC (lambdaC (list (? cnbt? params)) _) _)
+        (error 'parse "SHEQ: cannot have if, :, let, in, end, = as params")]
+       [(AppC (lambdaC params _) _)
+        (if (checking-dups (cast params (Listof Symbol)))
+            ; cast must succeed by definition of pattern above
+            (error 'parse "SHEQ: duplicate parameter")
+            func)])]                                           
+    [_ (error 'parse "SHEQ: invalid syntax for let statement")]))
+
+;This function checks if there are duplicates in the function parameters
+(define (checking-dups [params : (Listof Symbol)]) : (U Symbol #f)
+  (check-duplicates params equal?))
+
+;this is a helper function for the interp function that will do all the interps for the PrimV operators
+;takes in a sumbol and the operands and uses a matching pattern to find the correct primop to use
+(define (primv-interp [sym : Symbol] [operands : (Listof Value)]) : Value
+  (match (list sym operands)
+    [(list '+ (list (NumV a) (NumV b))) (NumV (+ a b))]
+    [(list '- (list (NumV a) (NumV b))) (NumV (- a b))]
+    [(list '* (list (NumV a) (NumV b))) (NumV (* a b))]
+    [(list '/ (list (NumV a) (NumV b))) (if (zero? b)
+                                            (error 'primv-interp "SHEQ: can't do division by zero") (NumV (/ a b)))]
+    [(list '<= (list (NumV a) (NumV b))) (if (<= a b)
+                                             (BoolV #t)
+                                             (BoolV #f))]
+    [(list 'strlen (list (StrV s))) (NumV (string-length s))]
+    [(list 'equal? (list a b)) (if (equal? a b)
+                                   (BoolV #t)
+                                   (BoolV #f))]
+    [(list 'substring (list (StrV s) (NumV start) (NumV stop)))
+     (if (and (>= stop start)
+              (and (exact-integer? start) (>= start 0))
+              (and (exact-integer? stop) (>= stop 0))
+              (<= start (string-length s))
+              (<= stop (string-length s)))
+         (StrV (substring s start stop))
+         (error 'primv-interp "SHEQ: invalid start and stop indices"))]
+    [(list 'error (list v)) (error 'SHEQ (string-append "user-error " (serialize v)))]
+
+    [(list '+ (list _ _)) (error 'primv-interp "SHEQ: need numbers for +")]
+    [(list '- (list _ _)) (error 'primv-interp "SHEQ: need numbers for -")]
+    [(list '* (list _ _)) (error 'primv-interp "SHEQ: need numbers for *")]
+    [(list '/ (list _ _)) (error 'primv-interp "SHEQ: need numbers for /")]
+    [(list '<= (list _ _)) (error 'primv-interp "SHEQ: need numbers for <=")]
+    [(list 'strlen (list _ )) (error 'primv-interp "SHEQ: need a string to get the length")]
+    [(list '+ args) (error 'primv-interp "SHEQ: need two arguments for +")]
+    [(list '- args) (error 'primv-interp "SHEQ: need two arguments for -")]
+    [(list '* args) (error 'primv-interp "SHEQ: need two arguments for *")]
+    [(list '/ args) (error 'primv-interp "SHEQ: need two arguments for /")]
+    [(list '<= args) (error 'primv-interp "SHEQ: need two arguments for <=")]
+    [(list 'strlen args) (error 'primv-interp "SHEQ: need 1 string to get the length")]
+    [(list 'substring args) (error 'primv-interp "SHEQ: need a string, a start, and a stop variable to subst")]
+    [(list 'equal? args) (error 'primv-interp "SHEQ: need two arguments to see if they are equal")]
+    [(list 'error args) (error 'SHEQ "errors expect 1 argument")])
+  )
+
+;takes in an ExprC that was outputted by the parser and an environment and interprets the ExprC to
+;give the output as a value which can be a real, boolean, string, closure, or prim op
+(define (interp [exp : ExprC] [env : Environment]) : Value
+  (match exp
+    [(NumC n) (NumV n)]
+    [(strC s) (StrV s)]
+    [(idC i) (lookup i env)]
+    [(lambdaC args body) (CloV args body env)]
+    [(AppC f a)
+     (define fun (interp f env))
+     (define arg-vals (map (lambda (arg) (interp (cast arg ExprC) env)) a))
+     (match fun
+       [(CloV p b e)
+        (if (= (length p) (length arg-vals))
+            (let ()
+              (define extension : (Listof Binding)
+                (for/list : (Listof Binding)
+                  ([params_list : Symbol (in-list p)]
+                   [arg_list : Value (in-list arg-vals)])
+                  (Binding params_list arg_list )))
+              (define call-env (append extension e))
+              (interp b call-env))
+            (error 'interp "SHEQ: wrong number of arguments" ))]
+       [(PrimV op) (primv-interp op arg-vals)]
+       [_  (error 'interp "SHEQ: attempted to call a non-function")])]
+    [(ifC test then else)
+     (define interp_test (interp test env))
+     (match interp_test
+       [(BoolV b) (if b
+                      (interp then env)
+                      (interp else env))]
+       [_ (error 'interp "SHEQ: if expression must be a boolean value")])]))
+
+;top-interp combines all of the functions into one function that will interpret what the user gives it
+(define (top-interp [s : Sexp]) : String
+  (serialize (interp (parse s) top-env)))
+
+
+;Tests
+
+;lookup
+(check-exn (regexp (regexp-quote "SHEQ: name not found"))
+           (lambda () (lookup  'no-such top-env)))
+
+
+;interp
+(check-equal? (interp (NumC 17) top-env) (NumV 17))
+(check-equal? (interp (strC "Hello there") top-env) (StrV "Hello there"))
+(check-equal? (interp (idC 'true) top-env) (BoolV #t))
+(check-equal? (interp (idC 'false) top-env) (BoolV #f))
+(check-equal? (interp (AppC (lambdaC '(x) (idC 'x)) (list (NumC 42))) top-env) (NumV 42))
+(check-equal? (interp (AppC (lambdaC '(x y) (AppC (idC '+) (list (idC 'x) (idC 'y))))
+                            (list (NumC 5) (NumC 6))) top-env) (NumV 11))
+(check-equal? (interp (AppC (lambdaC '(x y) (AppC (idC '-) (list (idC 'x) (idC 'y))))
+                            (list (NumC 5) (NumC 6))) top-env) (NumV -1))
+(check-equal? (interp (AppC (lambdaC '(x y) (AppC (idC '*) (list (idC 'x) (idC 'y))))
+                            (list (NumC 5) (NumC 6))) top-env) (NumV 30))
+(check-equal? (interp (AppC (lambdaC '(x y) (AppC (idC '/) (list (idC 'x) (idC 'y))))
+                            (list (NumC 6) (NumC 6))) top-env) (NumV 1))
+(check-equal? (interp (AppC (lambdaC '(x y) (AppC (idC '<=) (list (idC 'x) (idC 'y))))
+                            (list (NumC 5) (NumC 6))) top-env) (BoolV #t))
+(check-equal? (interp (AppC (lambdaC '(x y) (AppC (idC '<=) (list (idC 'x) (idC 'y))))
+                            (list (NumC 6) (NumC 5))) top-env) (BoolV #f))
+(check-equal? (interp (AppC (lambdaC '(x) (AppC (idC 'strlen) (list (idC 'x))))
+                            (list (strC "hello") )) top-env) (NumV 5))
+(check-equal? (interp (AppC (lambdaC '(x y) (AppC (idC 'equal?) (list (idC 'x) (idC 'y))))
+                            (list (strC "5") (NumC 6))) top-env) (BoolV #f))
+(check-equal? (interp (AppC (lambdaC '(x y) (AppC (idC 'equal?) (list (idC 'x) (idC 'y))))
+                            (list (strC "hi") (strC "hi"))) top-env) (BoolV #t))
+(check-equal? (interp {AppC {lambdaC '(z y) {AppC {idC '+} {list {idC 'z} {idC 'y}}}}
+                            {list {AppC {idC '+} {list {NumC 9} {NumC 14}}} {NumC 98}}} top-env) {NumV 121})
+(check-equal? (interp (ifC (idC 'true) (NumC 1) (NumC 0)) top-env) (NumV 1))
+(check-equal? (interp (ifC (idC 'false) (NumC 1) (NumC 0)) top-env) (NumV 0))
+(check-equal? (primv-interp 'substring (list (StrV "apple") (NumV 2) (NumV 4))) (StrV "pl"))
+(check-equal? (primv-interp 'substring (list (StrV "apple") (NumV 2) (NumV 2))) (StrV ""))
+(check-equal? (primv-interp 'substring (list (StrV "apple") (NumV 0) (NumV 4))) (StrV "appl"))
+(check-equal? (primv-interp 'substring (list (StrV "apple") (NumV 0) (NumV 5))) (StrV "apple"))
+(check-exn (regexp (regexp-quote "SHEQ: invalid start and stop indices"))
+           (lambda () (primv-interp 'substring (list (StrV "apple") (NumV 6) (NumV 4)))))
+(check-exn (regexp (regexp-quote "SHEQ: invalid start and stop indices"))
+           (lambda () (primv-interp 'substring (list (StrV "apple") (NumV 3.0) (NumV 5.0)))))
+
+(check-exn (regexp (regexp-quote "SHEQ: if expression must be a boolean value"))
+           (lambda () (interp (ifC (idC '+) (NumC 1) (NumC 0)) top-env)))
+(check-exn (regexp (regexp-quote "SHEQ: can't do division by zero"))
+           (lambda () (interp (AppC (lambdaC '(x y) (AppC (idC '/) (list (idC 'x) (idC 'y))))
+                                    (list (NumC 6) (NumC 0))) top-env)))
+(check-exn (regexp (regexp-quote "SHEQ: wrong number of arguments"))
+           (lambda () (interp (AppC (lambdaC '(x y) (idC 'x)) (list (NumC 1))) top-env)))
+
+(check-exn (regexp (regexp-quote "SHEQ: attempted to call a non-function"))
+           (lambda () (interp (AppC (NumC 0) (list)) top-env)))
+
+(check-exn (regexp (regexp-quote "SHEQ: need two arguments for /"))
+           (lambda () (interp (AppC (lambdaC '(x y) (AppC (idC '/) (list (idC 'x) (idC 'y) (NumC 5))))
+                                    (list (NumC 6) (NumC 0))) top-env)))
+
+(check-exn (regexp (regexp-quote "SHEQ: need two arguments for +"))
+           (lambda () (interp (AppC (lambdaC '(x y) (AppC (idC '+) (list (idC 'x) (idC 'y) (NumC 5))))
+                                    (list (NumC 6) (NumC 0))) top-env)))
+
+(check-exn (regexp (regexp-quote "SHEQ: need two arguments for -"))
+           (lambda () (interp (AppC (lambdaC '(x y) (AppC (idC '-) (list (idC 'x) (idC 'y) (NumC 5))))
+                                    (list (NumC 6) (NumC 0))) top-env)))
+
+(check-exn (regexp (regexp-quote "SHEQ: need two arguments for *"))
+           (lambda () (interp (AppC (lambdaC '(x y) (AppC (idC '*) (list (idC 'x) (idC 'y) (NumC 5))))
+                                    (list (NumC 6) (NumC 0))) top-env)))
+
+(check-exn (regexp (regexp-quote "SHEQ: need two arguments for <="))
+           (lambda () (interp (AppC (lambdaC '(x y) (AppC (idC '<=) (list  (NumC 5))))
+                                    (list (NumC 6) (NumC 0))) top-env)))
+
+(check-exn (regexp (regexp-quote "SHEQ: need 1 string to get the length"))
+           (lambda () (interp (AppC (lambdaC '(x y) (AppC (idC 'strlen) (list (idC 'x) (idC 'y) (NumC 5))))
+                                    (list (NumC 6) (NumC 0))) top-env)))
+
+(check-exn (regexp (regexp-quote "SHEQ: need a string, a start, and a stop variable to subst"))
+           (lambda () (interp (AppC (lambdaC '(x y) (AppC (idC 'substring) (list (idC 'x) (idC 'y) (NumC 5))))
+                                    (list (NumC 6) (NumC 0))) top-env)))
+
+(check-exn (regexp (regexp-quote "SHEQ: need two arguments to see if they are equal"))
+           (lambda () (interp (AppC (lambdaC '(x y) (AppC (idC 'equal?) (list (idC 'x) (idC 'y) (NumC 5))))
+                                    (list (NumC 6) (NumC 0))) top-env)))
+
+(check-exn (regexp (regexp-quote "SHEQ: need numbers for +"))
+           (lambda () (interp (AppC (lambdaC '() (AppC (idC '+) (list (strC "hi") (NumC 5)))) '()) top-env)))
+
+(check-exn (regexp (regexp-quote "SHEQ: need numbers for -"))
+           (lambda () (interp (AppC (lambdaC '() (AppC (idC '-) (list (strC "hi") (NumC 5)))) '()) top-env)))
+
+(check-exn (regexp (regexp-quote "SHEQ: need numbers for *"))
+           (lambda () (interp (AppC (lambdaC '() (AppC (idC '*) (list (strC "hi") (NumC 5)))) '()) top-env)))
+
+(check-exn (regexp (regexp-quote "SHEQ: need numbers for /"))
+           (lambda () (interp (AppC (lambdaC '() (AppC (idC '/) (list (strC "hi") (NumC 5)))) '()) top-env)))
+
+(check-exn (regexp (regexp-quote "SHEQ: need numbers for <="))
+           (lambda () (interp (AppC (lambdaC '() (AppC (idC '<=) (list (strC "hi") (NumC 5)))) '()) top-env)))
+
+(check-exn (regexp (regexp-quote "SHEQ: need a string to get the length"))
+           (lambda () (interp (AppC (lambdaC '() (AppC (idC 'strlen) (list (NumC 5)))) '()) top-env)))
+
+
+
+;serialize
+(check-equal? (serialize (BoolV #t)) "true")
+(check-equal? (serialize (BoolV #f)) "false")
+(check-equal? (serialize (NumV 5)) "5")
+(check-equal? (serialize (StrV "hello")) "\"hello\"")
+(check-equal? (serialize (PrimV '+)) "#<primop>")
+(check-equal? (serialize (CloV (list '+) (NumC 5) top-env)) "#<procedure>")
+
+;; parse tests
+(check-equal? (parse 17) (NumC 17))
+(check-equal? (parse "hello") (strC "hello"))
+(check-equal? (parse 'true) (idC 'true))
+(check-equal? (parse 'false) (idC 'false))
+(check-equal? (parse '{+ 1 2}) (AppC (idC '+)
+                                     (list (NumC 1) (NumC 2))))
+(check-equal? (parse '{- 10 4}) (AppC (idC '-)
+                                      (list (NumC 10) (NumC 4))))
+(check-equal? (parse '{* 37 2}) (AppC (idC '*)
+                                      (list (NumC 37) (NumC 2))))
+(check-equal? (parse '{/ 4 0}) (AppC (idC '/)
+                                     (list (NumC 4) (NumC 0))))
+(check-equal? (parse '{<= 10 20}) (AppC (idC '<=)
+                                        (list (NumC 10) (NumC 20))))
+(check-equal? (parse '{substring "hello" 0 2}) (AppC (idC 'substring)
+                                                     (list (strC "hello") (NumC 0) (NumC 2))))
+(check-equal? (parse '{strlen "word"}) (AppC (idC 'strlen)
+                                             (list (strC "word"))))
+(check-equal? (parse '{equal? 0 "zero"}) (AppC (idC 'equal?)
+                                               (list (NumC 0) (strC "zero"))))
+(check-equal? (parse '{error true}) (AppC (idC 'error)
+                                          (list (idC 'true))))
+(check-equal? (parse 'x) (idC 'x))
+(check-equal? (parse '{if true {+ 1 1} {- 1 1}})
+              (ifC (idC 'true)
+                   (AppC (idC '+) (list (NumC 1) (NumC 1))) (AppC (idC '-) (list (NumC 1) (NumC 1)))))
+(check-equal? (parse '{let {[x = 2]} in {+ x 2} end})
+              (AppC (lambdaC '(x) (AppC (idC '+) (list (idC 'x) (NumC 2))))
+                    (list (NumC 2))))
+(check-equal? (parse '{let {[x = "hello"] [y = 1] [z = 3]} in {substring x y z} end})
+              (AppC (lambdaC '(x y z) (AppC (idC 'substring) (list (idC 'x) (idC 'y) (idC' z))))
+                    (list (strC "hello") (NumC 1) (NumC 3))))
+(check-equal? (parse '{let {} in {+ 1 2} end})
+              (AppC (lambdaC '() (AppC (idC '+) (list (NumC 1) (NumC 2)))) '()))
+(check-equal? (parse '{lambda (x y) : {+ x y}}) (lambdaC '(x y) (AppC (idC '+) (list (idC 'x) (idC 'y)))))
+(check-equal? (parse '{lambda (z) : {* z 500}}) (lambdaC '(z) (AppC (idC '*) (list (idC 'z) (NumC 500)))))
+(check-equal? (parse '{lambda (s) : {strlen s}}) (lambdaC '(s) (AppC (idC 'strlen) (list (idC 's)))))
+(check-exn (regexp (regexp-quote "SHEQ: Invalid s-expression '()"))
+           (lambda () (parse '())))
+(check-exn (regexp (regexp-quote "SHEQ: cannot have 'if as an identifier name"))
+           (lambda () (parse 'if)))
+(check-exn (regexp (regexp-quote "SHEQ: cannot have ': as an identifier name"))
+           (lambda () (parse ':)))
+(check-exn (regexp (regexp-quote "SHEQ: cannot have 'let as an identifier name"))
+           (lambda () (parse 'let)))
+(check-exn (regexp (regexp-quote "SHEQ: cannot have '= as an identifier name"))
+           (lambda () (parse '=)))
+(check-exn (regexp (regexp-quote "SHEQ: cannot have 'in as an identifier name"))
+           (lambda () (parse 'in)))
+(check-exn (regexp (regexp-quote "SHEQ: cannot have 'end as an identifier name"))
+           (lambda () (parse 'end)))
+#;(check-exn (regexp (regexp-quote "SHEQ: cannot have 'lambda as an identifier name"))
+             (lambda () (parse 'lambda)))
+(check-exn (regexp (regexp-quote "SHEQ: functions cannot have multiple paramaters with the same identifier"))
+           (lambda () (parse '{lambda (x x) : (+ x x)})))
+
+(check-exn (regexp (regexp-quote "SHEQ: duplicate parameter"))
+           (lambda () (parse '(let ((z = (lambda () : 3)) (z = 9)) in (z) end))))
+
+(check-exn (regexp (regexp-quote "SHEQ: cannot have if, :, let, in, end, = as params"))
+           (lambda () (parse '(let ((let = "")) in "World" end))))
+
+;; desugar tests
+(check-equal? (desugar '{[x = 1] [y = true]} '{if y x 0})
+              (AppC (lambdaC '(x y) (ifC (idC 'y) (idC 'x) (NumC 0))) (list (NumC 1) (idC 'true))))
+(check-equal? (desugar '{} '{+ 50 100})
+              (AppC (lambdaC '() (AppC (idC '+) (list (NumC 50) (NumC 100)))) '()))
+(check-exn (regexp (regexp-quote "SHEQ: invalid syntax for let statement"))
+           (lambda () (desugar 'what 'there)))
+(check-exn (regexp (regexp-quote "SHEQ: cannot have if, :, let, in, end, = as params"))
+           (lambda () (desugar '{[let = 12]} '{+ 1 2})))
+(check-exn (regexp (regexp-quote "SHEQ: duplicate parameter"))
+           (lambda () (desugar '{[x = 12] [x = 3]} '{+ x x})))
+
+;; checking-dups tests
+(check-equal? (checking-dups '(x y z)) #f)
+(check-equal? (checking-dups '(x y x)) 'x)
+
+;top-interp tests
+
+(check-equal? (top-interp '{let {[x = "hello"] [y = 1] [z = 3]} in {substring x y z} end}) "\"el\"")
+(check-exn (regexp (regexp-quote "SHEQ: user-error \"1234\""))
+           (lambda () (top-interp '(+ 4 (error "1234")))))
+(check-exn (regexp (regexp-quote "SHEQ: errors expect 1 argument"))
+           (lambda () (top-interp '(+ 4 (error "1234" "5678")))))
+
+(parse '{{lambda () : {+ 4 5}}})
+
+

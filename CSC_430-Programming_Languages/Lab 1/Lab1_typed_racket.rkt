@@ -1,0 +1,90 @@
+#lang typed/racket
+(require typed/rackunit)
+
+; Exercise 15
+; consumes two boolean values and uses the implication boolean (not p or q) 
+
+(define (==> [sunny : Boolean] [friday : Boolean]) : Boolean
+  (or (not sunny) friday))
+
+(==> true true)
+
+(check-equal? (==> true false) false)
+(check-equal? (==> true true) true)
+(check-equal? (==> false false) true)
+(check-equal? (==> false true) true)
+
+;Exercise 19
+; takes a string and places a underscore at the ith position that is declared
+(define str "helloworld")
+(define ind "0123456789")
+(define i 5)
+
+(define (string-insert [str : String] [i : Integer]) : String
+  (string-append (substring str 0 i)
+  "_"
+  (string-append (substring str i (string-length str)))))
+
+(string-insert str i)
+
+(check-equal? (string-insert str i) "hello_world")
+;Exercise 27
+; taking the constants and turning them into a definition
+(define base-ticket-price 5)
+(define people 120)
+(define change-in-price 15)
+(define 10-cent 0.1)
+(define fixed-cost 180)
+(define variable-cost 0.04)
+
+(define (attendees [ticket-price : Real]) : Real
+  (- people (* (- ticket-price base-ticket-price) (/ change-in-price 10-cent))))
+(define (revenue [ticket-price : Real]) : Real
+  (* ticket-price (attendees ticket-price)))
+(define (cost [ticket-price : Real]) : Real
+  (+ fixed-cost (* variable-cost (attendees ticket-price))))
+(define (profit [ticket-price : Real]) : Real
+  (- (revenue ticket-price)
+     (cost ticket-price)))
+
+(/ (round (* (profit 5.20) 100))100)
+
+(check-equal? (/ (round (* (profit 5.20) 100))100) 284.4)
+
+;4.2 Intervals
+
+(define (interest [deposit-amount : Real]) : Real
+ (cond
+   [(<= deposit-amount 1000) (* deposit-amount 0.04)]
+   [(<= deposit-amount 5000) (* deposit-amount 0.045)]
+   [else (* deposit-amount 0.05)]))
+
+(check-equal? (/ (round (* (interest 4999) 100))100) 224.96)
+(check-equal? (/ (round (* (interest 999) 100))100) 39.96)
+(check-equal? (/ (round (* (interest 5001) 100))100) 250.05)
+
+
+;4.4 Structures
+
+(struct desks ([width : Real] [height : Real] [depth : Real]) #:transparent)
+(struct bookshelves ([depth : Real] [number-of-shelves : Real] [shelf-width : Real]) #:transparent)
+
+(define-type office-furniture (U desks bookshelves))
+
+(define my-desk-whoo (desks 10 20 30))
+(define my-bookshelf (bookshelves 20 4 10))
+
+(define (furniture-footprint [my-furniture : office-furniture]) : Real
+      (match my-furniture
+        [(desks w h d) (* w d)]
+        [(bookshelves w n sw) (* w sw)]
+         ))
+
+(check-equal? (furniture-footprint my-desk-whoo) 300)
+(check-equal? (furniture-footprint my-bookshelf) 200)
+
+
+
+
+
+ 

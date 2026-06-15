@@ -1,0 +1,19 @@
+URL: https://www.kaggle.com/datasets/joebeachcapital/taylor-swift-all-songs-and-albums?select=taylor_all_songs.csv
+Author: Joakim Arvidsson
+
+Description:
+    Table albums: This table is filled with the albums of Taylor Swift that she has made in her career
+    Table albums_and_songs: This table is filled with the albums and songs from Taylor Swift. This does not include the singles or songs released without an album.
+    Table all_songs: This table is filled with every single song that Taylor Swift has made.
+
+Mapping Challenges:
+    The data for all_songs had some missing dates in it so I had to maunally look them up and input them.
+    The data from kaggle orinigally had 26 columsn in each of the data sets, but the extra info seemed irrelevant as it was talking
+    about the beat, dancability, and features.
+
+Information Queries:
+    List all the albums
+    Count how many songs are in an album
+    Songs without albums
+    Albums released after a certain date
+    Albums with specific songs

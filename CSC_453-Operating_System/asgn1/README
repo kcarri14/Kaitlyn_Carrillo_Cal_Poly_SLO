@@ -1,0 +1,16 @@
+Kaitlyn Carrillo
+
+Run "make" or "make malloc" to get 
+the archive and shared objects
+    -libmalloc.a
+    -libmalloc.so
+
+Run "make intel-all" to make the testing
+libraries run
+
+I hope the comments help the readability of the code because it can
+seem a little much. I am consolidated my code to keep it from 
+repeating so lots of helper functions were used.
+
+My malloc file is called malloc_lib.c not malloc.c. I named 
+it before looking at the instructions. whoops!

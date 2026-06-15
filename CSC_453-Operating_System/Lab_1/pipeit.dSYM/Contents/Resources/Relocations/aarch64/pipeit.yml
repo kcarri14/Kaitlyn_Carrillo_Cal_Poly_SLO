@@ -1,0 +1,5 @@
+---
+triple:          'arm64-apple-darwin'
+binary-path:     '/Users/kaitlyncarrillo/CSC_453/Lab_1/pipeit'
+relocations:     []
+...

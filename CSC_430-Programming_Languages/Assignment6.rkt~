@@ -1,0 +1,611 @@
+#lang typed/racket
+;Project is fully implemented and all tests passed
+
+(require typed/rackunit)
+	
+;‹expr› ::= ‹num›
+;       |‹id›
+;       |‹string›
+;       |{ ‹id› := ‹expr› }
+;       |{ if ‹expr› ‹expr› ‹expr› }
+;       |{ let { [‹id›=‹expr›]* } in ‹expr› end }
+;       |{ lambda ( ‹id›* ) : ‹expr› }
+;       |{ ‹expr› ‹expr›* }
+
+(define-type ExprC (U NumC strC idC ifC lambdaC AppC MutC))
+
+(struct NumC ([n : Real]) #:transparent)
+(struct idC ([s : Symbol]) #:transparent)
+(struct strC ([str : String]) #:transparent)
+(struct MutC ([id : Symbol] [exp : ExprC]) #:transparent)
+(struct ifC ([test : ExprC] [then : ExprC] [else : ExprC]) #:transparent)
+(struct lambdaC ([args : (Listof Symbol)] [body : ExprC]) #:transparent)
+(struct AppC ([func : ExprC] [args : (Listof ExprC)]) #:transparent)
+
+;; this function defines what the primops are so that symbols can be compared by them and
+;; be used to check that only primops are going through
+(define (primop? [a : Sexp]) : Boolean
+  (or (equal? a '+) (equal? a '-) (equal? a '*) (equal? a '/)
+      (equal? a '<=) (equal? a 'substring) (equal? a 'strlen)
+      (equal? a 'equal?) (equal? a 'error)))
+ 
+
+;; this function defines what symbols can not be
+;; cnbt = can not be this
+(define (cnbt? s)
+  (or (equal? s 'if) (equal? s ':) (equal? s 'let) (equal? s '=) (equal? s 'in) (equal? s 'end) (equal? s ':=)))
+
+
+;Values
+(define-type Value (U BoolV StrV NumV CloV PrimV NullV ArrayV))
+(struct NumV ([n : Real]) #:transparent)
+(struct BoolV ([b : Boolean]) #:transparent)
+(struct StrV ([s : String]) #:transparent)
+(struct CloV ([params : (Listof Symbol)] [body : ExprC] [env : Environment]) #:transparent)
+(struct PrimV ([name : Symbol]) #:transparent)
+(struct NullV () #:transparent)
+(struct ArrayV ([name : Location] [len : Natural]) #:transparent)
+
+;Environments
+(define-type Location Natural)
+(define-type Store (Vectorof Value))
+(struct Binding ([name : Symbol] [val : Location]) #:transparent)
+(define-type Environment (Listof Binding))
+
+;the top environment that contains the 16 pre-exisiting bindings
+(define top-env : Environment
+  (list (Binding 'true 1)
+        (Binding 'false 2)
+        (Binding '+ 3)
+        (Binding '- 4)
+        (Binding '* 5)
+        (Binding '/ 6)
+        (Binding 'strlen 7)
+        (Binding '<= 8)
+        (Binding 'substring 9)
+        (Binding 'equal? 10)
+        (Binding 'error 11)
+        (Binding 'seq 12)
+        (Binding 'make-array 13)
+        (Binding 'array 14)
+        (Binding 'aref 15)
+        (Binding 'aset! 16)))
+
+;makes the initial store with the initial bindings
+(define (make-initial-store [memsize : Natural]) : Store
+  (define store : Store (make-vector memsize (BoolV #f)))
+  (vector-set! store (ann 0 Natural) (NumV 17))
+  (vector-set! store (ann 1 Natural) (BoolV #t))
+  (vector-set! store (ann 2 Natural) (BoolV #f))
+  (vector-set! store (ann 3 Natural) (PrimV '+))
+  (vector-set! store (ann 4 Natural) (PrimV '-))
+  (vector-set! store (ann 5 Natural) (PrimV '*))
+  (vector-set! store (ann 6 Natural) (PrimV '/))
+  (vector-set! store (ann 7 Natural) (PrimV 'strlen))
+  (vector-set! store (ann 8 Natural) (PrimV '<=))
+  (vector-set! store (ann 9 Natural) (PrimV 'substring))
+  (vector-set! store (ann 10 Natural) (PrimV 'equal?))
+  (vector-set! store (ann 11 Natural) (PrimV 'error))
+  (vector-set! store (ann 12 Natural) (PrimV 'seq))
+  (vector-set! store (ann 13 Natural) (PrimV 'make-array))
+  (vector-set! store (ann 14 Natural) (PrimV 'array))
+  (vector-set! store (ann 15 Natural) (PrimV 'aref))
+  (vector-set! store (ann 16 Natural) (PrimV 'aset!))
+  store)
+
+;returns the next free memeory store in the first cell 
+(define (next-free [store : Store]) : Natural
+  (match (vector-ref store (ann 0 Natural))
+    [(NumV n) (cast n Natural)]))
+
+;puts the new next free memory after allocation and returns n
+(define (new-free [store : Store] [n : Natural]) : Natural
+  (vector-set! store (ann 0 Natural) (NumV n))
+  n)
+
+;takes in a store and a number and allocates that amount of space and returns the base location
+(define (allocate [store : Store] [length : Natural]) : Natural
+  (define base (next-free store))
+  (define new (+ base length))
+  (if (= length 0)
+      (error 'allocate "SHEQ: cannot allocate 0 cells")
+      (if (> new (vector-length store))
+          (error 'allocate "SHEQ: out of memory ~e" new)
+          (new-free store (cast new Nonnegative-Integer))
+          ))
+  base)
+
+
+;accepts any SHEQ4 value and returns a string (double-quoted wrapped)
+(define (serialize [v : Value]) : String
+  (match v
+    [(NumV n) (~v n)]
+    [(BoolV bool) (if bool "true" "false")]
+    [(StrV str) (~v str)]
+    [(PrimV op) "#<primop>"]
+    [(CloV arg body env) "#<procedure>"]
+    [(NullV) "null"]
+    [(ArrayV loc len) "#<array>"]))
+
+;this function takes in a symbol and an environment to find the symbol's value in the environment
+(define (lookup [for : Symbol] [env : Environment] [store : Store]) : Value
+  (cond
+    [(empty? env) (error 'lookup "SHEQ: id not found ~e" for)]
+    [else (cond
+            [(symbol=? for (Binding-name (first env)))
+             (vector-ref store (Binding-val (first env)))]
+            [else (lookup for (rest env) store)])]))
+
+; this function takes in a symbol, a value, environment, and store,
+; and mutates the original value of the symbol in the store to the new value
+; returns a NullV
+(define (mutate [for : Symbol] [new : Value] [env : Environment] [store : Store]) : Value
+  (cond
+    [(empty? env) (error 'lookup "SHEQ: cannot mutate unbound id ~e" for)]
+    [else (cond
+            [(symbol=? for (Binding-name (first env)))
+             (vector-set! store (Binding-val (first env)) new)
+             (NullV)]
+            [else (mutate for new (rest env) store)])]))
+
+;This function takes an s-expression and parses it and outputs an ExprC
+(define (parse [e : Sexp]) : ExprC
+  (match e
+    [(? real? n) (NumC n)]
+    [(? string? str) (strC str)]
+    [(? primop? (? symbol? op)) (idC op)]
+    [(list (? symbol? id) ':= exp) (MutC
+                                    (cast id Symbol) ; cast must succeed by definition of pattern above
+                                    (cast (parse exp) ExprC))] ; cast must succeed by definition of pattern above
+    [(? cnbt? (? symbol? s))
+     (error 'parse "SHEQ: cannot have ~e as an identifier name" s)]
+    [(? symbol? s) (idC s)]
+    [(list 'if test then else) (ifC (parse test) (parse then) (parse else))]
+    [(list 'lambda (list (? symbol? args) ...) ': body)
+     (if (checking-dups (cast args (Listof Symbol))) ; cast must succeed by definition of pattern above
+         (error 'parse "SHEQ: functions cannot have multiple paramaters with the same identifier")
+         ; cast must succeed by definition of pattern above
+         (lambdaC (cast args (Listof Symbol)) (parse body)))]
+    [(list 'let args 'in body 'end) (desugar args body)]
+    [(cons op args) (AppC (parse op) (map parse (cast args (Listof Sexp))))] ; cast must succeed by definition of Sexp
+    [x (error 'parse "SHEQ: Invalid s-expression ~e" x)]))
+
+;; desugar takes in the arguments and the body of a let statement and desugars it into an AppC
+(define (desugar [args : Sexp] [body : Sexp]) : ExprC
+  (match args
+    [(list (list (? symbol? var) '= rst) ...)
+     (define func (AppC (lambdaC (cast var (Listof Symbol)) (parse body))
+                        ; cast must succeed by definition of pattern above
+                        (map parse (cast rst (Listof Sexp)))))         
+     (match func
+       [(AppC (lambdaC (list (? cnbt? params)) _) _)
+        (error 'parse "SHEQ: cannot have if, :, let, in, end, = as params")]
+       [(AppC (lambdaC params _) _)
+        (if (checking-dups (cast params (Listof Symbol)))
+            ; cast must succeed by definition of pattern above
+            (error 'parse "SHEQ: duplicate parameter")
+            func)])]                                           
+    [_ (error 'parse "SHEQ: invalid syntax for let statement")]))
+
+;This function checks if there are duplicates in the function parameters
+(define (checking-dups [params : (Listof Symbol)]) : (U Symbol #f)
+  (check-duplicates params equal?))
+
+;this is a helper function for the interp function that will do all the interps for the PrimV operators
+;takes in a sumbol and the operands and uses a matching pattern to find the correct primop to use
+(define (primv-interp [sym : Symbol] [operands : (Listof Value)] [store : Store]) : Value
+  (match (list sym operands)
+    [(list '+ (list (NumV a) (NumV b))) (NumV (+ a b))]
+    [(list '- (list (NumV a) (NumV b))) (NumV (- a b))]
+    [(list '* (list (NumV a) (NumV b))) (NumV (* a b))]
+    [(list '/ (list (NumV a) (NumV b))) (if (zero? b)
+                                            (error 'primv-interp "SHEQ: can't do division by ~e" b) (NumV (/ a b)))]
+    [(list '<= (list (NumV a) (NumV b))) (if (<= a b)
+                                             (BoolV #t)
+                                             (BoolV #f))]
+    [(list 'strlen (list (StrV s))) (NumV (string-length s))]
+    ;equal? for arrays that two arrays point to the same region of memeory
+    [(list 'equal? (list (ArrayV loc1 len1) (ArrayV loc2 len2))) (BoolV (= loc1 loc2))]
+    [(list 'equal? (list a b)) (if (equal? a b)
+                                   (BoolV #t)
+                                   (BoolV #f))]
+    [(list 'substring (list (StrV s) (NumV start) (NumV stop)))
+     (if (and (>= stop start)
+              (and (exact-integer? start) (>= start 0))
+              (and (exact-integer? stop) (>= stop 0))
+              (<= start (string-length s))
+              (<= stop (string-length s)))
+         (StrV (substring s start stop))
+         (error 'primv-interp "SHEQ: invalid start and stop indices ~e ~e" start stop))]
+    [(list 'error (list v)) (error 'SHEQ (string-append "user-error " (serialize v)))]
+    [(list 'seq a) (last a)]
+    [(list '+ (list _ _)) (error 'primv-interp "SHEQ: need numbers for +")]
+    [(list '- (list _ _)) (error 'primv-interp "SHEQ: need numbers for -")]
+    [(list '* (list _ _)) (error 'primv-interp "SHEQ: need numbers for *")]
+    [(list '/ (list _ _)) (error 'primv-interp "SHEQ: need numbers for /")]
+    [(list '<= (list _ _)) (error 'primv-interp "SHEQ: need numbers for <=")]
+    [(list 'strlen (list _ )) (error 'primv-interp "SHEQ: need a string to get the length")]
+    [(list '+ args) (error 'primv-interp "SHEQ: need two arguments for +")]
+    [(list '- args) (error 'primv-interp "SHEQ: need two arguments for -")]
+    [(list '* args) (error 'primv-interp "SHEQ: need two arguments for *")]
+    [(list '/ args) (error 'primv-interp "SHEQ: need two arguments for /")]
+    [(list '<= args) (error 'primv-interp "SHEQ: need two arguments for <=")]
+    [(list 'strlen args) (error 'primv-interp "SHEQ: need 1 string to get the length")]
+    [(list 'substring args) (error 'primv-interp "SHEQ: need a string, a start, and a stop variable to subst")]
+    [(list 'equal? args) (error 'primv-interp "SHEQ: need two arguments to see if they are equal")]
+    [(list 'error args) (error 'SHEQ "errors expect 1 argument")]
+    [(list 'make-array (list (NumV s) fill))
+     (if (exact-integer? s)
+         (if (>= s 1)
+             (let ([base (allocate store (cast s Natural))])
+               (for ([i (in-range base (+ base s))])
+                 (vector-set! store i fill))
+               (ArrayV base (cast s Natural)))
+             (error 'primv-interp "SHEQ: array must have a length that is positive: ~e"s))
+         (error 'primv-interp "SHEQ: array length must be a whole number: ~e" s))
+     ]
+    [(list 'array args) (define base (allocate store (length args)))
+                        (for ([arg : Value (in-list args)]
+                                  [i : Natural (in-naturals (cast base Nonnegative-Integer))])
+                              (vector-set! store i arg))
+                        (ArrayV (cast base Nonnegative-Integer) (length args))]
+    [(list 'aref (list (ArrayV location length) (NumV num)))
+     (if (and (>= num 0) (< num length))
+         (vector-ref store (+ location (cast num Natural)))
+         (error 'primv-interp "SHEQ: index out of bounds ~e" num))]
+    [(list 'aset! (list (ArrayV location length) (NumV n) fill))
+     (if (exact-integer? n)
+         (if (and (>= n 0) (< n length))
+             (vector-set! store (+ location (cast n Natural)) fill)
+             (error 'primv-interp "SHEQ: index out of bounds ~e" n))
+         (error 'primv-interp "SHEQ: index must be a whole number ~e" n))
+     
+     (NullV)]))
+
+
+;takes in an ExprC that was outputted by the parser and an environment and interprets the ExprC to
+;give the output as a value which can be a real, boolean, string, closure, or prim op
+(define (interp [exp : ExprC] [env : Environment] [store : Store]) : Value
+  (match exp
+    [(NumC n) (NumV n)]
+    [(strC s) (StrV s)]
+    [(idC i) (lookup i env store)]
+    [(lambdaC args body) (CloV args body env)]
+    [(MutC id expr)
+     (mutate id (interp expr env store) env store)
+     (NullV)]
+    [(AppC f a)
+     (define fun (interp f env store))
+     (define arg-vals (map (lambda (arg) (interp (cast arg ExprC) env store)) a))
+     (match fun
+       [(CloV p b e)
+        (if (= (length p) (length arg-vals))
+            (let ()
+              (define extension : (Listof Binding)
+                (for/list : (Listof Binding)
+                  ([params_list : Symbol (in-list p)]
+                   [arg_list : Value (in-list arg-vals)])
+                  
+                  (let ()
+                    (define new-loc (allocate store 1))
+                    (vector-set! store new-loc arg_list)
+                    (Binding params_list new-loc))))
+              (define call-env (append extension e))
+              (interp b call-env store))
+            (error 'interp "SHEQ: wrong number of arguments" ))]
+       [(PrimV op) (primv-interp op arg-vals store)]
+       [_  (error 'interp "SHEQ: attempted to call a non-function")])]
+    [(ifC test then else)
+     (define interp_test (interp test env store))
+     (match interp_test
+       [(BoolV b) (if b
+                      (interp then env store)
+                      (interp else env store))]
+       [_ (error 'interp "SHEQ: if expression must be a boolean value")])]))
+
+
+;top-interp combines all of the functions into one function that will interpret what the user gives it
+(define (top-interp [s : Sexp] [memsize : Natural]) : String
+  (serialize (interp (parse s) top-env (make-initial-store memsize))))
+
+
+
+(define while '{let {[while = "temp"]}
+                    in
+                    {seq
+                     {while := {lambda (guard body) : {if {guard}
+                                                          {seq {body} {while guard body}}
+                                                          false}}}
+                     while}
+                     end})
+
+(define in-order '{lambda (arr size) :
+                    {let {[i = 0]
+                          [ok = true]}
+                      in
+                      {seq
+                       {while
+                        {lambda () : (if ok {<= i {- size 2}} false)}
+                        {lambda () :
+                          {seq
+                           {if {<= {aref arr {+ i 1}} {aref arr i}}
+                               {ok := false}
+                               true}
+                           {i := {+ i 1}}}}
+                        ok}}
+                      end}})
+
+;Tests
+;lookup
+(check-exn (regexp (regexp-quote "SHEQ: id not found 'no-such"))
+           (lambda () (lookup  'no-such top-env (make-initial-store 100))))
+
+; allocate
+(check-exn (regexp (regexp-quote "SHEQ: out of memory 3"))
+           (lambda () (allocate (vector (NumV 1) (BoolV #f)) 2)))
+
+
+;array-primvs
+(define store1 (make-initial-store 30))
+(define arr (primv-interp 'make-array (list (NumV 2) (NumV 1)) store1 ))
+(check-equal? (primv-interp 'aref (list arr (NumV 0)) store1) (NumV 1))
+(check-equal? (primv-interp 'aref (list arr (NumV 1)) store1) (NumV 1))
+(primv-interp 'aset! (list arr (NumV 0) (NumV 4)) store1)
+(check-equal? (primv-interp 'aref (list arr (NumV 0)) store1) (NumV 4))
+(define arr1 (primv-interp 'array (list (NumV 4) (NumV 13) (BoolV #f) (NumV 5)) store1))
+(check-equal? (primv-interp 'aref (list arr1 (NumV 0)) store1) (NumV 4))
+(check-equal? (primv-interp 'aref (list arr1 (NumV 2)) store1) (BoolV #f))
+(check-equal? (primv-interp 'equal? (list arr1 arr) store1) (BoolV #f))
+(check-equal? (primv-interp 'equal? (list arr arr) store1) (BoolV #t))
+
+(check-exn (regexp (regexp-quote "SHEQ: array must have a length that is positive: -2"))
+           (lambda () (primv-interp  'make-array (list (NumV -2) (NumV 1)) store1 )))
+
+(check-exn (regexp (regexp-quote "SHEQ: array length must be a whole number: 2.1"))
+           (lambda () (primv-interp  'make-array (list (NumV 2.1) (NumV 1)) store1 )))
+
+(check-exn (regexp (regexp-quote "SHEQ: cannot allocate 0 cells"))
+           (lambda () (primv-interp  'array (list) store1 )))
+
+(check-exn (regexp (regexp-quote "SHEQ: index out of bounds 8"))
+           (lambda () (primv-interp  'aref (list arr1 (NumV 8)) store1)))
+
+(check-exn (regexp (regexp-quote "SHEQ: index out of bounds 9"))
+           (lambda () (primv-interp  'aset! (list arr (NumV 9) (NumV 4)) store1 )))
+(check-exn (regexp (regexp-quote "SHEQ: index must be a whole number 2.3" ))
+           (lambda () (primv-interp  'aset! (list arr (NumV 2.3) (NumV 4)) store1 )))
+(check-equal? (primv-interp 'seq (list (BoolV #f) (NumV 12)) (vector (NumV 1) (BoolV #f))) (NumV 12))
+(check-exn (regexp (regexp-quote "SHEQ: cannot allocate 0 cells"))
+           (lambda () (primv-interp 'array '() (vector (NumV 1) (BoolV #f)))))
+
+
+;interp
+(check-equal? (interp (parse '{let {[x = 5]}
+                                in
+                                {let {[func = {lambda () : {x := 10}}]}
+                                  in
+                                  {func}
+                                  end}
+                                end}) top-env (make-initial-store 20))
+              (NullV))
+(check-exn (regexp (regexp-quote "SHEQ: cannot mutate unbound id 'x"))
+           (lambda () (interp (parse '{x := 10}) top-env (make-initial-store 20))))
+(check-equal? (interp (NumC 17) top-env (make-initial-store 100)) (NumV 17))
+(check-equal? (interp (strC "Hello there") top-env (make-initial-store 100)) (StrV "Hello there"))
+(check-equal? (interp (idC 'true) top-env (make-initial-store 100)) (BoolV #t))
+(check-equal? (interp (idC 'false) top-env (make-initial-store 100)) (BoolV #f))
+(check-equal? (interp (AppC (lambdaC '(x) (idC 'x)) (list (NumC 42))) top-env (make-initial-store 100)) (NumV 42))
+(check-equal? (interp (AppC (lambdaC '(x y) (AppC (idC '+) (list (idC 'x) (idC 'y))))
+                            (list (NumC 5) (NumC 6))) top-env (make-initial-store 100)) (NumV 11))
+(check-equal? (interp (AppC (lambdaC '(x y) (AppC (idC '-) (list (idC 'x) (idC 'y))))
+                            (list (NumC 5) (NumC 6))) top-env (make-initial-store 100)) (NumV -1))
+(check-equal? (interp (AppC (lambdaC '(x y) (AppC (idC '*) (list (idC 'x) (idC 'y))))
+                            (list (NumC 5) (NumC 6))) top-env (make-initial-store 100)) (NumV 30))
+(check-equal? (interp (AppC (lambdaC '(x y) (AppC (idC '/) (list (idC 'x) (idC 'y))))
+                            (list (NumC 6) (NumC 6))) top-env  (make-initial-store 100)) (NumV 1))
+(check-equal? (interp (AppC (lambdaC '(x y) (AppC (idC '<=) (list (idC 'x) (idC 'y))))
+                            (list (NumC 5) (NumC 6))) top-env (make-initial-store 100)) (BoolV #t))
+(check-equal? (interp (AppC (lambdaC '(x y) (AppC (idC '<=) (list (idC 'x) (idC 'y))))
+                            (list (NumC 6) (NumC 5))) top-env (make-initial-store 100)) (BoolV #f))
+(check-equal? (interp (AppC (lambdaC '(x) (AppC (idC 'strlen) (list (idC 'x))))
+                            (list (strC "hello") )) top-env (make-initial-store 100)) (NumV 5))
+(check-equal? (interp (AppC (lambdaC '(x y) (AppC (idC 'equal?) (list (idC 'x) (idC 'y))))
+                            (list (strC "5") (NumC 6))) top-env (make-initial-store 100)) (BoolV #f))
+(check-equal? (interp (AppC (lambdaC '(x y) (AppC (idC 'equal?) (list (idC 'x) (idC 'y))))
+                            (list (strC "hi") (strC "hi"))) top-env (make-initial-store 100)) (BoolV #t))
+(check-equal? (interp {AppC {lambdaC '(z y) {AppC {idC '+} {list {idC 'z} {idC 'y}}}}
+                            {list {AppC {idC '+} {list {NumC 9} {NumC 14}}} {NumC 98}}}
+                      top-env (make-initial-store 100)) {NumV 121})
+(check-equal? (interp (ifC (idC 'true) (NumC 1) (NumC 0)) top-env (make-initial-store 100)) (NumV 1))
+(check-equal? (interp (ifC (idC 'false) (NumC 1) (NumC 0)) top-env (make-initial-store 100)) (NumV 0))
+(check-equal? (primv-interp 'substring (list (StrV "apple") (NumV 2) (NumV 4)) (make-initial-store 100)) (StrV "pl"))
+(check-equal? (primv-interp 'substring (list (StrV "apple") (NumV 2) (NumV 2)) (make-initial-store 100)) (StrV ""))
+(check-equal? (primv-interp 'substring (list (StrV "apple") (NumV 0) (NumV 4)) (make-initial-store 100)) (StrV "appl"))
+(check-equal? (primv-interp 'substring (list (StrV "apple") (NumV 0) (NumV 5)) (make-initial-store 100)) (StrV "apple"))
+
+(check-equal? (serialize (primv-interp 'make-array (list (NumV 3) (NumV 7)) (make-initial-store 100))) "#<array>")
+(check-exn (regexp (regexp-quote "SHEQ: invalid start and stop indices 6 4"))
+           (lambda () (primv-interp 'substring (list (StrV "apple") (NumV 6) (NumV 4)) (make-initial-store 100))))
+(check-exn (regexp (regexp-quote "SHEQ: invalid start and stop indices 3.0 5.0"))
+           (lambda () (primv-interp 'substring (list (StrV "apple") (NumV 3.0) (NumV 5.0)) (make-initial-store 100))))
+
+(check-exn (regexp (regexp-quote "SHEQ: if expression must be a boolean value"))
+           (lambda () (interp (ifC (idC '+) (NumC 1) (NumC 0)) top-env (make-initial-store 100))))
+(check-exn (regexp (regexp-quote "SHEQ: can't do division by 0"))
+           (lambda () (interp (AppC (lambdaC '(x y) (AppC (idC '/) (list (idC 'x) (idC 'y))))
+                                    (list (NumC 6) (NumC 0))) top-env (make-initial-store 100))))
+(check-exn (regexp (regexp-quote "SHEQ: wrong number of arguments"))
+           (lambda () (interp (AppC (lambdaC '(x y) (idC 'x)) (list (NumC 1))) top-env (make-initial-store 100))))
+
+(check-exn (regexp (regexp-quote "SHEQ: attempted to call a non-function"))
+           (lambda () (interp (AppC (NumC 0) (list)) top-env (make-initial-store 100))))
+
+(check-exn (regexp (regexp-quote "SHEQ: need two arguments for /"))
+           (lambda () (interp (AppC (lambdaC '(x y) (AppC (idC '/) (list (idC 'x) (idC 'y) (NumC 5))))
+                                    (list (NumC 6) (NumC 0))) top-env (make-initial-store 100))))
+
+(check-exn (regexp (regexp-quote "SHEQ: need two arguments for +"))
+           (lambda () (interp (AppC (lambdaC '(x y) (AppC (idC '+) (list (idC 'x) (idC 'y) (NumC 5))))
+                                    (list (NumC 6) (NumC 0))) top-env (make-initial-store 100))))
+
+(check-exn (regexp (regexp-quote "SHEQ: need two arguments for -"))
+           (lambda () (interp (AppC (lambdaC '(x y) (AppC (idC '-) (list (idC 'x) (idC 'y) (NumC 5))))
+                                    (list (NumC 6) (NumC 0))) top-env (make-initial-store 100))))
+
+(check-exn (regexp (regexp-quote "SHEQ: need two arguments for *"))
+           (lambda () (interp (AppC (lambdaC '(x y) (AppC (idC '*) (list (idC 'x) (idC 'y) (NumC 5))))
+                                    (list (NumC 6) (NumC 0))) top-env (make-initial-store 100))))
+
+(check-exn (regexp (regexp-quote "SHEQ: need two arguments for <="))
+           (lambda () (interp (AppC (lambdaC '(x y) (AppC (idC '<=) (list  (NumC 5))))
+                                    (list (NumC 6) (NumC 0))) top-env (make-initial-store 100))))
+
+(check-exn (regexp (regexp-quote "SHEQ: need 1 string to get the length"))
+           (lambda () (interp (AppC (lambdaC '(x y) (AppC (idC 'strlen) (list (idC 'x) (idC 'y) (NumC 5))))
+                                    (list (NumC 6) (NumC 0))) top-env (make-initial-store 100))))
+
+(check-exn (regexp (regexp-quote "SHEQ: need a string, a start, and a stop variable to subst"))
+           (lambda () (interp (AppC (lambdaC '(x y) (AppC (idC 'substring) (list (idC 'x) (idC 'y) (NumC 5))))
+                                    (list (NumC 6) (NumC 0))) top-env (make-initial-store 100))))
+
+(check-exn (regexp (regexp-quote "SHEQ: need two arguments to see if they are equal"))
+           (lambda () (interp (AppC (lambdaC '(x y) (AppC (idC 'equal?) (list (idC 'x) (idC 'y) (NumC 5))))
+                                    (list (NumC 6) (NumC 0))) top-env (make-initial-store 100))))
+
+(check-exn (regexp (regexp-quote "SHEQ: need numbers for +"))
+           (lambda () (interp (AppC (lambdaC '() (AppC (idC '+) (list (strC "hi") (NumC 5)))) '())
+                              top-env (make-initial-store 100))))
+
+(check-exn (regexp (regexp-quote "SHEQ: need numbers for -"))
+           (lambda () (interp (AppC (lambdaC '() (AppC (idC '-) (list (strC "hi") (NumC 5)))) '())
+                              top-env (make-initial-store 100))))
+
+(check-exn (regexp (regexp-quote "SHEQ: need numbers for *"))
+           (lambda () (interp (AppC (lambdaC '() (AppC (idC '*) (list (strC "hi") (NumC 5)))) '())
+                              top-env (make-initial-store 100))))
+
+(check-exn (regexp (regexp-quote "SHEQ: need numbers for /"))
+           (lambda () (interp (AppC (lambdaC '() (AppC (idC '/) (list (strC "hi") (NumC 5)))) '())
+                              top-env (make-initial-store 100))))
+
+(check-exn (regexp (regexp-quote "SHEQ: need numbers for <="))
+           (lambda () (interp (AppC (lambdaC '() (AppC (idC '<=) (list (strC "hi") (NumC 5)))) '())
+                              top-env (make-initial-store 100))))
+
+(check-exn (regexp (regexp-quote "SHEQ: need a string to get the length"))
+           (lambda () (interp (AppC (lambdaC '() (AppC (idC 'strlen) (list (NumC 5)))) '())
+                              top-env (make-initial-store 100))))
+
+;serialize
+(check-equal? (serialize (BoolV #t)) "true")
+(check-equal? (serialize (BoolV #f)) "false")
+(check-equal? (serialize (NumV 5)) "5")
+(check-equal? (serialize (StrV "hello")) "\"hello\"")
+(check-equal? (serialize (PrimV '+)) "#<primop>")
+(check-equal? (serialize (CloV (list '+) (NumC 5) top-env)) "#<procedure>")
+(check-equal? (serialize (NullV)) "null")
+
+;; parse tests
+(check-equal? (parse 17) (NumC 17))
+(check-equal? (parse "hello") (strC "hello"))
+(check-equal? (parse 'true) (idC 'true))
+(check-equal? (parse 'false) (idC 'false))
+(check-equal? (parse '{+ 1 2}) (AppC (idC '+)
+                                     (list (NumC 1) (NumC 2))))
+(check-equal? (parse '{- 10 4}) (AppC (idC '-)
+                                      (list (NumC 10) (NumC 4))))
+(check-equal? (parse '{* 37 2}) (AppC (idC '*)
+                                      (list (NumC 37) (NumC 2))))
+(check-equal? (parse '{/ 4 0}) (AppC (idC '/)
+                                     (list (NumC 4) (NumC 0))))
+(check-equal? (parse '{<= 10 20}) (AppC (idC '<=)
+                                        (list (NumC 10) (NumC 20))))
+(check-equal? (parse '{substring "hello" 0 2}) (AppC (idC 'substring)
+                                                     (list (strC "hello") (NumC 0) (NumC 2))))
+(check-equal? (parse '{strlen "word"}) (AppC (idC 'strlen)
+                                             (list (strC "word"))))
+(check-equal? (parse '{equal? 0 "zero"}) (AppC (idC 'equal?)
+                                               (list (NumC 0) (strC "zero"))))
+(check-equal? (parse '{error true}) (AppC (idC 'error)
+                                          (list (idC 'true))))
+(check-equal? (parse 'x) (idC 'x))
+(check-equal? (parse '{if true {+ 1 1} {- 1 1}})
+              (ifC (idC 'true)
+                   (AppC (idC '+) (list (NumC 1) (NumC 1))) (AppC (idC '-) (list (NumC 1) (NumC 1)))))
+(check-equal? (parse '{let {[x = 2]} in {+ x 2} end})
+              (AppC (lambdaC '(x) (AppC (idC '+) (list (idC 'x) (NumC 2))))
+                    (list (NumC 2))))
+(check-equal? (parse '{let {[x = "hello"] [y = 1] [z = 3]} in {substring x y z} end})
+              (AppC (lambdaC '(x y z) (AppC (idC 'substring) (list (idC 'x) (idC 'y) (idC' z))))
+                    (list (strC "hello") (NumC 1) (NumC 3))))
+(check-equal? (parse '{let {} in {+ 1 2} end})
+              (AppC (lambdaC '() (AppC (idC '+) (list (NumC 1) (NumC 2)))) '()))
+(check-equal? (parse '{lambda (x y) : {+ x y}}) (lambdaC '(x y) (AppC (idC '+) (list (idC 'x) (idC 'y)))))
+(check-equal? (parse '{lambda (z) : {* z 500}}) (lambdaC '(z) (AppC (idC '*) (list (idC 'z) (NumC 500)))))
+(check-equal? (parse '{lambda (s) : {strlen s}}) (lambdaC '(s) (AppC (idC 'strlen) (list (idC 's)))))
+(check-exn (regexp (regexp-quote "SHEQ: Invalid s-expression '()"))
+           (lambda () (parse '())))
+(check-exn (regexp (regexp-quote "SHEQ: cannot have 'if as an identifier name"))
+           (lambda () (parse 'if)))
+(check-exn (regexp (regexp-quote "SHEQ: cannot have ': as an identifier name"))
+           (lambda () (parse ':)))
+(check-exn (regexp (regexp-quote "SHEQ: cannot have 'let as an identifier name"))
+           (lambda () (parse 'let)))
+(check-exn (regexp (regexp-quote "SHEQ: cannot have '= as an identifier name"))
+           (lambda () (parse '=)))
+(check-exn (regexp (regexp-quote "SHEQ: cannot have 'in as an identifier name"))
+           (lambda () (parse 'in)))
+(check-exn (regexp (regexp-quote "SHEQ: cannot have 'end as an identifier name"))
+           (lambda () (parse 'end)))
+#;(check-exn (regexp (regexp-quote "SHEQ: cannot have 'lambda as an identifier name"))
+             (lambda () (parse 'lambda)))
+(check-exn (regexp (regexp-quote "SHEQ: functions cannot have multiple paramaters with the same identifier"))
+           (lambda () (parse '{lambda (x x) : (+ x x)})))
+
+(check-exn (regexp (regexp-quote "SHEQ: duplicate parameter"))
+           (lambda () (parse '(let ((z = (lambda () : 3)) (z = 9)) in (z) end))))
+
+(check-exn (regexp (regexp-quote "SHEQ: cannot have if, :, let, in, end, = as params"))
+           (lambda () (parse '(let ((let = "")) in "World" end))))
+(check-equal? (parse '{x := 20}) (MutC 'x (NumC 20)))
+(check-equal? (parse '{x := "hello"}) (MutC 'x (strC "hello")))
+
+;; desugar tests
+(check-equal? (desugar '{[x = 1] [y = true]} '{if y x 0})
+              (AppC (lambdaC '(x y) (ifC (idC 'y) (idC 'x) (NumC 0))) (list (NumC 1) (idC 'true))))
+(check-equal? (desugar '{} '{+ 50 100})
+              (AppC (lambdaC '() (AppC (idC '+) (list (NumC 50) (NumC 100)))) '()))
+(check-exn (regexp (regexp-quote "SHEQ: invalid syntax for let statement"))
+           (lambda () (desugar 'what 'there)))
+(check-exn (regexp (regexp-quote "SHEQ: cannot have if, :, let, in, end, = as params"))
+           (lambda () (desugar '{[let = 12]} '{+ 1 2})))
+(check-exn (regexp (regexp-quote "SHEQ: duplicate parameter"))
+           (lambda () (desugar '{[x = 12] [x = 3]} '{+ x x})))
+
+;; mutate tests
+(define test-store : Store (vector (NumV 3) (NumV 20) (NumV 55)))
+(define test-env : Environment (list (Binding 'x 1) (Binding 'y 2)))
+(check-equal? (let ()
+                (mutate 'x (NumV 11) test-env test-store)
+                (vector-ref test-store (ann 1 Natural))) (NumV 11))
+(check-equal? (mutate 'y (NumV 11) test-env test-store) (NullV))
+(check-exn (regexp (regexp-quote "SHEQ: cannot mutate unbound id 'z"))
+           (lambda () (mutate 'z (NumV 1) test-env test-store)))
+
+;; checking-dups tests
+(check-equal? (checking-dups '(x y z)) #f)
+(check-equal? (checking-dups '(x y x)) 'x)
+
+;top-interp tests
+
+(check-equal? (top-interp '{let {[x = "hello"] [y = 1] [z = 3]} in {substring x y z} end} 100) "\"el\"")
+
+(check-exn (regexp (regexp-quote "SHEQ: user-error \"1234\""))
+           (lambda () (top-interp '(+ 4 (error "1234")) 100)))
+(check-exn (regexp (regexp-quote "SHEQ: errors expect 1 argument"))
+           (lambda () (top-interp '(+ 4 (error "1234" "5678")) 100)))
+
+
+
+
+

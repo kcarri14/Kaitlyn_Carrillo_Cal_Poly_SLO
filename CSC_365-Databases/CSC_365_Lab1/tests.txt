@@ -1,0 +1,148 @@
+# Test 1: Search for student
+Command: S: COOKUS
+
+Expected Output:
+
+Student: COOKUS, XUAN
+Grade: 3
+Classroom: 107
+Teacher: FAFARD, ROCIO
+
+#Test 2: Search for student and bus routes
+Command: S: WOOLERY [B]
+
+Expected Output:
+
+Student: WOOLERY, NOLAN
+Bus Route: 51
+
+#Test 3: Search for Teacher
+Command: T: KERBS
+
+Expected Output:
+
+Student: RACANELLO,NOEL
+Student: CORONADO,DIMPLE
+Student: BOYTER,WAN
+Student: KEMERER,ROSETTA
+Student: DEMARTINI,DEWAYNE
+
+#Test 4: Search by grade
+Command: G: 6
+
+Expected Output:
+
+Student: SCHOENECKER, PHUONG
+Student: RACANELLO, NOEL
+Student: STERBACK, PETER
+Student: FINCHMAN, MATHILDA
+Student: ZAPPAVIGNA, ELLIOTT
+Student: OBREIN, STAN
+Student: CORONADO, DIMPLE
+Student: SAENPHIMMACHA, NUMBERS
+Student: BOYTER, WAN
+Student: BREVO, JANNETTE
+Student: CLECKLER, FLOY
+Student: KRAKE, VALENTIN
+Student: KEMERER, ROSETTA
+Student: BEAN, INGER
+Student: DEMARTINI, DEWAYNE
+Student: CREMEANS, RANDOLPH
+Student: FEYEREISEN, WILFREDO
+Student: WERST, LEON
+Student: LAMKIN, TAMA
+Student: KREESE, CARRIE
+Student: FRIEDSTROM, REED
+
+#Test 5: Search by grade the highest GPA
+Command: G: 1 [H]
+
+Expected Output:
+
+Student: GARTH, JOHN
+GPA: 3.14
+Bus Route: 0
+Teacher: FALKER, ADOLPH
+
+#Test 6: Search by grae the lowest GPA
+Command: 2 [L]
+
+Expected Output:
+
+Student: KOZOLA, BUSTER
+GPA: 2.76
+Bus Route: 55
+Teacher: HAMER, GAVIN
+
+#Test 7: Search by bus route
+Command: B: 55
+
+Expected Output:
+
+Student: SWEDLUND, SHARRI
+Grade: 3
+Classroom: 107
+Student: ZAPPAVIGNA, ELLIOTT
+Grade: 6
+Classroom: 106
+Student: SAENPHIMMACHA, NUMBERS
+Grade: 6
+Classroom: 111
+Student: BOYTER, WAN
+Grade: 6
+Classroom: 102
+Student: KOZOLA, BUSTER
+Grade: 2
+Classroom: 108
+Student: DEMARTINI, DEWAYNE
+Grade: 6
+Classroom: 102
+Student: BEX, TAMESHA
+Grade: 4
+Classroom: 105
+Student: WERST, LEON
+Grade: 6
+Classroom: 111
+Student: LAMKIN, TAMA
+Grade: 6
+Classroom: 111
+
+#Test 8: Search for an average GPA per grade
+Command: A: 4
+
+Expected Output:
+
+Grade: 4
+Average GPA for grade 4: 2.95
+
+#Test 9: search for info on the grades
+Command: I
+
+Expected Output:
+
+Grade 0: 0
+Grade 1: 2
+Grade 2: 13
+Grade 3: 9
+Grade 4: 15
+Grade 5: 0
+Grade 6: 21
+
+#Test 10: quit command
+Command: Q
+
+Expected Output:
+(no output, terminates the program)
+
+#Test 11: unexpected command
+Commmand: something that is not in the student.txt
+
+Expected Output:
+No Student found with this last name: 
+OR
+No Teacher found with this last name:
+OR
+No Student in this grade: 
+(and then it returns back to the command prompt)
+
+

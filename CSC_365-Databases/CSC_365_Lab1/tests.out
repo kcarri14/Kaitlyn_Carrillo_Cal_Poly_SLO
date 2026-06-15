@@ -1,0 +1,107 @@
+kaitlyncarrillo@Kaitlyns-MacBook-Pro-2048 Lab1 % ./schoolsearch students.txt 
+Enter Command: S: COOKUS
+
+Student: COOKUS, XUAN
+Grade: 3
+Classroom: 107
+Teacher: FAFARD, ROCIO
+
+Enter Command: S: WOOLERY [B]
+
+Student: WOOLERY, NOLAN
+Bus Route: 51
+
+Enter Command: T: KERBS
+
+Student: RACANELLO, NOEL
+Student: CORONADO, DIMPLE
+Student: BOYTER, WAN
+Student: KEMERER, ROSETTA
+Student: DEMARTINI, DEWAYNE
+
+Enter Command: G: 6
+
+Student: SCHOENECKER, PHUONG
+Student: RACANELLO, NOEL
+Student: STERBACK, PETER
+Student: FINCHMAN, MATHILDA
+Student: ZAPPAVIGNA, ELLIOTT
+Student: OBREIN, STAN
+Student: CORONADO, DIMPLE
+Student: SAENPHIMMACHA, NUMBERS
+Student: BOYTER, WAN
+Student: BREVO, JANNETTE
+Student: CLECKLER, FLOY
+Student: KRAKE, VALENTIN
+Student: KEMERER, ROSETTA
+Student: BEAN, INGER
+Student: DEMARTINI, DEWAYNE
+Student: CREMEANS, RANDOLPH
+Student: FEYEREISEN, WILFREDO
+Student: WERST, LEON
+Student: LAMKIN, TAMA
+Student: KREESE, CARRIE
+Student: FRIEDSTROM, REED
+
+Enter Command: G: 1 [H]
+
+Student: GARTH, JOHN
+GPA: 3.14
+Bus Route: 0
+Teacher: FALKER, ADOLPH
+
+Enter Command: G: 2 [L]
+
+Student: KOZOLA, BUSTER
+GPA: 2.76
+Bus Route: 55
+Teacher: HAMER, GAVIN
+
+Enter Command: B: 55
+
+Student: SWEDLUND, SHARRI
+Grade: 3
+Classroom: 107
+Student: ZAPPAVIGNA, ELLIOTT
+Grade: 6
+Classroom: 106
+Student: SAENPHIMMACHA, NUMBERS
+Grade: 6
+Classroom: 111
+Student: BOYTER, WAN
+Grade: 6
+Classroom: 102
+Student: KOZOLA, BUSTER
+Grade: 2
+Classroom: 108
+Student: DEMARTINI, DEWAYNE
+Grade: 6
+Classroom: 102
+Student: BEX, TAMESHA
+Grade: 4
+Classroom: 105
+Student: WERST, LEON
+Grade: 6
+Classroom: 111
+Student: LAMKIN, TAMA
+Grade: 6
+Classroom: 111
+
+Enter Command: A: 4
+
+Grade: 4
+Average GPA for grade 4: 2.95
+
+Enter Command: I
+Grade 0: 0
+Grade 1: 2
+Grade 2: 13
+Grade 3: 9
+Grade 4: 15
+Grade 5: 0
+Grade 6: 21
+
+Enter Command: Q
+
+kaitlyncarrillo@Kaitlyns-MacBook-Pro-2048 Lab1 % 
+

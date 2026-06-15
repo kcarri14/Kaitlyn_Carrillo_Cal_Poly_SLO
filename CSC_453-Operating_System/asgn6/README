@@ -1,0 +1,5 @@
+Kaitlyn Carrillo
+
+run "make hello" or "make" to compile
+
+run "make test" and it will test the hello.c

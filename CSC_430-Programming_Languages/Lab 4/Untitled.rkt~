@@ -1,0 +1,29 @@
+#lang racket
+
+;Problem 3
+;takes a number 'a' and return a function that takes number 'b' and returns a + b
+(define (curried-add a)
+  (define (curried-bdd b)
+    (+ a b))
+  curried-bdd)
+
+(curried-add 5)(6)
+
+;Problem 4
+;takes a function of two arguments f, and produces a function that we'll call M
+;function M takes one argument and produces a function N
+;N takes one argument and produces the result of calling the input function f
+
+;Problem 5
+;takes a fucntion of three arguments, and produces a function that takes one argument
+;produces a function that tajes one argument and produces a fucntion that takes one argument
+;and produces the result of calling the input function
+
+;Problem 6
+;consumes a list and symbol and returns true exactly when the symbol occurs in the list
+(define (contains? lst sym)
+  (error 'contains "TODO"))
+
+;Problem 6.1
+;consumes a source list of symbols and list of query symbols and returns a list of booleans
+;indicating for the corresponding element of the query list whether it occurs in the source list

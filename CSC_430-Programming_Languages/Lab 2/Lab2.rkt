@@ -1,0 +1,137 @@
+#lang typed/racket
+
+(require typed/rackunit)
+
+;Question 1
+;take a list of strings reverse them and put them in all together
+(define lst '("cooking" "love" "I"))
+
+(define (rev-str-app [lst-strings : (Listof String)]): String
+  #;(match lst-strings
+      ['()...]
+      [(cons f r) ... (rev-str-app r)...])
+  
+  (match lst-strings
+    ['() ""]
+    [(cons f r) (string-append(rev-str-app r) f)]))
+
+
+
+(check-equal? (rev-str-app lst) "Ilovecooking")
+(check-equal? (rev-str-app '("" "play" "ball" "")) "ballplay")
+(check-equal? (rev-str-app '()) "")
+
+;Question 2
+;rev-str-app has the type of (-> (Listof String) String) which means it takes a list of strings
+;and ouputs a string.
+;when i put (:print-type +) into the interactions window, it prints out a giant page of the cases of
+;what happens in each case. It's so long because there are so many cases for the plus sign
+
+;Questions 3-5
+;consumes a list of bicycles and returns a list containing only the Treks
+
+(define-type bicycle (U Trek Bianchi Gunnar))
+(struct Trek([number : Real]) #:transparent)
+(struct Bianchi([number : Real])#:transparent)
+(struct Gunnar([number : Real])#:transparent)
+
+(define lst-bikes ( list (Trek 1) (Bianchi 2) (Gunnar 3) (Trek 4) (Bianchi 5) (Gunnar 6)))
+
+(define (only-treks [lst-bikes : (Listof bicycle)]): (Listof Trek)
+  #;(cond
+      [(empty? lst-bikes) '()]
+      [(Trek? (first lst-bikes))
+       (cons (first lst-bikes) (only-treks (rest lst-bikes)))]
+      [else (only-treks (rest lst-bikes))])
+  (match lst-bikes
+    ['() '()]
+    [(cons f r) (if (Trek? f)
+                    (cons f (only-treks r))
+                    (only-treks r))]
+    #;[(cons (Trek n) rest) (cons (Trek n) (only-treks rest))]
+    #;[(cons (Bianchi n) rest) (only-treks rest)]
+    #;[(cons (Gunnar n) rest) (only-treks rest)]))
+
+
+(check-equal? (only-treks lst-bikes) (list (Trek 1) (Trek 4)))
+(check-equal? (only-treks '()) '())
+
+;Question 6
+;consumes a list of bicycles and returns a list containing only the Treks
+(define (only-bianchis [lst-bikes : (Listof bicycle)]): (Listof Bianchi)
+  #;(cond
+      [(empty? lst-bikes) '()]
+      [(Bianchi? (first lst-bikes))
+       (cons (first lst-bikes) (only-bianchis (rest lst-bikes)))]
+      [else (only-bianchis (rest lst-bikes))])
+  (match lst-bikes
+    ['() '()]
+    [(cons (Bianchi n) rest) (cons (Bianchi n) (only-bianchis rest))]
+    [(cons (Trek n) rest) (only-bianchis rest)]
+    [(cons (Gunnar n) rest) (only-bianchis rest)]))
+
+(check-equal? (only-bianchis lst-bikes) (list (Bianchi 2) (Bianchi 5)))
+(check-equal? (only-bianchis '()) '())
+
+;Question 7
+;consumes a list of bicycles and a particular bicycle predicate and returns a list of bicycles with that specific bike
+(define (only-these [bicycle-lst : (Listof bicycle)] [type-of-bike : (-> Any Boolean)]) : (Listof bicycle)
+  #;(cond
+      [(empty? bicycle-lst) '()]
+      [(type-of-bike (first bicycle-lst))
+       (cons(first bicycle-lst) (only-these (rest bicycle-lst) type-of-bike))]
+      [else (only-these (rest bicycle-lst) type-of-bike)])
+  (match bicycle-lst
+    ['() '()]
+    [(cons (? type-of-bike f ) r) (cons f (only-these r type-of-bike)) ]
+    [(cons f r) (only-these r type-of-bike)]))
+
+(check-equal? (only-these lst-bikes Bianchi?) (list (Bianchi 2) (Bianchi 5)))
+(check-equal? (only-these lst-bikes Trek?) (list (Trek 1) (Trek 4)))
+(check-equal? (only-bianchis '()) '())
+
+;Question 8
+; consumes two lists and returns the results of appending the second one to the first one
+(define lst-1 '(a b c))
+(define lst-2 '(d e f))
+
+(define (my-append [lst1 : (Listof Symbol)] [lst2 : (Listof Symbol)]) : (Listof Symbol)
+  (match lst2
+    ['() lst1]
+    [(cons f r) (cons f (my-append lst1 r )) ])
+  #;(cond
+      [(empty? lst2) lst1]
+      [else (cons (first lst2) (my-append lst1 (rest lst2) )) ]))
+
+
+
+(check-equal? (my-append lst-1 lst-2) '(d e f a b c))
+(check-equal? (my-append '() '()) '())
+(check-equal? (my-append '(a b c) '()) '(a b c))
+
+
+(define (my-append-correct [lst1 : (Listof Symbol)] [lst2 : (Listof Symbol)]) : (Listof Symbol)
+  (match lst1
+    ['() lst2]
+    [(cons f r) (cons f (my-append lst2 r )) ])
+  #;(cond
+      [(empty? lst2) lst1]
+      [else (cons (first lst2) (my-append lst1 (rest lst2) )) ]))
+
+
+
+(check-equal? (my-append-correct lst-1 lst-2) '(a b c d e f))
+(check-equal? (my-append-correct '() '()) '())
+
+
+;Question 9
+;consumes a list and a number n and returns the first n elements of the list
+(define (my-take [take-lst : (Listof Any)] [number : Natural]) : (Listof Any)
+  (cond
+    [(or (zero? number) (empty? take-lst)) '()]
+    [else (cons (first take-lst) (my-take (rest take-lst) (- number 1)))]))
+
+(check-equal? (my-take '(1 2 3 4) 3) '(1 2 3))
+(check-equal? (my-take '() 3) '())
+(check-equal? (my-take '(1 2 3 4) 5) '(1 2 3 4))
+

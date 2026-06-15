@@ -1,0 +1,85 @@
+#lang typed/racket
+;Problem 2.3.3
+;An old-style movie theater has a simple profit function.
+;Each customer pays $5 per ticket. Every performance costs the theater $20,
+;plus $.50 per attendee. Develop the function total-profit. It consumes the number of attendees
+;(of a show) and produces how much income the attendees produce.
+(define customer-ticket 5)
+(define performance-cost 20)
+(define customer-cost 0.5)
+
+(define (total-profit [num-peep: Real]) : Real
+  (total-costumer-ticket (* customer-ticket num-peep)))
+
+(check-equal? (total-profit 50) 205)
+
+;Problem 3.3.3
+;Develop area-cylinder.
+;The program consumes the radius of the cylinder's base disk and its height.
+;Its result is the surface area of the cylinder.
+
+;Problem 2.2
+;given a writing utensil, it returns the distance in meters how long itll write for
+;before it runs out
+
+; represents a writing implement
+(define-type Writer (U Pen Pencil))
+; ink volume in ml, how-full a number in the range 0.0 to 1.0
+(struct Pen ([ink-volume : Real] [how-full : Real]) #:transparent)
+; length in cm
+(struct Pencil ([length : Real]) #:transparent)
+
+(define (how-far-to-write [writing-utensil : Writer]) : Real
+  (error 'how-far-to-write "#TODO")
+  )
+
+;Problem 2.3
+;data defintions
+(define-type Polynomial (U Linear Quadratic))
+(struct Linear ([A : Real] [B : Real] ) #:transparent)
+(struct Quadratic ([A : Real] [B : Real] [C : Real]) #:transparent)
+;accepts a polynomial and a value for x and returns the correct result when plugging x in
+(define (interp [Equation : Polynomial] [variable : Real]) : Real
+  (error 'interp "#TODO"))
+
+;Problem 2.4
+
+; accepts a polynomial and returns another polynomial that is the derative of it
+(define (derivative [Equation : Polynomial]) : Polynomial
+  (error 'derivative "#TODO"))
+
+;Problem 2.5
+(define-type BTree (U Leaf Node))
+(struct Leaf ([sym : Symbol]) #:transparent)
+(struct Node ([left : BTree] [right : BTree]))
+; Finish the examples
+
+
+
+;Problem 2.6
+;takes in a binary tree and produces a binary tree of the same shape just the leaves have symbols 'zz
+(define (zz-tree [binary-tree : BTree]) : BTree
+  (error 'zz-tree "TODO"))
+
+;Problem 2.7
+;takes in a binary tree and produces a left-right mirroe of the bianry tree
+(define (mirror [binary-tree : BTree]) : BTree
+  (error 'mirror "TODO"))
+
+;Problem 2.8
+; accepts a binary tree and produces the shortest path to a leaf 
+(define (min-depth [binary-tree : BTree]) : Real
+  (error 'min-depth "TODO"))
+
+;Problem 2.9
+;takes in a binary tree and a symbol and returns if the symbol is in that tree
+(define (contains? [binary-tree : BTree] [sym : Symbol]) : Boolean
+  (error 'zz-tree "TODO"))
+
+;Problem 2.10
+;takes in a source binary tree and a symbol and replacement binary tree
+;returns a new tree where every node of the source tree containing the symbol is replaced by the replacement tree
+(define (subst [binary-tree : BTree]) : BTree
+  (error 'subst "TODO"))
+
+

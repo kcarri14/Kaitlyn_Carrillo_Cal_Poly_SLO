@@ -1,0 +1,15 @@
+Social media platforms have been widely linked to societal harms, including ris-
+ing polarization and the erosion of constructive debate. Can these problems be
+mitigated through prosocial interventions? We address this question using a novel
+method – generative social simulation – that embeds Large Language Models
+within Agent-Based Models to create socially rich synthetic platforms. We cre-
+ate a minimal platform where agents can post, repost, and follow others. We
+find that the resulting following-networks reproduce three well-documented dys-
+functions: (1) partisan echo chambers; (2) concentrated influence among a small
+elite; and (3) the amplification of polarized voices – creating a “social media
+prism” that distorts political discourse. We test six proposed interventions, from
+chronological feeds to bridging algorithms, finding only modest improvements –
+and in some cases, worsened outcomes. These results suggest that core dysfunc-
+tions may be rooted in the feedback between reactive engagement and network
+growth, raising the possibility that meaningful reform will require rethinking the
+foundational dynamics of platform architecture.
