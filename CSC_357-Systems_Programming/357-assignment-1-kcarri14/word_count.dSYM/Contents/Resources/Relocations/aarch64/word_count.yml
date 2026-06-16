@@ -1,0 +1,8 @@
+---
+triple:          'arm64-apple-darwin'
+binary-path:     '/Users/kaitlyncarrillo/github-classroom/fahimhkhan-cp/357-assignment-1-kcarri14/word_count'
+relocations:
+  - { offset: 0x26, size: 0x8, addend: 0x0, symName: _counter, symObjAddr: 0x0, symBinAddr: 0x100003D68, symSize: 0xE8 }
+  - { offset: 0x41, size: 0x8, addend: 0x0, symName: _counter, symObjAddr: 0x0, symBinAddr: 0x100003D68, symSize: 0xE8 }
+  - { offset: 0xAB, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0xE8, symBinAddr: 0x100003E50, symSize: 0xEC }
+...

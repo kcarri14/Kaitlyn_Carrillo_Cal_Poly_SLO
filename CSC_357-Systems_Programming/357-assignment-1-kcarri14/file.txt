@@ -1,0 +1,5 @@
+I love programming.
+Working with files in C programming is fun.
+I am learning C programming at Cal Poly SLO.
+My name is Kaitlyn Carrillo.
+Im so tired.
