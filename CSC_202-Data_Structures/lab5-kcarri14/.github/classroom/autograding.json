@@ -1,0 +1,44 @@
+{
+  "tests": [
+    {
+      "name": "get",
+      "setup": "sudo -H pip3 install pytest",
+      "run": "pytest test_get.py",
+      "input": "",
+      "output": "",
+      "comparison": "exact",
+      "timeout": 10,
+      "points": 1
+    },
+    {
+      "name": "set",
+      "setup": "sudo -H pip3 install pytest",
+      "run": "pytest test_set.py",
+      "input": "",
+      "output": "",
+      "comparison": "exact",
+      "timeout": 10,
+      "points": 1
+    },
+    {
+      "name": "eq",
+      "setup": "sudo -H pip3 install pytest",
+      "run": "pytest test_eq.py",
+      "input": "",
+      "output": "",
+      "comparison": "exact",
+      "timeout": 10,
+      "points": 1
+    },
+    {
+      "name": "student",
+      "setup": "sudo -H pip3 install pytest",
+      "run": "pytest test_student.py",
+      "input": "",
+      "output": "",
+      "comparison": "exact",
+      "timeout": 10,
+      "points": 1
+    }
+  ]
+}
