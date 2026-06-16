@@ -1,0 +1,134 @@
+{
+  "tests": [
+    {
+      "name": "1",
+      "setup": "sudo -H pip3 install pytest",
+      "run": "pytest test_add1.py",
+      "input": "",
+      "output": "",
+      "comparison": "exact",
+      "timeout": 10,
+      "points": 1
+    },
+    {
+      "name": "2",
+      "setup": "sudo -H pip3 install pytest",
+      "run": "pytest test_add2.py",
+      "input": "",
+      "output": "",
+      "comparison": "exact",
+      "timeout": 10,
+      "points": 1
+    },
+    {
+      "name": "3",
+      "setup": "sudo -H pip3 install pytest",
+      "run": "pytest test_add3.py",
+      "input": "",
+      "output": "",
+      "comparison": "exact",
+      "timeout": 10,
+      "points": 1
+    },
+    {
+      "name": "4",
+      "setup": "sudo -H pip3 install pytest",
+      "run": "pytest test_sub1.py",
+      "input": "",
+      "output": "",
+      "comparison": "exact",
+      "timeout": 10,
+      "points": null
+    },
+    {
+      "name": "5",
+      "setup": "sudo -H pip3 install pytest",
+      "run": "pytest test_sub2.py",
+      "input": "",
+      "output": "",
+      "comparison": "exact",
+      "timeout": 10,
+      "points": null
+    },
+    {
+      "name": "6",
+      "setup": "sudo -H pip3 install pytest",
+      "run": "pytest test_sub3.py",
+      "input": "",
+      "output": "",
+      "comparison": "exact",
+      "timeout": 10,
+      "points": null
+    },
+    {
+      "name": "7",
+      "setup": "sudo -H pip3 install pytest",
+      "run": "pytest test_anti1.py",
+      "input": "",
+      "output": "",
+      "comparison": "exact",
+      "timeout": 10,
+      "points": 1
+    },
+    {
+      "name": "8",
+      "setup": "sudo -H pip3 install pytest",
+      "run": "pytest test_anti2.py",
+      "input": "",
+      "output": "",
+      "comparison": "exact",
+      "timeout": 10,
+      "points": 1
+    },
+    {
+      "name": "9",
+      "setup": "sudo -H pip3 install pytest",
+      "run": "pytest test_anti3.py",
+      "input": "",
+      "output": "",
+      "comparison": "exact",
+      "timeout": 10,
+      "points": 1
+    },
+    {
+      "name": "10",
+      "setup": "sudo -H pip3 install pytest",
+      "run": "pytest test_derivate1.py",
+      "input": "",
+      "output": "",
+      "comparison": "exact",
+      "timeout": 10,
+      "points": 1
+    },
+    {
+      "name": "11",
+      "setup": "sudo -H pip3 install pytest",
+      "run": "pytest test_derivate2.py",
+      "input": "",
+      "output": "",
+      "comparison": "exact",
+      "timeout": 10,
+      "points": 1
+    },
+    {
+      "name": "12",
+      "setup": "sudo -H pip3 install pytest",
+      "run": "pytest test_derivate3.py",
+      "input": "",
+      "output": "",
+      "comparison": "exact",
+      "timeout": 10,
+      "points": 1
+    },
+    {
+      "name": "13",
+      "setup": "sudo -H pip3 install pytest",
+      "run": "pytest test_student.py",
+      "input": "",
+      "output": "",
+      "comparison": "exact",
+      "timeout": 10,
+      "points": 0
+    }
+  ]
+}
