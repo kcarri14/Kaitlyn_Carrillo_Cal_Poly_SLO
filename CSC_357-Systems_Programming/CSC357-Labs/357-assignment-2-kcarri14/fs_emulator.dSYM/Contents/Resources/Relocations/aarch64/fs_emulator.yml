@@ -1,0 +1,5 @@
+---
+triple:          'arm64-apple-darwin'
+binary-path:     '/Users/kaitlyncarrillo/CSC357-Labs/357-assignment-2-kcarri14/fs_emulator'
+relocations:     []
+...
