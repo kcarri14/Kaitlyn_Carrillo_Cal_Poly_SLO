@@ -1,0 +1,24 @@
+{
+  "tests": [
+    {
+      "name": "t3",
+      "setup": "sudo -H pip3 install pytest",
+      "run": "pytest test_p3.py",
+      "input": "",
+      "output": "",
+      "comparison": "exact",
+      "timeout": 10,
+      "points": 1
+    },
+    {
+      "name": "t3s",
+      "setup": "sudo -H pip3 install pytest",
+      "run": "pytest test_student.py",
+      "input": "",
+      "output": "",
+      "comparison": "exact",
+      "timeout": 10,
+      "points": 1
+    }
+  ]
+}
