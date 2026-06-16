@@ -1,0 +1,8 @@
+---
+triple:          'arm64-apple-darwin'
+binary-path:     '/Users/kaitlyncarrillo/github-classroom/fahimhkhan-cp/357-lab-2-kcarri14/command_5'
+relocations:
+  - { offset: 0x26, size: 0x8, addend: 0x0, symName: _line_inter, symObjAddr: 0x0, symBinAddr: 0x100003E2C, symSize: 0x90 }
+  - { offset: 0x41, size: 0x8, addend: 0x0, symName: _line_inter, symObjAddr: 0x0, symBinAddr: 0x100003E2C, symSize: 0x90 }
+  - { offset: 0x81, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x90, symBinAddr: 0x100003EBC, symSize: 0x94 }
+...

@@ -1,0 +1,14 @@
+---
+triple:          'arm64-apple-darwin'
+binary-path:     '/Users/kaitlyncarrillo/github-classroom/fahimhkhan-cp/357-lab-2-kcarri14/example_3'
+relocations:
+  - { offset: 0x26, size: 0x8, addend: 0x0, symName: _start, symObjAddr: 0x0, symBinAddr: 0x100003C8C, symSize: 0x4 }
+  - { offset: 0x41, size: 0x8, addend: 0x0, symName: _start, symObjAddr: 0x0, symBinAddr: 0x100003C8C, symSize: 0x4 }
+  - { offset: 0x56, size: 0x8, addend: 0x0, symName: _pause, symObjAddr: 0x4, symBinAddr: 0x100003C90, symSize: 0x4 }
+  - { offset: 0x6B, size: 0x8, addend: 0x0, symName: _bad_int_example, symObjAddr: 0x8, symBinAddr: 0x100003C94, symSize: 0x24 }
+  - { offset: 0xAF, size: 0x8, addend: 0x0, symName: _bad_array_example, symObjAddr: 0x2C, symBinAddr: 0x100003CB8, symSize: 0x6C }
+  - { offset: 0xE5, size: 0x8, addend: 0x0, symName: _example1, symObjAddr: 0x98, symBinAddr: 0x100003D24, symSize: 0x8C }
+  - { offset: 0x133, size: 0x8, addend: 0x0, symName: _example2, symObjAddr: 0x124, symBinAddr: 0x100003DB0, symSize: 0xC8 }
+  - { offset: 0x181, size: 0x8, addend: 0x0, symName: _raw_copy, symObjAddr: 0x1EC, symBinAddr: 0x100003E78, symSize: 0x4C }
+  - { offset: 0x1B3, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x238, symBinAddr: 0x100003EC4, symSize: 0x48 }
+...
