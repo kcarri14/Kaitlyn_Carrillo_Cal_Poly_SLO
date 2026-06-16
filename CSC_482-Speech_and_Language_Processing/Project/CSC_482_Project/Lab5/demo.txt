@@ -1,0 +1,50 @@
+Guest92 22:45:53
+Kaitlyn-bot: usage
+kaitlyn-bot 22:45:54
+My name is kaitlyn-bot. I was created by Kaitlyn Carrillo, Ellie Pearson, Harini Baskar, and Siri Gunturi, CSC 482-03
+I can answer questions about the weather and places! Ask me: "What time is it in Los Angeles?" or "What's the weather in London?"
+Guest92 22:46:01
+Kaitlyn-bot: users
+kaitlyn-bot 22:46:02
+kaitlyn-bot, Guest13, Guest92, Guest24, Cole91, Alec, foaad_bot
+Guest92 22:46:09
+Kaitlyn-bot: hello
+kaitlyn-bot 22:46:09
+guest92: hello
+Guest92 22:46:15
+Kaitlyn-bot: how are you?
+kaitlyn-bot 22:46:16
+guest92: i'm fine
+guest92: how about you?
+Guest92 22:46:23
+Kaitlyn-bot: I'm good
+kaitlyn-bot 22:46:40
+Guest92: hey
+Guest92 22:46:42
+Kaitlyn-bot: hello
+kaitlyn-bot 22:46:42
+guest92: how's it going?
+Guest92 22:46:49
+Kaitlyn-bot: I'm good
+Kaitlyn-bot: how are you?
+kaitlyn-bot 22:46:54
+guest92: I'm good
+← kaitlyn-bot has left (Client Quit)
+→ kaitlyn-bot has joined
+Guest92 22:47:27
+kaitlyn-bot: What time is it in Los Angeles?
+kaitlyn-bot 22:47:29
+guest92: Los Angeles, United States has a population of 3820914 and it is currently March 09, 2026 at 10:47 PM PDT.
+Guest92 22:47:42
+Kaitlyn-bot: What's the weather in London?
+kaitlyn-bot 22:47:45
+guest92: The temperature in London is 48.9 °F and 9.4 °C right now but it feels like 46.1°F. There is a humidity of 89.0% and a 0.0% chance of rain.
+Guest92: hola
+Guest92 22:48:00
+Kaitlyn-bot: what's the weather in San Luis Obispo?
+kaitlyn-bot 22:48:03
+guest92: The temperature in San Luis Obispo is 55.7 °F and 13.1 °C right now but it feels like 55.4°F. There is a humidity of 94.0% and a 0.0% chance of rain.
+Guest92 22:48:14
+Kaitlyn-bot: die
+kaitlyn-bot 22:48:14
+guest92: I shall!

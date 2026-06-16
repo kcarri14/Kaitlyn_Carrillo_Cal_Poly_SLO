@@ -1,0 +1,30 @@
+0 @I1@ INDI
+1 NAME Emma Charlotte Duerre /Watson/
+1 SEX F
+1 BIRT
+2 DATE 15 APR 1990
+2 PLAC Paris, France
+1 FAMC @F1@
+
+0 @I2@ INDI
+1 NAME Chris /Watson/
+1 SEX M
+1 FAMS @F1@
+
+0 @I3@ INDI
+1 NAME Jacqueline /Luesby/
+1 SEX F
+1 FAMS @F1@
+
+0 @I4@ INDI
+1 NAME 
+1 SEX M
+1 FAMC @F1@
+
+0 @F1@ FAM
+1 HUSB @I2@
+1 WIFE @I3@
+1 DIV
+2 DATE ABT 1995
+1 CHIL @I1@
+1 CHIL @I4@

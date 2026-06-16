@@ -1,0 +1,49 @@
+0 @I1@ INDI
+1 NAME Taylor Alison /Swift/
+1 SEX F
+1 BIRT
+2 DATE 13 DEC 1989
+2 PLAC West Reading, Pennsylvania, USA
+1 FAMC @F1@
+
+0 @I2@ INDI
+1 NAME Scott Kingsley /Swift/
+1 SEX M
+1 FAMS @F1@
+
+0 @I3@ INDI
+1 NAME Andrea Gardner /Finlay/
+1 SEX F
+1 FAMS @F1@
+1 FAMC @F3@
+
+0 @I4@ INDI
+1 NAME Austin /Swift/
+1 SEX M
+1 FAMC @F1@
+
+0 @I5@ INDI
+1 NAME Charles Carmine Antonio /Baldi/
+1 SEX M
+
+0 @I6@ INDI
+1 NAME Marjorie /Moehlenkamp/
+1 SEX F
+1 FAMS @F3@
+
+0 @I7@ INDI
+1 NAME James /Taylor/
+1 SEX M
+
+0 @F1@ FAM
+1 HUSB @I2@
+1 WIFE @I3@
+1 CHIL @I1@
+1 CHIL @I4@
+
+0 @F2@ FAM
+1 CHIL @I2@
+
+0 @F3@ FAM
+1 WIFE @I6@
+1 CHIL @I3@

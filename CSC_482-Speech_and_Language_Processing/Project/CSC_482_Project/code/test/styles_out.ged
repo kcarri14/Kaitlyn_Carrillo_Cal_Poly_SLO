@@ -1,0 +1,71 @@
+0 @I1@ INDI
+1 NAME Harry /Styles/
+1 SEX M
+1 BIRT
+2 DATE 1 FEB 1994
+2 PLAC Redditch, Worcestershire, England
+1 FAMC @F1@
+
+0 @I2@ INDI
+1 NAME Anne /Twist/
+1 SEX F
+1 FAMS @F1@
+1 FAMS @F2@
+1 FAMS @F3@
+1 FAMS @F4@
+
+0 @I3@ INDI
+1 NAME Desmond "Des" /Styles/
+1 SEX M
+1 FAMS @F1@
+
+0 @I4@ INDI
+1 NAME Gemma /Styles/
+1 SEX F
+1 FAMC @F1@
+
+0 @I5@ INDI
+1 NAME John /Cox/
+1 SEX M
+1 FAMS @F2@
+
+0 @I6@ INDI
+1 NAME Robin /Twist/
+1 SEX M
+1 DEAT
+2 DATE 2017
+1 FAMS @F3@
+
+0 @I7@ INDI
+1 NAME Mike
+1 SEX M
+1 FAMC @F3@
+
+0 @I8@ INDI
+1 NAME Amy
+1 SEX F
+1 FAMC @F3@
+
+0 @F1@ FAM
+1 HUSB @I3@
+1 WIFE @I2@
+1 CHIL @I1@
+1 CHIL @I4@
+1 DIV
+2 DATE ABT 2001
+
+0 @F2@ FAM
+1 HUSB @I5@
+1 WIFE @I2@
+1 DIV
+
+0 @F3@ FAM
+1 HUSB @I6@
+1 WIFE @I2@
+1 MARR
+2 DATE 2013
+1 CHIL @I7@
+1 CHIL @I8@
+
+0 @F4@ FAM
+1 WIFE @I2@

@@ -1,0 +1,76 @@
+0 @I1@ INDI
+1 NAME Alexander /Hamilton/
+1 SEX M
+1 BIRT
+2 DATE 11 JAN 1755
+2 PLAC Charlestown, Nevis, British Leeward Islands
+1 BIRT
+2 DATE 11 JAN 1757
+2 PLAC Charlestown, Nevis, British Leeward Islands
+1 DEAT
+2 DATE 19 FEB 1768
+2 PLAC Saint Croix
+1 FAMC @F1@
+
+0 @I2@ INDI
+1 NAME James Jr. /Hamilton/
+1 SEX M
+1 FAMC @F1@
+
+0 @I3@ INDI
+1 NAME Rachel /Lavien/
+1 SEX F
+1 FAMS @F1@
+1 FAMS @F2@
+1 FAMC @F4@
+1 DEAT
+2 DATE 19 FEB 1768
+2 PLAC Saint Croix
+
+0 @I4@ INDI
+1 NAME James A. /Hamilton/
+1 SEX M
+1 FAMS @F1@
+1 FAMC @F3@
+
+0 @I5@ INDI
+1 NAME Johann /Lavien/
+1 SEX M
+1 FAMS @F2@
+
+0 @I6@ INDI
+1 NAME Peter /Lavien/
+1 SEX M
+1 FAMC @F2@
+
+0 @I7@ INDI
+1 NAME Alexander /Hamilton/
+1 SEX M
+1 FAMS @F3@
+
+0 @I8@ INDI
+1 NAME John /Faucette/
+1 SEX M
+1 BIRT
+2 DATE ABT 1682
+2 PLAC Saintonge, France
+1 FAMS @F4@
+
+0 @F1@ FAM
+1 HUSB @I4@
+1 WIFE @I3@
+1 CHIL @I1@
+1 CHIL @I2@
+
+0 @F2@ FAM
+1 HUSB @I5@
+1 WIFE @I3@
+1 CHIL @I6@
+
+0 @F3@ FAM
+1 HUSB @I7@
+1 CHIL @I4@
+
+0 @F4@ FAM
+1 HUSB @I8@
+1 CHIL @I3@

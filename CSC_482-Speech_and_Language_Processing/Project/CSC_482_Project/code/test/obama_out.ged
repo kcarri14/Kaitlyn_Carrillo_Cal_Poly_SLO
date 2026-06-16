@@ -1,0 +1,53 @@
+0 @I1@ INDI
+1 NAME Barack /Obama/
+1 SEX M
+1 BIRT
+2 DATE 4 AUG 1961
+2 PLAC Kapiolani Medical Center for Women and Children, Honolulu, Hawaii, USA
+1 FAMC @F1@
+1 FAMC @F3@
+
+0 @I2@ INDI
+1 NAME Barack /Obama Sr./
+1 SEX M
+1 BIRT
+2 DATE 1934
+2 PLAC Kenya
+1 DEAT
+2 DATE 1982
+2 PLAC Kenya
+1 FAMS @F1@
+
+0 @I3@ INDI
+1 NAME Ann /Dunham/
+1 SEX F
+1 BIRT
+2 DATE 1942
+2 PLAC Wichita, Kansas, USA
+1 DEAT
+2 DATE 1995
+1 FAMS @F1@
+1 FAMS @F3@
+
+0 @I4@ INDI
+1 NAME Lolo /Soetoro/
+1 SEX M
+1 FAMS @F3@
+
+0 @F1@ FAM
+1 HUSB @I2@
+1 WIFE @I3@
+1 MARR
+2 DATE 2 FEB 1961
+2 PLAC Wailuku, Hawaii, USA
+1 DIV
+2 DATE MAR 1964
+1 CHIL @I1@
+
+0 @F3@ FAM
+1 HUSB @I4@
+1 WIFE @I3@
+1 MARR
+2 DATE 15 MAR 1965
+2 PLAC Molokai, Hawaii, USA
+1 CHIL @I1@

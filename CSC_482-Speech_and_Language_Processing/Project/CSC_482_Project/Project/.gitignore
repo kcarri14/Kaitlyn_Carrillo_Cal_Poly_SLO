@@ -1,0 +1,4 @@
+chatbot_relation_model/
+*.safetensors
+wikidata.json
+wikidata.json

@@ -1,0 +1,28 @@
+0 @I1@ INDI
+1 NAME Stefani Joanne Angelina /Germanotta/
+1 SEX F
+1 BIRT
+2 DATE 28 MAR 1986
+2 PLAC Lenox Hill Hospital, Lenox Hill, Manhattan, New York City, New York, USA
+1 FAMC @F1@
+
+0 @I2@ INDI
+1 NAME Joseph /Germanotta/
+1 SEX M
+1 FAMS @F1@
+
+0 @I3@ INDI
+1 NAME Cynthia Louise /Bissett/
+1 SEX F
+1 FAMS @F1@
+
+0 @I4@ INDI
+1 NAME Natali /Germanotta/
+1 SEX F
+1 FAMC @F1@
+
+0 @F1@ FAM
+1 HUSB @I2@
+1 WIFE @I3@
+1 CHIL @I1@
+1 CHIL @I4@

@@ -1,0 +1,14 @@
+{
+  "label2id": {
+    "parent": 0,
+    "child": 1,
+    "spouse": 2,
+    "sibling": 3
+  },
+  "id2label": {
+    "0": "parent",
+    "1": "child",
+    "2": "spouse",
+    "3": "sibling"
+  }
+}

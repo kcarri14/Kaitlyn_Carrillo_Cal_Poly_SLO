@@ -1,0 +1,16 @@
+{
+  "label2id": {
+    "none": 0,
+    "parent": 1,
+    "child": 2,
+    "spouse": 3,
+    "sibling": 4
+  },
+  "id2label": {
+    "0": "none",
+    "1": "parent",
+    "2": "child",
+    "3": "spouse",
+    "4": "sibling"
+  }
+}

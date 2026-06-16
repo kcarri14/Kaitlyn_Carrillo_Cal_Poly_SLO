@@ -1,0 +1,64 @@
+0 @I1@ INDI
+1 NAME George Walker /Bush/
+1 SEX M
+1 BIRT
+2 DATE 6 JUL 1946
+2 PLAC Grace-New Haven Hospital, New Haven, Connecticut, USA
+1 FAMC @F1@
+
+0 @I2@ INDI
+1 NAME George Herbert Walker /Bush/
+1 SEX M
+1 FAMS @F1@
+1 FAMC @F3@
+
+0 @I3@ INDI
+1 NAME Barbara /Pierce/
+1 SEX F
+1 FAMS @F1@
+
+0 @I4@ INDI
+1 NAME Robin /Bush/
+1 SEX F
+1 DEAT
+2 DATE 1953
+1 FAMC @F1@
+
+0 @I5@ INDI
+1 NAME Jeb /Bush/
+1 SEX M
+1 FAMC @F1@
+
+0 @I6@ INDI
+1 NAME Neil /Bush/
+1 SEX M
+1 FAMC @F1@
+
+0 @I7@ INDI
+1 NAME Marvin /Bush/
+1 SEX M
+1 FAMC @F1@
+
+0 @I8@ INDI
+1 NAME Dorothy /Bush/
+1 SEX F
+1 FAMC @F1@
+
+0 @I9@ INDI
+1 NAME Prescott /Bush/
+1 SEX M
+1 FAMS @F3@
+
+0 @F1@ FAM
+1 HUSB @I2@
+1 WIFE @I3@
+1 CHIL @I1@
+1 CHIL @I4@
+1 CHIL @I5@
+1 CHIL @I6@
+1 CHIL @I7@
+1 CHIL @I8@
+
+0 @F3@ FAM
+1 HUSB @I9@
+1 CHIL @I2@

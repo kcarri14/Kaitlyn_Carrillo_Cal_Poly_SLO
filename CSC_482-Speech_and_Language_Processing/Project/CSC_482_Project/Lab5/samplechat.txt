@@ -1,0 +1,45 @@
+
+CASE: basic greeting
+test1] kaitlyn-bot: hello
+kaitlyn-bot] test1: hello back at you!
+test1] kaitlyn-bot: how are you?
+kaitlyn-bot] test1: i'm good
+kaitlyn-bot] test1: how about you?
+test1] kaitlyn-bot: I'm doing great!
+
+
+CASE: bot initiates
+(after 15 seconds)
+kaitlyn-bot] test1: hi
+test1] kaitlyn-bot: hello
+kaitlyn-bot] test1: how are you?
+test1] kaitlyn-bot: i'm fine
+kaitlyn-bot] test1: I'm fine, thanks for asking
+
+
+CASE: weather and population info
+test1] kaitlyn-bot: forget
+kaitlyn-bot] test1: forgetting everything!
+test1] kaitlyn-bot: what's the weather in Tokyo?
+kaitlyn-bot] test1: The temperature in Tokyo is 68.2°F (20.1°C) but feels like 66.4°F. Humidity: 54.0%, chance of rain: 10.0%.
+test1] kaitlyn-bot: what time is it in London?
+kaitlyn-bot] test1: London, United Kingdom has a population of 7556900 and it is currently March 09, 2026 at 06:54 AM GMT.
+
+
+CASE: frustration
+kaitlyn-bot] test1: hey
+(30 seconds pass)
+kaitlyn-bot] test1: I said HELLO
+(30 seconds pass)
+kaitlyn-bot] test1: Screw you!
+* kaitlyn-bot has quit (Quit: kaitlyn-bot)
+
+CASE: basic commands
+test1] kaitlyn-bot: who are you?
+kaitlyn-bot] test1: My name is kaitlyn-bot. I was created by Kaitlyn Carrillo, Ellie Pearson, Harini Baskar, and Siri Gunturi, CSC 482-03
+kaitlyn-bot] test1: I can answer questions about the weather and places! Ask me: "What time is it in Los Angeles?" or "What's the weather in London?"
+test1] kaitlyn-bot: users
+kaitlyn-bot] test1: test1, foaad_bot, kaitlyn-bot, Cole91, Alec, Guest24
+test1] kaitlyn-bot: die
+kaitlyn-bot] test1: I shall!
+* kaitlyn-bot has quit (Quit: kaitlyn-bot)

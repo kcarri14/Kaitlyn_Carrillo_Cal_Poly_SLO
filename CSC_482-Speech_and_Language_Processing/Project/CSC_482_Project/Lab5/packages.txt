@@ -1,0 +1,10 @@
+# Python package dependencies for kaitlyn-bot
+# Install with:  pip install -r packages.txt
+
+
+# Note: zoneinfo is part of the Python 3.9+ standard library (no install needed)
+# Note: socket, sys, time, select, os, random are all Python standard library modules
+
+spacy>=3.7.0
+openmeteo-requests>=1.1.0
+requests>=2.31.0
