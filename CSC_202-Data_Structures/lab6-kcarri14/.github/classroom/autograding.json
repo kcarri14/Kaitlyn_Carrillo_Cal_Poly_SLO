@@ -1,0 +1,44 @@
+{
+  "tests": [
+    {
+      "name": "sort",
+      "setup": "sudo -H pip3 install pytest",
+      "run": "pytest test_sort.py",
+      "input": "",
+      "output": "",
+      "comparison": "exact",
+      "timeout": 10,
+      "points": 1
+    },
+    {
+      "name": "reverse",
+      "setup": "sudo -H pip3 install pytest",
+      "run": "pytest test_reverse.py",
+      "input": "",
+      "output": "",
+      "comparison": "exact",
+      "timeout": 10,
+      "points": 1
+    },
+    {
+      "name": "pushpop",
+      "setup": "sudo -H pip3 install pytest",
+      "run": "pytest test_pushpop.py",
+      "input": "",
+      "output": "",
+      "comparison": "exact",
+      "timeout": 10,
+      "points": 1
+    },
+    {
+      "name": "student",
+      "setup": "sudo -H pip3 install pytest",
+      "run": "pytest test_student.py",
+      "input": "",
+      "output": "",
+      "comparison": "exact",
+      "timeout": 10,
+      "points": 1
+    }
+  ]
+}
