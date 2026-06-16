@@ -1,0 +1,34 @@
+{
+  "tests": [
+    {
+      "name": "Check WInner",
+      "setup": "sudo -H pip3 install pytest",
+      "run": "pytest test_check_winner.py",
+      "input": "",
+      "output": "",
+      "comparison": "exact",
+      "timeout": 10,
+      "points": 1
+    },
+    {
+      "name": "Initalize Board",
+      "setup": "sudo -H pip3 install pytest",
+      "run": "pytest  test_init.py",
+      "input": "",
+      "output": "",
+      "comparison": "exact",
+      "timeout": 10,
+      "points": 1
+    },
+    {
+      "name": "Fill Board",
+      "setup": "sudo -H pip3 install pytest",
+      "run": "pytest test_randomly_fill_board.py",
+      "input": "",
+      "output": "",
+      "comparison": "exact",
+      "timeout": 10,
+      "points": 1
+    }
+  ]
+}
