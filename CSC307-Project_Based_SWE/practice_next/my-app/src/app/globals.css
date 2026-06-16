@@ -1,0 +1,87 @@
+
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background:#607b7d ;
+    --foreground: #f4ebbe;
+  }
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: Arial, Helvetica, sans-serif;
+}
+/* Add a black background color to the top navigation */
+.topnav {
+  background-color: #4C3B4D;
+  overflow: hidden;
+}
+
+/* Style the links inside the navigation bar */
+.topnav a {
+  float: left;
+  color: #f4ebbe;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+/* Change the color of links on hover */
+.topnav a:hover {
+  background-color: #1D263B;
+  color: #f4ebbe;
+}
+
+/* Add a color to the active/current link */
+.topnav a.active {
+  background-color: #CF8E80;
+  color: #f4ebbe;
+}
+.topnav a.split {
+  float: right;
+  background-color: #CF8E80;
+  color: #f4ebbe;
+}
+
+.btn-group button {
+  background-color: #CF8E80; 
+  border: none;
+  color: #f4ebbe;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 16px;
+}
+
+
+
+.btn-group button:not(:last-child) {
+  border-right: none; /* Prevent double borders */
+}
+
+/* Clear floats (clearfix hack) */
+.btn-group:after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+/* Add a background color on hover */
+.btn-group button:hover {
+  background-color: #7D1D3F;
+}
+
+.custom-input::placeholder {
+  color: #f4ebbe;
+  opacity: 1; /* Ensures full color visibility */
+}
