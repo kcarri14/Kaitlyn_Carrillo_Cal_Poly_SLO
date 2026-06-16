@@ -1,0 +1,429 @@
+/**
+ *  Used to assist in efficiently grading your assignment.
+ *  The results of running this file are *not* indicative of
+ *  the final grade you will be assigned for this assignment.
+ *
+ * @author Vanessa Rivera
+ */
+
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+import processing.core.PImage;
+
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.List;
+import java.util.Optional;
+import java.util.Random;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import static org.junit.jupiter.api.Assertions.fail;
+
+public class AutoGradeTests {
+
+    private static Stream<String> provideTestClassExistsArguments() {
+        return Stream.of(
+                "Actor",
+                "Gardener",
+                "Nymph",
+                "Rose",
+                "WaterActor",
+                "Well"
+        );
+    }
+
+    private static Stream<Arguments> provideTestClassExtendsClassArguments() {
+        return Stream.of(
+                Arguments.of("Gardener", "Actor"),
+                Arguments.of("Gardener", "WaterActor"),
+                Arguments.of("Nymph", "Actor"),
+                Arguments.of("Rose", "Actor"),
+                Arguments.of("Rose", "WaterActor"),
+                Arguments.of("Well", "Actor")
+        );
+    }
+
+    private static Stream<Arguments> provideTestConstructorExistsArguments() {
+        return Stream.of(
+                Arguments.of(
+                        "Actor",
+                        new String[] {"public"},
+                        new Class<?>[] {Point.class, List.class, double.class}
+                ),
+                Arguments.of(
+                        "Gardener",
+                        new String[] {"public"},
+                        new Class<?>[] {Point.class, List.class, double.class}
+                ),
+                Arguments.of(
+                        "Nymph",
+                        new String[] {"public"},
+                        new Class<?>[] {Point.class, List.class, double.class}
+                ),
+                Arguments.of(
+                        "Rose",
+                        new String[] {"public"},
+                        new Class<?>[] {Point.class, List.class, double.class}
+                ),
+                Arguments.of(
+                        "WaterActor",
+                        new String[] {"public"},
+                        new Class<?>[] {Point.class, List.class, double.class, int.class}
+                ),
+                Arguments.of(
+                        "Well",
+                        new String[] {"public"},
+                        new Class<?>[] {Point.class, List.class, double.class}
+                )
+        );
+    }
+
+    private static Stream<Arguments> provideTestFieldExistsArguments() {
+        return Stream.of(
+                Arguments.of(
+                        "Actor",
+                        "ACTOR_PROPERTY_KEY_INDEX",
+                        int.class,
+                        new String[] {"public", "final", "static"},
+                        new String[] {}
+                ),
+                Arguments.of(
+                        "Actor",
+                        "ACTOR_PROPERTY_POSITION_X_INDEX",
+                        int.class,
+                        new String[] {"public", "final", "static"},
+                        new String[] {}
+                ),
+                Arguments.of(
+                        "Actor",
+                        "ACTOR_PROPERTY_UPDATE_PERIOD_INDEX",
+                        int.class,
+                        new String[] {"public", "final", "static"},
+                        new String[] {}
+                ),
+                Arguments.of(
+                        "Actor",
+                        "position",
+                        Point.class,
+                        new String[] {"private"},
+                        new String[] {}
+                ),
+                Arguments.of(
+                        "Actor",
+                        "images",
+                        List.class,
+                        new String[] {"private"},
+                        new String[] {"final"}
+                ),
+                Arguments.of(
+                        "Actor",
+                        "imageIndex",
+                        int.class,
+                        new String[] {"private"},
+                        new String[] {}
+                ),
+                Arguments.of(
+                        "Actor",
+                        "updatePeriod",
+                        double.class,
+                        new String[] {"private"},
+                        new String[] {"final"}
+                ),
+                Arguments.of(
+                        "Gardener",
+                        "GARDENER_KEY",
+                        String.class,
+                        new String[] {"public", "final", "static"},
+                        new String[] {}
+                ),
+                Arguments.of(
+                        "Gardener",
+                        "GARDENER_WATER_LIMIT",
+                        int.class,
+                        new String[] {"public", "final", "static"},
+                        new String[] {}
+                ),
+                Arguments.of(
+                        "Nymph",
+                        "NYMPH_KEY",
+                        String.class,
+                        new String[] {"public", "final", "static"},
+                        new String[] {}
+                ),
+                Arguments.of(
+                        "Rose",
+                        "ROSE_KEY",
+                        String.class,
+                        new String[] {"public", "final", "static"},
+                        new String[] {}
+                ),
+                Arguments.of(
+                        "Rose",
+                        "ROSE_TO_NYMPH_UPDATE_PERIOD",
+                        double.class,
+                        new String[] {"public", "final", "static"},
+                        new String[] {}
+                ),
+                Arguments.of(
+                        "Rose",
+                        "ROSE_WATER_LIMIT",
+                        int.class,
+                        new String[] {"public", "final", "static"},
+                        new String[] {}
+                ),
+                Arguments.of(
+                        "WaterActor",
+                        "water",
+                        int.class,
+                        new String[] {"private"},
+                        new String[] {}
+                ),
+                Arguments.of(
+                        "Well",
+                        "WELL_KEY",
+                        String.class,
+                        new String[] {"public", "final", "static"},
+                        new String[] {}
+                )
+        );
+    }
+
+    private static Stream<Arguments> provideTestNonStaticFieldCountArguments() {
+        return Stream.of(
+                Arguments.of("Actor", 4),
+                Arguments.of("Gardener", 0),
+                Arguments.of("Nymph", 0),
+                Arguments.of("Rose", 0),
+                Arguments.of("WaterActor", 1),
+                Arguments.of("Well", 0)
+        );
+    }
+
+    private static Stream<Arguments> provideTestMethodExistsArguments() {
+        return Stream.of(
+                Arguments.of(
+                        "Actor",
+                        "findByKind",
+                        new String[] {"public", "static"},
+                        Optional.class,
+                        new Class<?>[] {World.class, Class.class}
+                ),
+                Arguments.of(
+                        "Actor",
+                        "scheduleUpdate",
+                        new String[] {"public"},
+                        void.class,
+                        new Class<?>[] {World.class, ImageLibrary.class, EventScheduler.class}
+                ),
+                Arguments.of(
+                        "Actor",
+                        "executeUpdate",
+                        new String[] {"public", "abstract"},
+                        void.class,
+                        new Class<?>[] {World.class, ImageLibrary.class, EventScheduler.class}
+                ),
+                Arguments.of(
+                        "Actor",
+                        "getImageIndex",
+                        new String[] {"public"},
+                        int.class,
+                        new Class<?>[] {}
+                ),
+                Arguments.of(
+                        "Actor",
+                        "setImageIndex",
+                        new String[] {"public"},
+                        void.class,
+                        new Class<?>[] {int.class}
+                ),
+                Arguments.of(
+                        "Actor",
+                        "getImages",
+                        new String[] {"public"},
+                        List.class,
+                        new Class<?>[] {}
+                ),
+                Arguments.of(
+                        "Actor",
+                        "getPosition",
+                        new String[] {"public"},
+                        Point.class,
+                        new Class<?>[] {}
+                ),
+                Arguments.of(
+                        "Actor",
+                        "setPosition",
+                        new String[] {"public"},
+                        void.class,
+                        new Class<?>[] {Point.class}
+                ),
+                Arguments.of(
+                        "Gardener",
+                        "executeUpdate",
+                        new String[]{"public"},
+                        void.class,
+                        new Class<?>[]{World.class, ImageLibrary.class, EventScheduler.class}
+                ),
+                Arguments.of(
+                        "Gardener",
+                        "reposition",
+                        new String[]{"public"},
+                        void.class,
+                        new Class<?>[]{World.class, EventScheduler.class}
+                ),
+                Arguments.of(
+                        "Nymph",
+                        "executeUpdate",
+                        new String[] {"public"},
+                        void.class,
+                        new Class<?>[] {World.class, ImageLibrary.class, EventScheduler.class}
+                ),
+                Arguments.of(
+                        "Nymph",
+                        "reposition",
+                        new String[] {"public"},
+                        void.class,
+                        new Class<?>[] {World.class, EventScheduler.class}
+                ),
+                Arguments.of(
+                        "Rose",
+                        "executeUpdate",
+                        new String[] {"public"},
+                        void.class,
+                        new Class<?>[] {World.class, ImageLibrary.class, EventScheduler.class}
+                ),
+                Arguments.of(
+                        "WaterActor",
+                        "getWater",
+                        new String[] {"public"},
+                        int.class,
+                        new Class<?>[] {}
+                ),
+                Arguments.of(
+                        "WaterActor",
+                        "setWater",
+                        new String[] {"public"},
+                        void.class,
+                        new Class<?>[] {int.class}
+                ),
+                Arguments.of(
+                        "Well",
+                        "executeUpdate",
+                        new String[] {"public"},
+                        void.class,
+                        new Class<?>[] {World.class, ImageLibrary.class, EventScheduler.class}
+                )
+        );
+    }
+
+    private static Stream<Arguments> provideTestParserArguments() {
+        return Stream.of(
+                Arguments.of(
+                        "Gardener",
+                        "gardener 0 0 1.0"
+                ),
+                Arguments.of(
+                        "Nymph",
+                        "nymph 0 0 1.0"
+                ),
+                Arguments.of(
+                        "Rose",
+                        "rose 0 0 1.0"
+                ),
+                Arguments.of(
+                        "Well",
+                        "well 0 0 1.0"
+                )
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideTestClassExistsArguments")
+    public void testClassExists(String className) {
+        AutoGradeUtil.ensureClass(className);
+    }
+    @ParameterizedTest
+    @MethodSource("provideTestClassExtendsClassArguments")
+    public void testClassExtendsClass(String subClassName, String superClassName) {
+        AutoGradeUtil.ensureClassExtendsClass(subClassName, superClassName);
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideTestConstructorExistsArguments")
+    public void testConstructorExists(
+            String className,
+            String[] expectedModifiers,
+            Class<?>[] expectedParameterTypes
+    ) {
+        Class<?> clazz = AutoGradeUtil.ensureClass(className);
+        Constructor<?> constructor = AutoGradeUtil.ensureConstructor(clazz, expectedParameterTypes);
+        AutoGradeUtil.ensureConstructorModifiers(constructor, expectedModifiers);
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideTestFieldExistsArguments")
+    public void testFieldExists(
+            String className,
+            String fieldName,
+            Class<?> expectedType,
+            String[] expectedModifiers,
+            String[] optionalModifiers
+    ) {
+        Class<?> clazz = AutoGradeUtil.ensureClass(className);
+        Field field = AutoGradeUtil.ensureField(clazz, fieldName);
+        AutoGradeUtil.ensureFieldType(field, expectedType);
+        AutoGradeUtil.ensureFieldModifiers(field, expectedModifiers, optionalModifiers);
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideTestNonStaticFieldCountArguments")
+    public void testNonStaticFieldCount(
+            String className,
+            int expectedCount
+    ) {
+        Class<?> clazz = AutoGradeUtil.ensureClass(className);
+        AutoGradeUtil.ensureNonStaticFieldCount(clazz, expectedCount);
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideTestMethodExistsArguments")
+    public void testMethodExists(
+            String className,
+            String methodName,
+            String[] expectedModifiers,
+            Class<?> expectedReturnType,
+            Class<?>[] expectedParameterTypes
+    ) {
+        Class<?> clazz = AutoGradeUtil.ensureClass(className);
+        Method method = AutoGradeUtil.ensureMethod(clazz, methodName, expectedParameterTypes);
+        AutoGradeUtil.ensureMethodModifiers(method, expectedModifiers);
+        AutoGradeUtil.ensureMethodReturnType(method, expectedReturnType);
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideTestParserArguments")
+    public void testParser(
+            String className,
+            String string
+    ) {
+        Class<?> clazz = AutoGradeUtil.ensureClass(className);
+
+        ImageLibrary imageLibrary = new ImageLibrary(ImageLibrary.createImageColored(32, 32, 0x808080));
+
+        Actor actor = WorldParser.parseActor(string, imageLibrary);
+
+        Assertions.assertInstanceOf(
+                clazz,
+                actor,
+                String.format("WorldParser.parseActor does not instantiate class '%s'", clazz.getName())
+        );
+    }
+}
