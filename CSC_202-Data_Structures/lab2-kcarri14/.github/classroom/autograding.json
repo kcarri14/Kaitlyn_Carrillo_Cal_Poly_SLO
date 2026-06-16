@@ -1,0 +1,44 @@
+{
+  "tests": [
+    {
+      "name": "Test 1",
+      "setup": "sudo -H pip3 install pytest",
+      "run": "pytest test_max.py",
+      "input": "",
+      "output": "",
+      "comparison": "exact",
+      "timeout": 10,
+      "points": 1
+    },
+    {
+      "name": "Test 2",
+      "setup": "sudo -H pip3 install pytest",
+      "run": "pytest test_reverse.py",
+      "input": "",
+      "output": "",
+      "comparison": "exact",
+      "timeout": 10,
+      "points": 1
+    },
+    {
+      "name": "Test 3",
+      "setup": "sudo -H pip3 install pytest",
+      "run": "pytest test_search.py",
+      "input": "",
+      "output": "",
+      "comparison": "exact",
+      "timeout": 10,
+      "points": 1
+    },
+    {
+      "name": "Test 4",
+      "setup": "sudo -H pip3 install pytest",
+      "run": "pytest test_student.py",
+      "input": "",
+      "output": "",
+      "comparison": "exact",
+      "timeout": 10,
+      "points": 1
+    }
+  ]
+}
