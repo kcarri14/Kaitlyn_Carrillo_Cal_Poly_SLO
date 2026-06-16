@@ -1,0 +1,10 @@
+---
+triple:          'arm64-apple-darwin'
+binary-path:     '/Users/kaitlyncarrillo/CSC357-Labs/357-lab-1-kcarri14/layout_1'
+relocations:
+  - { offset: 0x26, size: 0x8, addend: 0x0, symName: _start, symObjAddr: 0x0, symBinAddr: 0x100003F30, symSize: 0x4 }
+  - { offset: 0x33, size: 0x8, addend: 0x0, symName: _start, symObjAddr: 0x0, symBinAddr: 0x100003F30, symSize: 0x4 }
+  - { offset: 0x48, size: 0x8, addend: 0x0, symName: _pause, symObjAddr: 0x4, symBinAddr: 0x100003F34, symSize: 0x4 }
+  - { offset: 0x5D, size: 0x8, addend: 0x0, symName: _function_one, symObjAddr: 0x8, symBinAddr: 0x100003F38, symSize: 0x28 }
+  - { offset: 0x8F, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x30, symBinAddr: 0x100003F60, symSize: 0x40 }
+...
