@@ -1,0 +1,82 @@
+/**
+ *  Used to assist in efficiently grading your assignment.
+ *  The results of running this file are *not* indicative of
+ *  the final grade you will be assigned for this assignment.
+ *
+ * @author Vanessa Rivera
+ */
+
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import static org.junit.jupiter.api.Assertions.fail;
+
+public class AutoGradeUtil {
+
+    static Class<?> ensureClass(String className) {
+        Class<?> clazz = null;
+        try {
+            clazz = Class.forName(className);
+        } catch (ClassNotFoundException e) {
+            fail(String.format("Class '%s' not found", className));
+        }
+        return clazz;
+    }
+
+    static Method ensureMethod(Class<?> clazz, String methodName, Class<?>[] expecterParameterTypes) {
+        Method method = null;
+        try {
+            method = clazz.getDeclaredMethod(methodName, expecterParameterTypes);
+        } catch (NoSuchMethodException e) {
+            String typeString = String.join(", ", Stream.of(expecterParameterTypes).map(Class::getSimpleName).collect(Collectors.toList()));
+            fail(String.format("Method '%s.%s(%s)' not found", clazz.getName(), methodName, typeString));
+        }
+        return method;
+    }
+
+    static void ensureMethodModifiers(Method method, String[] expectedModifiers) {
+        // Obtain modifiers as a set of strings
+        Set<String> actualModifiers = new HashSet<>(Set.of(Modifier.toString(method.getModifiers()).split("\\s+")));
+
+        // Ensure modifiers match
+        for (String modifier : expectedModifiers) {
+            if (!actualModifiers.contains(modifier)) {
+                fail(String.format(
+                        "Method '%s.%s' is missing '%s' modifier.",
+                        method.getDeclaringClass().getName(),
+                        method.getName(),
+                        modifier
+                ));
+            }
+            actualModifiers.remove(modifier);
+        }
+
+        // Ensure no extraneous modifiers
+        if (!actualModifiers.isEmpty()) {
+            fail(String.format(
+                    "Method '%s.%s' contains unexpected modifiers: %s",
+                    method.getDeclaringClass().getName(),
+                    method.getName(),
+                    List.of(actualModifiers)
+            ));
+        }
+    }
+
+    static void ensureMethodReturnType(Method method, Class<?> returntype) {
+        if (method.getReturnType() != returntype) {
+            fail(String.format(
+                    "Method '%s.%s' expected return type %s parameters, got '%s'.",
+                    method.getDeclaringClass().getName(),
+                    method.getName(),
+                    returntype.getName(),
+                    method.getReturnType().getName()
+            ));
+        }
+    }
+
+}

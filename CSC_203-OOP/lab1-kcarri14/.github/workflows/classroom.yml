@@ -1,0 +1,32 @@
+name: Autograding Tests
+'on':
+- push
+- workflow_dispatch
+- repository_dispatch
+permissions:
+  checks: write
+  actions: read
+  contents: read
+jobs:
+  run-autograding-tests:
+    runs-on: ubuntu-latest
+    if: github.actor != 'github-classroom[bot]'
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Lab1 Autograde Test
+      id: lab1-autograde-test
+      uses: education/autograding-command-grader@v1
+      with:
+        test-name: Lab1 Autograde Test
+        setup-command: for file in __autograde__/*; do cp "$file" "src/$(basename
+          "$file").java"; done; javac -cp 'lib/*:src' src/* -d out;
+        command: java -jar 'lib/junit-platform-console-standalone-1.9.2.jar' --classpath
+          'out/' --select-class AutoGradeTests
+        timeout: 1
+    - name: Autograding Reporter
+      uses: education/autograding-grading-reporter@v1
+      env:
+        LAB1-AUTOGRADE-TEST_RESULTS: "${{steps.lab1-autograde-test.outputs.result}}"
+      with:
+        runners: lab1-autograde-test
