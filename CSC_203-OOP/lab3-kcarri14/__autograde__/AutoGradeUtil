@@ -1,0 +1,202 @@
+/**
+ *  Used to assist in efficiently grading your assignment.
+ *  The results of running this file are *not* indicative of
+ *  the final grade you will be assigned for this assignment.
+ *
+ * @author Vanessa Rivera
+ */
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import static org.junit.jupiter.api.Assertions.fail;
+
+public class AutoGradeUtil {
+
+    static Class<?> ensureClass(String className) {
+        Class<?> clazz = null;
+        try {
+            clazz = Class.forName(className);
+        } catch (ClassNotFoundException e) {
+            fail(String.format("Class '%s' not found", className));
+        }
+        return clazz;
+    }
+
+    static Class<?> ensureInterface(String className) {
+        Class<?> clazz = null;
+        try {
+            clazz = Class.forName(className);
+            if (!clazz.isInterface()) {
+                fail(String.format("Class '%s' is not an interface", className));
+            }
+        } catch (ClassNotFoundException e) {
+            fail(String.format("Interface '%s' not found", className));
+        }
+        return clazz;
+    }
+
+    static void ensureClassImplementsInterface(String className, String interfaceName) {
+        Class<?> clazz = ensureClass(className);
+        Class<?> interfaceClass = ensureInterface(interfaceName);
+
+        if (!interfaceClass.isAssignableFrom(clazz)) {
+            fail(String.format("Class '%s' does not implement interface '%s'", className, interfaceName));
+        }
+    }
+
+    static Constructor<?> ensureConstructor(Class<?> clazz, Class<?>[] expectedParameterTypes) {
+        Constructor<?> constructor = null;
+        try {
+            constructor = clazz.getDeclaredConstructor(expectedParameterTypes);
+        } catch (NoSuchMethodException e) {
+            String typeString = String.join(", ", Stream.of(expectedParameterTypes).map(Class::getSimpleName).collect(Collectors.toList()));
+            fail(String.format("Constructor '%s(%s)' not found", clazz.getName(), typeString));
+        }
+        return constructor;
+    }
+
+    static void ensureConstructorModifiers(Constructor<?> constructor, String[] expectedModifiers) {
+        // Obtain modifiers as a set of strings
+        Set<String> actualModifiers = new HashSet<>(Set.of(Modifier.toString(constructor.getModifiers()).split("\\s+")));
+
+        // Ensure modifiers match
+        for (String modifier : expectedModifiers) {
+            if (!actualModifiers.contains(modifier)) {
+                fail(String.format(
+                        "Constructor '%s.%s' is missing '%s' modifier.",
+                        constructor.getDeclaringClass().getName(),
+                        constructor.getName(),
+                        modifier
+                ));
+            }
+            actualModifiers.remove(modifier);
+        }
+
+        // Ensure no extraneous modifiers
+        if (!actualModifiers.isEmpty()) {
+            fail(String.format(
+                    "Constructor '%s.%s' contains unexpected modifiers: %s",
+                    constructor.getDeclaringClass().getName(),
+                    constructor.getName(),
+                    List.of(actualModifiers)
+            ));
+        }
+    }
+
+    static Method ensureMethod(Class<?> clazz, String methodName, Class<?>[] expectedParameterTypes) {
+        Method method = null;
+        try {
+            method = clazz.getDeclaredMethod(methodName, expectedParameterTypes);
+        } catch (NoSuchMethodException e) {
+            String typeString = String.join(", ", Stream.of(expectedParameterTypes).map(Class::getSimpleName).collect(Collectors.toList()));
+            fail(String.format("Method '%s.%s(%s)' not found", clazz.getName(), methodName, typeString));
+        }
+        return method;
+    }
+
+    static void ensureMethodModifiers(Method method, String[] expectedModifiers) {
+        // Obtain modifiers as a set of strings
+        Set<String> actualModifiers = new HashSet<>(Set.of(Modifier.toString(method.getModifiers()).split("\\s+")));
+
+        // Ensure modifiers match
+        for (String modifier : expectedModifiers) {
+            if (!actualModifiers.contains(modifier)) {
+                fail(String.format(
+                        "Method '%s.%s' is missing '%s' modifier.",
+                        method.getDeclaringClass().getName(),
+                        method.getName(),
+                        modifier
+                ));
+            }
+            actualModifiers.remove(modifier);
+        }
+
+        // Ensure no extraneous modifiers
+        if (!actualModifiers.isEmpty()) {
+            fail(String.format(
+                    "Method '%s.%s' contains unexpected modifiers: %s",
+                    method.getDeclaringClass().getName(),
+                    method.getName(),
+                    List.of(actualModifiers)
+            ));
+        }
+    }
+
+    static void ensureMethodReturnType(Method method, Class<?> returnType) {
+        if (method.getReturnType() != returnType) {
+            fail(String.format(
+                    "Method '%s.%s' expected return type %s parameters, got '%s'.",
+                    method.getDeclaringClass().getName(),
+                    method.getName(),
+                    returnType.getName(),
+                    method.getReturnType().getName()
+            ));
+        }
+    }
+
+    static Field ensureField(Class<?> clazz, String fieldName) {
+        Field field = null;
+        try {
+            field = clazz.getDeclaredField(fieldName);
+        } catch (NoSuchFieldException e) {
+            fail(String.format("Field '%s.%s' not found", clazz.getName(), fieldName));
+        }
+        return field;
+    }
+
+    static void ensureFieldType(Field field, Class<?> type) {
+        Class<?> actualType = field.getType();
+
+        if (!actualType.equals(type)) {
+            fail(String.format(
+                    "Field '%s.%s' is of type '%s', expected '%s'.",
+                    field.getDeclaringClass().getName(),
+                    field.getName(),
+                    actualType.getName(),
+                    type.getName()
+            ));
+        }
+    }
+
+    static void ensureFieldModifiers(Field field, String[] expectedModifiers, String[] optionalModifiers) {
+        // Obtain modifiers as a set of strings
+        Set<String> actualModifiers = new HashSet<>(Set.of(Modifier.toString(field.getModifiers()).split("\\s+")));
+
+        // Ensure modifiers match
+        for (String modifier : expectedModifiers) {
+            if (!actualModifiers.contains(modifier)) {
+                fail(String.format(
+                        "Field '%s.%s' is missing '%s' modifier.",
+                        field.getDeclaringClass().getName(),
+                        field.getName(),
+                        modifier
+                ));
+            }
+            actualModifiers.remove(modifier);
+        }
+
+        // Ignore optional modifiers
+        for (String modifier : optionalModifiers) {
+            actualModifiers.remove(modifier);
+        }
+
+        // Ensure no extraneous modifiers
+        if (!actualModifiers.isEmpty()) {
+            fail(String.format(
+                    "Method '%s.%s' contains unexpected modifiers: %s",
+                    field.getDeclaringClass().getName(),
+                    field.getName(),
+                    List.of(actualModifiers)
+            ));
+        }
+    }
+
+}
