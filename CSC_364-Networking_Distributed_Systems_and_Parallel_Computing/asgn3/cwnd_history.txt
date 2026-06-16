@@ -1,0 +1,2762 @@
+packet sent: 0, during cwnd:1
+
+number_acks_received = 1
+ack_received: 1024, (1, 2)
+
+packet sent: 1024, during cwnd:2
+
+packet sent: 2048, during cwnd:2
+
+number_acks_received = 2
+ack_received: 3072, (2, 4)
+
+packet sent: 3072, during cwnd:4
+
+packet sent: 4096, during cwnd:4
+
+packet sent: 5120, during cwnd:4
+
+packet sent: 6144, during cwnd:4
+
+number_acks_received = 4
+ack_received: 7168, (3, 8)
+
+packet sent: 7168, during cwnd:8
+
+packet sent: 8192, during cwnd:8
+
+packet sent: 9216, during cwnd:8
+
+packet sent: 10240, during cwnd:8
+
+packet sent: 11264, during cwnd:8
+
+packet sent: 12288, during cwnd:8
+
+packet sent: 13312, during cwnd:8
+
+packet sent: 14336, during cwnd:8
+
+number_acks_received = 8
+ack_received: 15360, (4, 16)
+
+packet sent: 15360, during cwnd:16
+
+packet sent: 16384, during cwnd:16
+
+packet sent: 17408, during cwnd:16
+
+packet sent: 18432, during cwnd:16
+
+packet sent: 19456, during cwnd:16
+
+packet sent: 20480, during cwnd:16
+
+packet sent: 21504, during cwnd:16
+
+packet sent: 22528, during cwnd:16
+
+packet sent: 23552, during cwnd:16
+
+packet sent: 24576, during cwnd:16
+
+packet sent: 25600, during cwnd:16
+
+packet sent: 26624, during cwnd:16
+
+packet sent: 27648, during cwnd:16
+
+packet sent: 28672, during cwnd:16
+
+packet sent: 29696, during cwnd:16
+
+packet sent: 30720, during cwnd:16
+
+number_acks_received = 16
+ack_received: 31744, (5, 17)
+
+packet sent: 31744, during cwnd:17
+
+packet sent: 32768, during cwnd:17
+
+packet sent: 33792, during cwnd:17
+
+packet sent: 34816, during cwnd:17
+
+packet sent: 35840, during cwnd:17
+
+packet sent: 36864, during cwnd:17
+
+packet sent: 37888, during cwnd:17
+
+packet sent: 38912, during cwnd:17
+
+packet sent: 39936, during cwnd:17
+
+packet sent: 40960, during cwnd:17
+
+packet sent: 41984, during cwnd:17
+
+packet sent: 43008, during cwnd:17
+
+packet sent: 44032, during cwnd:17
+
+packet sent: 45056, during cwnd:17
+
+packet sent: 46080, during cwnd:17
+
+packet sent: 47104, during cwnd:17
+
+packet sent: 48128, during cwnd:17
+
+number_acks_received = 7
+ack_received: 38912, (6, 18)
+
+packet sent: 49152, during cwnd:18
+
+packet sent: 50176, during cwnd:18
+
+packet sent: 51200, during cwnd:18
+
+packet sent: 52224, during cwnd:18
+
+packet sent: 53248, during cwnd:18
+
+packet sent: 54272, during cwnd:18
+
+packet sent: 55296, during cwnd:18
+
+packet sent: 56320, during cwnd:18
+
+number_acks_received = 1
+dup: (1, 38912)
+
+packet sent: 38912, during cwnd:18
+
+packet sent: 39936, during cwnd:18
+
+packet sent: 40960, during cwnd:18
+
+packet sent: 41984, during cwnd:18
+
+packet sent: 43008, during cwnd:18
+
+packet sent: 44032, during cwnd:18
+
+packet sent: 45056, during cwnd:18
+
+packet sent: 46080, during cwnd:18
+
+packet sent: 47104, during cwnd:18
+
+packet sent: 48128, during cwnd:18
+
+packet sent: 49152, during cwnd:18
+
+packet sent: 50176, during cwnd:18
+
+packet sent: 51200, during cwnd:18
+
+packet sent: 52224, during cwnd:18
+
+packet sent: 53248, during cwnd:18
+
+packet sent: 54272, during cwnd:18
+
+packet sent: 55296, during cwnd:18
+
+packet sent: 56320, during cwnd:18
+
+number_acks_received = 18
+ack_received: 57344, (7, 19)
+
+packet sent: 57344, during cwnd:19
+
+packet sent: 58368, during cwnd:19
+
+packet sent: 59392, during cwnd:19
+
+packet sent: 60416, during cwnd:19
+
+packet sent: 61440, during cwnd:19
+
+packet sent: 62464, during cwnd:19
+
+packet sent: 63488, during cwnd:19
+
+packet sent: 64512, during cwnd:19
+
+packet sent: 65536, during cwnd:19
+
+packet sent: 66560, during cwnd:19
+
+packet sent: 67584, during cwnd:19
+
+packet sent: 68608, during cwnd:19
+
+packet sent: 69632, during cwnd:19
+
+packet sent: 70656, during cwnd:19
+
+packet sent: 71680, during cwnd:19
+
+packet sent: 72704, during cwnd:19
+
+packet sent: 73728, during cwnd:19
+
+packet sent: 74752, during cwnd:19
+
+packet sent: 75776, during cwnd:19
+
+number_acks_received = 19
+ack_received: 76800, (8, 20)
+
+packet sent: 76800, during cwnd:20
+
+packet sent: 77824, during cwnd:20
+
+packet sent: 78848, during cwnd:20
+
+packet sent: 79872, during cwnd:20
+
+packet sent: 80896, during cwnd:20
+
+packet sent: 81920, during cwnd:20
+
+packet sent: 82944, during cwnd:20
+
+packet sent: 83968, during cwnd:20
+
+packet sent: 84992, during cwnd:20
+
+packet sent: 86016, during cwnd:20
+
+packet sent: 87040, during cwnd:20
+
+packet sent: 88064, during cwnd:20
+
+packet sent: 89088, during cwnd:20
+
+packet sent: 90112, during cwnd:20
+
+packet sent: 91136, during cwnd:20
+
+packet sent: 92160, during cwnd:20
+
+packet sent: 93184, during cwnd:20
+
+packet sent: 94208, during cwnd:20
+
+packet sent: 95232, during cwnd:20
+
+packet sent: 96256, during cwnd:20
+
+number_acks_received = 20
+ack_received: 97280, (9, 21)
+
+packet sent: 97280, during cwnd:21
+
+packet sent: 98304, during cwnd:21
+
+packet sent: 99328, during cwnd:21
+
+packet sent: 100352, during cwnd:21
+
+packet sent: 101376, during cwnd:21
+
+packet sent: 102400, during cwnd:21
+
+packet sent: 103424, during cwnd:21
+
+packet sent: 104448, during cwnd:21
+
+packet sent: 105472, during cwnd:21
+
+packet sent: 106496, during cwnd:21
+
+packet sent: 107520, during cwnd:21
+
+packet sent: 108544, during cwnd:21
+
+packet sent: 109568, during cwnd:21
+
+packet sent: 110592, during cwnd:21
+
+packet sent: 111616, during cwnd:21
+
+packet sent: 112640, during cwnd:21
+
+packet sent: 113664, during cwnd:21
+
+packet sent: 114688, during cwnd:21
+
+packet sent: 115712, during cwnd:21
+
+packet sent: 116736, during cwnd:21
+
+packet sent: 117760, during cwnd:21
+
+number_acks_received = 1
+dup: (1, 97280)
+
+packet sent: 97280, during cwnd:21
+
+packet sent: 98304, during cwnd:21
+
+packet sent: 99328, during cwnd:21
+
+packet sent: 100352, during cwnd:21
+
+packet sent: 101376, during cwnd:21
+
+packet sent: 102400, during cwnd:21
+
+packet sent: 103424, during cwnd:21
+
+packet sent: 104448, during cwnd:21
+
+packet sent: 105472, during cwnd:21
+
+packet sent: 106496, during cwnd:21
+
+packet sent: 107520, during cwnd:21
+
+packet sent: 108544, during cwnd:21
+
+packet sent: 109568, during cwnd:21
+
+packet sent: 110592, during cwnd:21
+
+packet sent: 111616, during cwnd:21
+
+packet sent: 112640, during cwnd:21
+
+packet sent: 113664, during cwnd:21
+
+packet sent: 114688, during cwnd:21
+
+packet sent: 115712, during cwnd:21
+
+packet sent: 116736, during cwnd:21
+
+packet sent: 117760, during cwnd:21
+
+number_acks_received = 21
+ack_received: 118784, (10, 22)
+
+packet sent: 118784, during cwnd:22
+
+packet sent: 119808, during cwnd:22
+
+packet sent: 120832, during cwnd:22
+
+packet sent: 121856, during cwnd:22
+
+packet sent: 122880, during cwnd:22
+
+packet sent: 123904, during cwnd:22
+
+packet sent: 124928, during cwnd:22
+
+packet sent: 125952, during cwnd:22
+
+packet sent: 126976, during cwnd:22
+
+packet sent: 128000, during cwnd:22
+
+packet sent: 129024, during cwnd:22
+
+packet sent: 130048, during cwnd:22
+
+packet sent: 131072, during cwnd:22
+
+packet sent: 132096, during cwnd:22
+
+packet sent: 133120, during cwnd:22
+
+packet sent: 134144, during cwnd:22
+
+packet sent: 135168, during cwnd:22
+
+packet sent: 136192, during cwnd:22
+
+packet sent: 137216, during cwnd:22
+
+packet sent: 138240, during cwnd:22
+
+packet sent: 139264, during cwnd:22
+
+packet sent: 140288, during cwnd:22
+
+number_acks_received = 22
+ack_received: 141312, (11, 23)
+
+packet sent: 141312, during cwnd:23
+
+packet sent: 142336, during cwnd:23
+
+packet sent: 143360, during cwnd:23
+
+packet sent: 144384, during cwnd:23
+
+packet sent: 145408, during cwnd:23
+
+packet sent: 146432, during cwnd:23
+
+packet sent: 147456, during cwnd:23
+
+packet sent: 148480, during cwnd:23
+
+packet sent: 149504, during cwnd:23
+
+packet sent: 150528, during cwnd:23
+
+packet sent: 151552, during cwnd:23
+
+packet sent: 152576, during cwnd:23
+
+packet sent: 153600, during cwnd:23
+
+packet sent: 154624, during cwnd:23
+
+packet sent: 155648, during cwnd:23
+
+packet sent: 156672, during cwnd:23
+
+packet sent: 157696, during cwnd:23
+
+packet sent: 158720, during cwnd:23
+
+packet sent: 159744, during cwnd:23
+
+packet sent: 160768, during cwnd:23
+
+packet sent: 161792, during cwnd:23
+
+packet sent: 162816, during cwnd:23
+
+packet sent: 163840, during cwnd:23
+
+number_acks_received = 23
+ack_received: 164864, (12, 24)
+
+packet sent: 164864, during cwnd:24
+
+packet sent: 165888, during cwnd:24
+
+packet sent: 166912, during cwnd:24
+
+packet sent: 167936, during cwnd:24
+
+packet sent: 168960, during cwnd:24
+
+packet sent: 169984, during cwnd:24
+
+packet sent: 171008, during cwnd:24
+
+packet sent: 172032, during cwnd:24
+
+packet sent: 173056, during cwnd:24
+
+packet sent: 174080, during cwnd:24
+
+packet sent: 175104, during cwnd:24
+
+packet sent: 176128, during cwnd:24
+
+packet sent: 177152, during cwnd:24
+
+packet sent: 178176, during cwnd:24
+
+packet sent: 179200, during cwnd:24
+
+packet sent: 180224, during cwnd:24
+
+packet sent: 181248, during cwnd:24
+
+packet sent: 182272, during cwnd:24
+
+packet sent: 183296, during cwnd:24
+
+packet sent: 184320, during cwnd:24
+
+packet sent: 185344, during cwnd:24
+
+packet sent: 186368, during cwnd:24
+
+packet sent: 187392, during cwnd:24
+
+packet sent: 188416, during cwnd:24
+
+number_acks_received = 24
+ack_received: 189440, (13, 25)
+
+packet sent: 189440, during cwnd:25
+
+packet sent: 190464, during cwnd:25
+
+packet sent: 191488, during cwnd:25
+
+packet sent: 192512, during cwnd:25
+
+packet sent: 193536, during cwnd:25
+
+packet sent: 194560, during cwnd:25
+
+packet sent: 195584, during cwnd:25
+
+packet sent: 196608, during cwnd:25
+
+packet sent: 197632, during cwnd:25
+
+packet sent: 198656, during cwnd:25
+
+packet sent: 199680, during cwnd:25
+
+packet sent: 200704, during cwnd:25
+
+packet sent: 201728, during cwnd:25
+
+packet sent: 202752, during cwnd:25
+
+packet sent: 203776, during cwnd:25
+
+packet sent: 204800, during cwnd:25
+
+packet sent: 205824, during cwnd:25
+
+packet sent: 206848, during cwnd:25
+
+packet sent: 207872, during cwnd:25
+
+packet sent: 208896, during cwnd:25
+
+packet sent: 209920, during cwnd:25
+
+packet sent: 210944, during cwnd:25
+
+packet sent: 211968, during cwnd:25
+
+packet sent: 212992, during cwnd:25
+
+packet sent: 214016, during cwnd:25
+
+number_acks_received = 17
+ack_received: 206848, (14, 26)
+
+packet sent: 215040, during cwnd:26
+
+packet sent: 216064, during cwnd:26
+
+packet sent: 217088, during cwnd:26
+
+packet sent: 218112, during cwnd:26
+
+packet sent: 219136, during cwnd:26
+
+packet sent: 220160, during cwnd:26
+
+packet sent: 221184, during cwnd:26
+
+packet sent: 222208, during cwnd:26
+
+packet sent: 223232, during cwnd:26
+
+packet sent: 224256, during cwnd:26
+
+packet sent: 225280, during cwnd:26
+
+packet sent: 226304, during cwnd:26
+
+packet sent: 227328, during cwnd:26
+
+packet sent: 228352, during cwnd:26
+
+packet sent: 229376, during cwnd:26
+
+packet sent: 230400, during cwnd:26
+
+packet sent: 231424, during cwnd:26
+
+packet sent: 232448, during cwnd:26
+
+number_acks_received = 1
+dup: (1, 206848)
+
+packet sent: 206848, during cwnd:26
+
+packet sent: 207872, during cwnd:26
+
+packet sent: 208896, during cwnd:26
+
+packet sent: 209920, during cwnd:26
+
+packet sent: 210944, during cwnd:26
+
+packet sent: 211968, during cwnd:26
+
+packet sent: 212992, during cwnd:26
+
+packet sent: 214016, during cwnd:26
+
+packet sent: 215040, during cwnd:26
+
+packet sent: 216064, during cwnd:26
+
+packet sent: 217088, during cwnd:26
+
+packet sent: 218112, during cwnd:26
+
+packet sent: 219136, during cwnd:26
+
+packet sent: 220160, during cwnd:26
+
+packet sent: 221184, during cwnd:26
+
+packet sent: 222208, during cwnd:26
+
+packet sent: 223232, during cwnd:26
+
+packet sent: 224256, during cwnd:26
+
+packet sent: 225280, during cwnd:26
+
+packet sent: 226304, during cwnd:26
+
+packet sent: 227328, during cwnd:26
+
+packet sent: 228352, during cwnd:26
+
+packet sent: 229376, during cwnd:26
+
+packet sent: 230400, during cwnd:26
+
+packet sent: 231424, during cwnd:26
+
+packet sent: 232448, during cwnd:26
+
+number_acks_received = 26
+ack_received: 233472, (15, 27)
+
+packet sent: 233472, during cwnd:27
+
+packet sent: 234496, during cwnd:27
+
+packet sent: 235520, during cwnd:27
+
+packet sent: 236544, during cwnd:27
+
+packet sent: 237568, during cwnd:27
+
+packet sent: 238592, during cwnd:27
+
+packet sent: 239616, during cwnd:27
+
+packet sent: 240640, during cwnd:27
+
+packet sent: 241664, during cwnd:27
+
+packet sent: 242688, during cwnd:27
+
+packet sent: 243712, during cwnd:27
+
+packet sent: 244736, during cwnd:27
+
+packet sent: 245760, during cwnd:27
+
+packet sent: 246784, during cwnd:27
+
+packet sent: 247808, during cwnd:27
+
+packet sent: 248832, during cwnd:27
+
+packet sent: 249856, during cwnd:27
+
+packet sent: 250880, during cwnd:27
+
+packet sent: 251904, during cwnd:27
+
+packet sent: 252928, during cwnd:27
+
+packet sent: 253952, during cwnd:27
+
+packet sent: 254976, during cwnd:27
+
+packet sent: 256000, during cwnd:27
+
+packet sent: 257024, during cwnd:27
+
+packet sent: 258048, during cwnd:27
+
+packet sent: 259072, during cwnd:27
+
+packet sent: 260096, during cwnd:27
+
+number_acks_received = 27
+ack_received: 261120, (16, 28)
+
+packet sent: 261120, during cwnd:28
+
+packet sent: 262144, during cwnd:28
+
+packet sent: 263168, during cwnd:28
+
+packet sent: 264192, during cwnd:28
+
+packet sent: 265216, during cwnd:28
+
+packet sent: 266240, during cwnd:28
+
+packet sent: 267264, during cwnd:28
+
+packet sent: 268288, during cwnd:28
+
+packet sent: 269312, during cwnd:28
+
+packet sent: 270336, during cwnd:28
+
+packet sent: 271360, during cwnd:28
+
+packet sent: 272384, during cwnd:28
+
+packet sent: 273408, during cwnd:28
+
+packet sent: 274432, during cwnd:28
+
+packet sent: 275456, during cwnd:28
+
+packet sent: 276480, during cwnd:28
+
+packet sent: 277504, during cwnd:28
+
+packet sent: 278528, during cwnd:28
+
+packet sent: 279552, during cwnd:28
+
+packet sent: 280576, during cwnd:28
+
+packet sent: 281600, during cwnd:28
+
+packet sent: 282624, during cwnd:28
+
+packet sent: 283648, during cwnd:28
+
+packet sent: 284672, during cwnd:28
+
+packet sent: 285696, during cwnd:28
+
+packet sent: 286720, during cwnd:28
+
+packet sent: 287744, during cwnd:28
+
+packet sent: 288768, during cwnd:28
+
+number_acks_received = 27
+ack_received: 288768, (17, 29)
+
+packet sent: 289792, during cwnd:29
+
+packet sent: 290816, during cwnd:29
+
+packet sent: 291840, during cwnd:29
+
+packet sent: 292864, during cwnd:29
+
+packet sent: 293888, during cwnd:29
+
+packet sent: 294912, during cwnd:29
+
+packet sent: 295936, during cwnd:29
+
+packet sent: 296960, during cwnd:29
+
+packet sent: 297984, during cwnd:29
+
+packet sent: 299008, during cwnd:29
+
+packet sent: 300032, during cwnd:29
+
+packet sent: 301056, during cwnd:29
+
+packet sent: 302080, during cwnd:29
+
+packet sent: 303104, during cwnd:29
+
+packet sent: 304128, during cwnd:29
+
+packet sent: 305152, during cwnd:29
+
+packet sent: 306176, during cwnd:29
+
+packet sent: 307200, during cwnd:29
+
+packet sent: 308224, during cwnd:29
+
+packet sent: 309248, during cwnd:29
+
+packet sent: 310272, during cwnd:29
+
+packet sent: 311296, during cwnd:29
+
+packet sent: 312320, during cwnd:29
+
+packet sent: 313344, during cwnd:29
+
+packet sent: 314368, during cwnd:29
+
+packet sent: 315392, during cwnd:29
+
+packet sent: 316416, during cwnd:29
+
+packet sent: 317440, during cwnd:29
+
+number_acks_received = 1
+dup: (1, 288768)
+
+packet sent: 288768, during cwnd:29
+
+packet sent: 289792, during cwnd:29
+
+packet sent: 290816, during cwnd:29
+
+packet sent: 291840, during cwnd:29
+
+packet sent: 292864, during cwnd:29
+
+packet sent: 293888, during cwnd:29
+
+packet sent: 294912, during cwnd:29
+
+packet sent: 295936, during cwnd:29
+
+packet sent: 296960, during cwnd:29
+
+packet sent: 297984, during cwnd:29
+
+packet sent: 299008, during cwnd:29
+
+packet sent: 300032, during cwnd:29
+
+packet sent: 301056, during cwnd:29
+
+packet sent: 302080, during cwnd:29
+
+packet sent: 303104, during cwnd:29
+
+packet sent: 304128, during cwnd:29
+
+packet sent: 305152, during cwnd:29
+
+packet sent: 306176, during cwnd:29
+
+packet sent: 307200, during cwnd:29
+
+packet sent: 308224, during cwnd:29
+
+packet sent: 309248, during cwnd:29
+
+packet sent: 310272, during cwnd:29
+
+packet sent: 311296, during cwnd:29
+
+packet sent: 312320, during cwnd:29
+
+packet sent: 313344, during cwnd:29
+
+packet sent: 314368, during cwnd:29
+
+packet sent: 315392, during cwnd:29
+
+packet sent: 316416, during cwnd:29
+
+packet sent: 317440, during cwnd:29
+
+number_acks_received = 29
+ack_received: 318464, (18, 30)
+
+packet sent: 318464, during cwnd:30
+
+packet sent: 319488, during cwnd:30
+
+packet sent: 320512, during cwnd:30
+
+packet sent: 321536, during cwnd:30
+
+packet sent: 322560, during cwnd:30
+
+packet sent: 323584, during cwnd:30
+
+packet sent: 324608, during cwnd:30
+
+packet sent: 325632, during cwnd:30
+
+packet sent: 326656, during cwnd:30
+
+packet sent: 327680, during cwnd:30
+
+packet sent: 328704, during cwnd:30
+
+packet sent: 329728, during cwnd:30
+
+packet sent: 330752, during cwnd:30
+
+packet sent: 331776, during cwnd:30
+
+packet sent: 332800, during cwnd:30
+
+packet sent: 333824, during cwnd:30
+
+packet sent: 334848, during cwnd:30
+
+packet sent: 335872, during cwnd:30
+
+packet sent: 336896, during cwnd:30
+
+packet sent: 337920, during cwnd:30
+
+packet sent: 338944, during cwnd:30
+
+packet sent: 339968, during cwnd:30
+
+packet sent: 340992, during cwnd:30
+
+packet sent: 342016, during cwnd:30
+
+packet sent: 343040, during cwnd:30
+
+packet sent: 344064, during cwnd:30
+
+packet sent: 345088, during cwnd:30
+
+packet sent: 346112, during cwnd:30
+
+packet sent: 347136, during cwnd:30
+
+packet sent: 348160, during cwnd:30
+
+number_acks_received = 30
+ack_received: 349184, (19, 31)
+
+packet sent: 349184, during cwnd:31
+
+packet sent: 350208, during cwnd:31
+
+packet sent: 351232, during cwnd:31
+
+packet sent: 352256, during cwnd:31
+
+packet sent: 353280, during cwnd:31
+
+packet sent: 354304, during cwnd:31
+
+packet sent: 355328, during cwnd:31
+
+packet sent: 356352, during cwnd:31
+
+packet sent: 357376, during cwnd:31
+
+packet sent: 358400, during cwnd:31
+
+packet sent: 359424, during cwnd:31
+
+packet sent: 360448, during cwnd:31
+
+packet sent: 361472, during cwnd:31
+
+packet sent: 362496, during cwnd:31
+
+packet sent: 363520, during cwnd:31
+
+packet sent: 364544, during cwnd:31
+
+packet sent: 365568, during cwnd:31
+
+packet sent: 366592, during cwnd:31
+
+packet sent: 367616, during cwnd:31
+
+packet sent: 368640, during cwnd:31
+
+packet sent: 369664, during cwnd:31
+
+packet sent: 370688, during cwnd:31
+
+packet sent: 371712, during cwnd:31
+
+packet sent: 372736, during cwnd:31
+
+packet sent: 373760, during cwnd:31
+
+packet sent: 374784, during cwnd:31
+
+packet sent: 375808, during cwnd:31
+
+packet sent: 376832, during cwnd:31
+
+packet sent: 377856, during cwnd:31
+
+packet sent: 378880, during cwnd:31
+
+packet sent: 379904, during cwnd:31
+
+number_acks_received = 31
+ack_received: 380928, (20, 32)
+
+packet sent: 380928, during cwnd:32
+
+packet sent: 381952, during cwnd:32
+
+packet sent: 382976, during cwnd:32
+
+packet sent: 384000, during cwnd:32
+
+packet sent: 385024, during cwnd:32
+
+packet sent: 386048, during cwnd:32
+
+packet sent: 387072, during cwnd:32
+
+packet sent: 388096, during cwnd:32
+
+packet sent: 389120, during cwnd:32
+
+packet sent: 390144, during cwnd:32
+
+packet sent: 391168, during cwnd:32
+
+packet sent: 392192, during cwnd:32
+
+packet sent: 393216, during cwnd:32
+
+packet sent: 394240, during cwnd:32
+
+packet sent: 395264, during cwnd:32
+
+packet sent: 396288, during cwnd:32
+
+packet sent: 397312, during cwnd:32
+
+packet sent: 398336, during cwnd:32
+
+packet sent: 399360, during cwnd:32
+
+packet sent: 400384, during cwnd:32
+
+packet sent: 401408, during cwnd:32
+
+packet sent: 402432, during cwnd:32
+
+packet sent: 403456, during cwnd:32
+
+packet sent: 404480, during cwnd:32
+
+packet sent: 405504, during cwnd:32
+
+packet sent: 406528, during cwnd:32
+
+packet sent: 407552, during cwnd:32
+
+packet sent: 408576, during cwnd:32
+
+packet sent: 409600, during cwnd:32
+
+packet sent: 410624, during cwnd:32
+
+packet sent: 411648, during cwnd:32
+
+packet sent: 412672, during cwnd:32
+
+number_acks_received = 18
+ack_received: 399360, (21, 33)
+
+packet sent: 413696, during cwnd:33
+
+packet sent: 414720, during cwnd:33
+
+packet sent: 415744, during cwnd:33
+
+packet sent: 416768, during cwnd:33
+
+packet sent: 417792, during cwnd:33
+
+packet sent: 418816, during cwnd:33
+
+packet sent: 419840, during cwnd:33
+
+packet sent: 420864, during cwnd:33
+
+packet sent: 421888, during cwnd:33
+
+packet sent: 422912, during cwnd:33
+
+packet sent: 423936, during cwnd:33
+
+packet sent: 424960, during cwnd:33
+
+packet sent: 425984, during cwnd:33
+
+packet sent: 427008, during cwnd:33
+
+packet sent: 428032, during cwnd:33
+
+packet sent: 429056, during cwnd:33
+
+packet sent: 430080, during cwnd:33
+
+packet sent: 431104, during cwnd:33
+
+packet sent: 432128, during cwnd:33
+
+number_acks_received = 1
+dup: (1, 399360)
+
+packet sent: 399360, during cwnd:33
+
+packet sent: 400384, during cwnd:33
+
+packet sent: 401408, during cwnd:33
+
+packet sent: 402432, during cwnd:33
+
+packet sent: 403456, during cwnd:33
+
+packet sent: 404480, during cwnd:33
+
+packet sent: 405504, during cwnd:33
+
+packet sent: 406528, during cwnd:33
+
+packet sent: 407552, during cwnd:33
+
+packet sent: 408576, during cwnd:33
+
+packet sent: 409600, during cwnd:33
+
+packet sent: 410624, during cwnd:33
+
+packet sent: 411648, during cwnd:33
+
+packet sent: 412672, during cwnd:33
+
+packet sent: 413696, during cwnd:33
+
+packet sent: 414720, during cwnd:33
+
+packet sent: 415744, during cwnd:33
+
+packet sent: 416768, during cwnd:33
+
+packet sent: 417792, during cwnd:33
+
+packet sent: 418816, during cwnd:33
+
+packet sent: 419840, during cwnd:33
+
+packet sent: 420864, during cwnd:33
+
+packet sent: 421888, during cwnd:33
+
+packet sent: 422912, during cwnd:33
+
+packet sent: 423936, during cwnd:33
+
+packet sent: 424960, during cwnd:33
+
+packet sent: 425984, during cwnd:33
+
+packet sent: 427008, during cwnd:33
+
+packet sent: 428032, during cwnd:33
+
+packet sent: 429056, during cwnd:33
+
+packet sent: 430080, during cwnd:33
+
+packet sent: 431104, during cwnd:33
+
+packet sent: 432128, during cwnd:33
+
+number_acks_received = 33
+ack_received: 433152, (22, 34)
+
+packet sent: 433152, during cwnd:34
+
+packet sent: 434176, during cwnd:34
+
+packet sent: 435200, during cwnd:34
+
+packet sent: 436224, during cwnd:34
+
+packet sent: 437248, during cwnd:34
+
+packet sent: 438272, during cwnd:34
+
+packet sent: 439296, during cwnd:34
+
+packet sent: 440320, during cwnd:34
+
+packet sent: 441344, during cwnd:34
+
+packet sent: 442368, during cwnd:34
+
+packet sent: 443392, during cwnd:34
+
+packet sent: 444416, during cwnd:34
+
+packet sent: 445440, during cwnd:34
+
+packet sent: 446464, during cwnd:34
+
+packet sent: 447488, during cwnd:34
+
+packet sent: 448512, during cwnd:34
+
+packet sent: 449536, during cwnd:34
+
+packet sent: 450560, during cwnd:34
+
+packet sent: 451584, during cwnd:34
+
+packet sent: 452608, during cwnd:34
+
+packet sent: 453632, during cwnd:34
+
+packet sent: 454656, during cwnd:34
+
+packet sent: 455680, during cwnd:34
+
+packet sent: 456704, during cwnd:34
+
+packet sent: 457728, during cwnd:34
+
+packet sent: 458752, during cwnd:34
+
+packet sent: 459776, during cwnd:34
+
+packet sent: 460800, during cwnd:34
+
+packet sent: 461824, during cwnd:34
+
+packet sent: 462848, during cwnd:34
+
+packet sent: 463872, during cwnd:34
+
+packet sent: 464896, during cwnd:34
+
+packet sent: 465920, during cwnd:34
+
+packet sent: 466944, during cwnd:34
+
+number_acks_received = 34
+ack_received: 467968, (23, 35)
+
+packet sent: 467968, during cwnd:35
+
+packet sent: 468992, during cwnd:35
+
+packet sent: 470016, during cwnd:35
+
+packet sent: 471040, during cwnd:35
+
+packet sent: 472064, during cwnd:35
+
+packet sent: 473088, during cwnd:35
+
+packet sent: 474112, during cwnd:35
+
+packet sent: 475136, during cwnd:35
+
+packet sent: 476160, during cwnd:35
+
+packet sent: 477184, during cwnd:35
+
+packet sent: 478208, during cwnd:35
+
+packet sent: 479232, during cwnd:35
+
+packet sent: 480256, during cwnd:35
+
+packet sent: 481280, during cwnd:35
+
+packet sent: 482304, during cwnd:35
+
+packet sent: 483328, during cwnd:35
+
+packet sent: 484352, during cwnd:35
+
+packet sent: 485376, during cwnd:35
+
+packet sent: 486400, during cwnd:35
+
+packet sent: 487424, during cwnd:35
+
+packet sent: 488448, during cwnd:35
+
+packet sent: 489472, during cwnd:35
+
+packet sent: 490496, during cwnd:35
+
+packet sent: 491520, during cwnd:35
+
+packet sent: 492544, during cwnd:35
+
+packet sent: 493568, during cwnd:35
+
+packet sent: 494592, during cwnd:35
+
+packet sent: 495616, during cwnd:35
+
+packet sent: 496640, during cwnd:35
+
+packet sent: 497664, during cwnd:35
+
+packet sent: 498688, during cwnd:35
+
+packet sent: 499712, during cwnd:35
+
+packet sent: 500736, during cwnd:35
+
+packet sent: 501760, during cwnd:35
+
+packet sent: 502784, during cwnd:35
+
+number_acks_received = 35
+ack_received: 503808, (24, 36)
+
+packet sent: 503808, during cwnd:36
+
+packet sent: 504832, during cwnd:36
+
+packet sent: 505856, during cwnd:36
+
+packet sent: 506880, during cwnd:36
+
+packet sent: 507904, during cwnd:36
+
+packet sent: 508928, during cwnd:36
+
+packet sent: 509952, during cwnd:36
+
+packet sent: 510976, during cwnd:36
+
+packet sent: 512000, during cwnd:36
+
+packet sent: 513024, during cwnd:36
+
+packet sent: 514048, during cwnd:36
+
+packet sent: 515072, during cwnd:36
+
+packet sent: 516096, during cwnd:36
+
+packet sent: 517120, during cwnd:36
+
+packet sent: 518144, during cwnd:36
+
+packet sent: 519168, during cwnd:36
+
+packet sent: 520192, during cwnd:36
+
+packet sent: 521216, during cwnd:36
+
+packet sent: 522240, during cwnd:36
+
+packet sent: 523264, during cwnd:36
+
+packet sent: 524288, during cwnd:36
+
+packet sent: 525312, during cwnd:36
+
+packet sent: 526336, during cwnd:36
+
+packet sent: 527360, during cwnd:36
+
+packet sent: 528384, during cwnd:36
+
+packet sent: 529408, during cwnd:36
+
+packet sent: 530432, during cwnd:36
+
+packet sent: 531456, during cwnd:36
+
+packet sent: 532480, during cwnd:36
+
+packet sent: 533504, during cwnd:36
+
+packet sent: 534528, during cwnd:36
+
+packet sent: 535552, during cwnd:36
+
+packet sent: 536576, during cwnd:36
+
+packet sent: 537600, during cwnd:36
+
+packet sent: 538624, during cwnd:36
+
+packet sent: 539648, during cwnd:36
+
+number_acks_received = 2
+ack_received: 505856, (25, 37)
+
+packet sent: 540672, during cwnd:37
+
+packet sent: 541696, during cwnd:37
+
+packet sent: 542720, during cwnd:37
+
+number_acks_received = 1
+dup: (1, 505856)
+
+packet sent: 505856, during cwnd:37
+
+packet sent: 506880, during cwnd:37
+
+packet sent: 507904, during cwnd:37
+
+packet sent: 508928, during cwnd:37
+
+packet sent: 509952, during cwnd:37
+
+packet sent: 510976, during cwnd:37
+
+packet sent: 512000, during cwnd:37
+
+packet sent: 513024, during cwnd:37
+
+packet sent: 514048, during cwnd:37
+
+packet sent: 515072, during cwnd:37
+
+packet sent: 516096, during cwnd:37
+
+packet sent: 517120, during cwnd:37
+
+packet sent: 518144, during cwnd:37
+
+packet sent: 519168, during cwnd:37
+
+packet sent: 520192, during cwnd:37
+
+packet sent: 521216, during cwnd:37
+
+packet sent: 522240, during cwnd:37
+
+packet sent: 523264, during cwnd:37
+
+packet sent: 524288, during cwnd:37
+
+packet sent: 525312, during cwnd:37
+
+packet sent: 526336, during cwnd:37
+
+packet sent: 527360, during cwnd:37
+
+packet sent: 528384, during cwnd:37
+
+packet sent: 529408, during cwnd:37
+
+packet sent: 530432, during cwnd:37
+
+packet sent: 531456, during cwnd:37
+
+packet sent: 532480, during cwnd:37
+
+packet sent: 533504, during cwnd:37
+
+packet sent: 534528, during cwnd:37
+
+packet sent: 535552, during cwnd:37
+
+packet sent: 536576, during cwnd:37
+
+packet sent: 537600, during cwnd:37
+
+packet sent: 538624, during cwnd:37
+
+packet sent: 539648, during cwnd:37
+
+packet sent: 540672, during cwnd:37
+
+packet sent: 541696, during cwnd:37
+
+packet sent: 542720, during cwnd:37
+
+number_acks_received = 37
+ack_received: 543744, (26, 38)
+
+packet sent: 543744, during cwnd:38
+
+packet sent: 544768, during cwnd:38
+
+packet sent: 545792, during cwnd:38
+
+packet sent: 546816, during cwnd:38
+
+packet sent: 547840, during cwnd:38
+
+packet sent: 548864, during cwnd:38
+
+packet sent: 549888, during cwnd:38
+
+packet sent: 550912, during cwnd:38
+
+packet sent: 551936, during cwnd:38
+
+packet sent: 552960, during cwnd:38
+
+packet sent: 553984, during cwnd:38
+
+packet sent: 555008, during cwnd:38
+
+packet sent: 556032, during cwnd:38
+
+packet sent: 557056, during cwnd:38
+
+packet sent: 558080, during cwnd:38
+
+packet sent: 559104, during cwnd:38
+
+packet sent: 560128, during cwnd:38
+
+packet sent: 561152, during cwnd:38
+
+packet sent: 562176, during cwnd:38
+
+packet sent: 563200, during cwnd:38
+
+packet sent: 564224, during cwnd:38
+
+packet sent: 565248, during cwnd:38
+
+packet sent: 566272, during cwnd:38
+
+packet sent: 567296, during cwnd:38
+
+packet sent: 568320, during cwnd:38
+
+packet sent: 569344, during cwnd:38
+
+packet sent: 570368, during cwnd:38
+
+packet sent: 571392, during cwnd:38
+
+packet sent: 572416, during cwnd:38
+
+packet sent: 573440, during cwnd:38
+
+packet sent: 574464, during cwnd:38
+
+packet sent: 575488, during cwnd:38
+
+packet sent: 576512, during cwnd:38
+
+packet sent: 577536, during cwnd:38
+
+packet sent: 578560, during cwnd:38
+
+packet sent: 579584, during cwnd:38
+
+packet sent: 580608, during cwnd:38
+
+packet sent: 581632, during cwnd:38
+
+TIMEOUT oldest=543744, next_seq=543744, cwnd=1, ssthresh=19, in_flight=0
+packet sent: 543744, during cwnd:1
+
+number_acks_received = 21
+ack_received: 565248, (27, 2)
+
+packet sent: 565248, during cwnd:2
+
+packet sent: 566272, during cwnd:2
+
+number_acks_received = 17
+ack_received: 582656, (28, 4)
+
+packet sent: 582656, during cwnd:4
+
+packet sent: 583680, during cwnd:4
+
+packet sent: 584704, during cwnd:4
+
+packet sent: 585728, during cwnd:4
+
+number_acks_received = 4
+ack_received: 586752, (29, 8)
+
+packet sent: 586752, during cwnd:8
+
+packet sent: 587776, during cwnd:8
+
+packet sent: 588800, during cwnd:8
+
+packet sent: 589824, during cwnd:8
+
+packet sent: 590848, during cwnd:8
+
+packet sent: 591872, during cwnd:8
+
+packet sent: 592896, during cwnd:8
+
+packet sent: 593920, during cwnd:8
+
+number_acks_received = 8
+ack_received: 594944, (30, 16)
+
+packet sent: 594944, during cwnd:16
+
+packet sent: 595968, during cwnd:16
+
+packet sent: 596992, during cwnd:16
+
+packet sent: 598016, during cwnd:16
+
+packet sent: 599040, during cwnd:16
+
+packet sent: 600064, during cwnd:16
+
+packet sent: 601088, during cwnd:16
+
+packet sent: 602112, during cwnd:16
+
+packet sent: 603136, during cwnd:16
+
+packet sent: 604160, during cwnd:16
+
+packet sent: 605184, during cwnd:16
+
+packet sent: 606208, during cwnd:16
+
+packet sent: 607232, during cwnd:16
+
+packet sent: 608256, during cwnd:16
+
+packet sent: 609280, during cwnd:16
+
+packet sent: 610304, during cwnd:16
+
+number_acks_received = 4
+ack_received: 599040, (31, 32)
+
+packet sent: 611328, during cwnd:32
+
+packet sent: 612352, during cwnd:32
+
+packet sent: 613376, during cwnd:32
+
+packet sent: 614400, during cwnd:32
+
+packet sent: 615424, during cwnd:32
+
+packet sent: 616448, during cwnd:32
+
+packet sent: 617472, during cwnd:32
+
+packet sent: 618496, during cwnd:32
+
+packet sent: 619520, during cwnd:32
+
+packet sent: 620544, during cwnd:32
+
+packet sent: 621568, during cwnd:32
+
+packet sent: 622592, during cwnd:32
+
+packet sent: 623616, during cwnd:32
+
+packet sent: 624640, during cwnd:32
+
+packet sent: 625664, during cwnd:32
+
+packet sent: 626688, during cwnd:32
+
+packet sent: 627712, during cwnd:32
+
+packet sent: 628736, during cwnd:32
+
+packet sent: 629760, during cwnd:32
+
+packet sent: 630784, during cwnd:32
+
+number_acks_received = 1
+dup: (1, 599040)
+
+packet sent: 599040, during cwnd:32
+
+packet sent: 600064, during cwnd:32
+
+packet sent: 601088, during cwnd:32
+
+packet sent: 602112, during cwnd:32
+
+packet sent: 603136, during cwnd:32
+
+packet sent: 604160, during cwnd:32
+
+packet sent: 605184, during cwnd:32
+
+packet sent: 606208, during cwnd:32
+
+packet sent: 607232, during cwnd:32
+
+packet sent: 608256, during cwnd:32
+
+packet sent: 609280, during cwnd:32
+
+packet sent: 610304, during cwnd:32
+
+packet sent: 611328, during cwnd:32
+
+packet sent: 612352, during cwnd:32
+
+packet sent: 613376, during cwnd:32
+
+packet sent: 614400, during cwnd:32
+
+packet sent: 615424, during cwnd:32
+
+packet sent: 616448, during cwnd:32
+
+packet sent: 617472, during cwnd:32
+
+packet sent: 618496, during cwnd:32
+
+packet sent: 619520, during cwnd:32
+
+packet sent: 620544, during cwnd:32
+
+packet sent: 621568, during cwnd:32
+
+packet sent: 622592, during cwnd:32
+
+packet sent: 623616, during cwnd:32
+
+packet sent: 624640, during cwnd:32
+
+packet sent: 625664, during cwnd:32
+
+packet sent: 626688, during cwnd:32
+
+packet sent: 627712, during cwnd:32
+
+packet sent: 628736, during cwnd:32
+
+packet sent: 629760, during cwnd:32
+
+packet sent: 630784, during cwnd:32
+
+number_acks_received = 32
+ack_received: 631808, (32, 33)
+
+packet sent: 631808, during cwnd:33
+
+packet sent: 632832, during cwnd:33
+
+packet sent: 633856, during cwnd:33
+
+packet sent: 634880, during cwnd:33
+
+packet sent: 635904, during cwnd:33
+
+packet sent: 636928, during cwnd:33
+
+packet sent: 637952, during cwnd:33
+
+packet sent: 638976, during cwnd:33
+
+packet sent: 640000, during cwnd:33
+
+packet sent: 641024, during cwnd:33
+
+packet sent: 642048, during cwnd:33
+
+packet sent: 643072, during cwnd:33
+
+packet sent: 644096, during cwnd:33
+
+packet sent: 645120, during cwnd:33
+
+packet sent: 646144, during cwnd:33
+
+packet sent: 647168, during cwnd:33
+
+packet sent: 648192, during cwnd:33
+
+packet sent: 649216, during cwnd:33
+
+packet sent: 650240, during cwnd:33
+
+packet sent: 651264, during cwnd:33
+
+packet sent: 652288, during cwnd:33
+
+packet sent: 653312, during cwnd:33
+
+packet sent: 654336, during cwnd:33
+
+packet sent: 655360, during cwnd:33
+
+packet sent: 656384, during cwnd:33
+
+packet sent: 657408, during cwnd:33
+
+packet sent: 658432, during cwnd:33
+
+packet sent: 659456, during cwnd:33
+
+packet sent: 660480, during cwnd:33
+
+packet sent: 661504, during cwnd:33
+
+packet sent: 662528, during cwnd:33
+
+packet sent: 663552, during cwnd:33
+
+packet sent: 664576, during cwnd:33
+
+number_acks_received = 33
+ack_received: 665600, (33, 34)
+
+packet sent: 665600, during cwnd:34
+
+packet sent: 666624, during cwnd:34
+
+packet sent: 667648, during cwnd:34
+
+packet sent: 668672, during cwnd:34
+
+packet sent: 669696, during cwnd:34
+
+packet sent: 670720, during cwnd:34
+
+packet sent: 671744, during cwnd:34
+
+packet sent: 672768, during cwnd:34
+
+packet sent: 673792, during cwnd:34
+
+packet sent: 674816, during cwnd:34
+
+packet sent: 675840, during cwnd:34
+
+packet sent: 676864, during cwnd:34
+
+packet sent: 677888, during cwnd:34
+
+packet sent: 678912, during cwnd:34
+
+packet sent: 679936, during cwnd:34
+
+packet sent: 680960, during cwnd:34
+
+packet sent: 681984, during cwnd:34
+
+packet sent: 683008, during cwnd:34
+
+packet sent: 684032, during cwnd:34
+
+packet sent: 685056, during cwnd:34
+
+packet sent: 686080, during cwnd:34
+
+packet sent: 687104, during cwnd:34
+
+packet sent: 688128, during cwnd:34
+
+packet sent: 689152, during cwnd:34
+
+packet sent: 690176, during cwnd:34
+
+packet sent: 691200, during cwnd:34
+
+packet sent: 692224, during cwnd:34
+
+packet sent: 693248, during cwnd:34
+
+packet sent: 694272, during cwnd:34
+
+packet sent: 695296, during cwnd:34
+
+packet sent: 696320, during cwnd:34
+
+packet sent: 697344, during cwnd:34
+
+packet sent: 698368, during cwnd:34
+
+packet sent: 699392, during cwnd:34
+
+number_acks_received = 21
+ack_received: 687104, (34, 35)
+
+packet sent: 700416, during cwnd:35
+
+packet sent: 701440, during cwnd:35
+
+packet sent: 702464, during cwnd:35
+
+packet sent: 703488, during cwnd:35
+
+packet sent: 704512, during cwnd:35
+
+packet sent: 705536, during cwnd:35
+
+packet sent: 706560, during cwnd:35
+
+packet sent: 707584, during cwnd:35
+
+packet sent: 708608, during cwnd:35
+
+packet sent: 709632, during cwnd:35
+
+packet sent: 710656, during cwnd:35
+
+packet sent: 711680, during cwnd:35
+
+packet sent: 712704, during cwnd:35
+
+packet sent: 713728, during cwnd:35
+
+packet sent: 714752, during cwnd:35
+
+packet sent: 715776, during cwnd:35
+
+packet sent: 716800, during cwnd:35
+
+packet sent: 717824, during cwnd:35
+
+packet sent: 718848, during cwnd:35
+
+packet sent: 719872, during cwnd:35
+
+packet sent: 720896, during cwnd:35
+
+packet sent: 721920, during cwnd:35
+
+number_acks_received = 1
+dup: (1, 687104)
+
+packet sent: 687104, during cwnd:35
+
+packet sent: 688128, during cwnd:35
+
+packet sent: 689152, during cwnd:35
+
+packet sent: 690176, during cwnd:35
+
+packet sent: 691200, during cwnd:35
+
+packet sent: 692224, during cwnd:35
+
+packet sent: 693248, during cwnd:35
+
+packet sent: 694272, during cwnd:35
+
+packet sent: 695296, during cwnd:35
+
+packet sent: 696320, during cwnd:35
+
+packet sent: 697344, during cwnd:35
+
+packet sent: 698368, during cwnd:35
+
+packet sent: 699392, during cwnd:35
+
+packet sent: 700416, during cwnd:35
+
+packet sent: 701440, during cwnd:35
+
+packet sent: 702464, during cwnd:35
+
+packet sent: 703488, during cwnd:35
+
+packet sent: 704512, during cwnd:35
+
+packet sent: 705536, during cwnd:35
+
+packet sent: 706560, during cwnd:35
+
+packet sent: 707584, during cwnd:35
+
+packet sent: 708608, during cwnd:35
+
+packet sent: 709632, during cwnd:35
+
+packet sent: 710656, during cwnd:35
+
+packet sent: 711680, during cwnd:35
+
+packet sent: 712704, during cwnd:35
+
+packet sent: 713728, during cwnd:35
+
+packet sent: 714752, during cwnd:35
+
+packet sent: 715776, during cwnd:35
+
+packet sent: 716800, during cwnd:35
+
+packet sent: 717824, during cwnd:35
+
+packet sent: 718848, during cwnd:35
+
+packet sent: 719872, during cwnd:35
+
+packet sent: 720896, during cwnd:35
+
+packet sent: 721920, during cwnd:35
+
+number_acks_received = 35
+ack_received: 722944, (35, 36)
+
+packet sent: 722944, during cwnd:36
+
+packet sent: 723968, during cwnd:36
+
+packet sent: 724992, during cwnd:36
+
+packet sent: 726016, during cwnd:36
+
+packet sent: 727040, during cwnd:36
+
+packet sent: 728064, during cwnd:36
+
+packet sent: 729088, during cwnd:36
+
+packet sent: 730112, during cwnd:36
+
+packet sent: 731136, during cwnd:36
+
+packet sent: 732160, during cwnd:36
+
+packet sent: 733184, during cwnd:36
+
+packet sent: 734208, during cwnd:36
+
+packet sent: 735232, during cwnd:36
+
+packet sent: 736256, during cwnd:36
+
+packet sent: 737280, during cwnd:36
+
+packet sent: 738304, during cwnd:36
+
+packet sent: 739328, during cwnd:36
+
+packet sent: 740352, during cwnd:36
+
+packet sent: 741376, during cwnd:36
+
+packet sent: 742400, during cwnd:36
+
+packet sent: 743424, during cwnd:36
+
+packet sent: 744448, during cwnd:36
+
+packet sent: 745472, during cwnd:36
+
+packet sent: 746496, during cwnd:36
+
+packet sent: 747520, during cwnd:36
+
+packet sent: 748544, during cwnd:36
+
+packet sent: 749568, during cwnd:36
+
+packet sent: 750592, during cwnd:36
+
+packet sent: 751616, during cwnd:36
+
+packet sent: 752640, during cwnd:36
+
+packet sent: 753664, during cwnd:36
+
+packet sent: 754688, during cwnd:36
+
+packet sent: 755712, during cwnd:36
+
+packet sent: 756736, during cwnd:36
+
+packet sent: 757760, during cwnd:36
+
+packet sent: 758784, during cwnd:36
+
+number_acks_received = 36
+ack_received: 759808, (36, 37)
+
+packet sent: 759808, during cwnd:37
+
+packet sent: 760832, during cwnd:37
+
+packet sent: 761856, during cwnd:37
+
+packet sent: 762880, during cwnd:37
+
+packet sent: 763904, during cwnd:37
+
+packet sent: 764928, during cwnd:37
+
+packet sent: 765952, during cwnd:37
+
+packet sent: 766976, during cwnd:37
+
+packet sent: 768000, during cwnd:37
+
+packet sent: 769024, during cwnd:37
+
+packet sent: 770048, during cwnd:37
+
+packet sent: 771072, during cwnd:37
+
+packet sent: 772096, during cwnd:37
+
+packet sent: 773120, during cwnd:37
+
+packet sent: 774144, during cwnd:37
+
+packet sent: 775168, during cwnd:37
+
+packet sent: 776192, during cwnd:37
+
+packet sent: 777216, during cwnd:37
+
+packet sent: 778240, during cwnd:37
+
+packet sent: 779264, during cwnd:37
+
+packet sent: 780288, during cwnd:37
+
+packet sent: 781312, during cwnd:37
+
+packet sent: 782336, during cwnd:37
+
+packet sent: 783360, during cwnd:37
+
+packet sent: 784384, during cwnd:37
+
+packet sent: 785408, during cwnd:37
+
+packet sent: 786432, during cwnd:37
+
+packet sent: 787456, during cwnd:37
+
+packet sent: 788480, during cwnd:37
+
+packet sent: 789504, during cwnd:37
+
+packet sent: 790528, during cwnd:37
+
+packet sent: 791552, during cwnd:37
+
+packet sent: 792576, during cwnd:37
+
+packet sent: 793600, during cwnd:37
+
+packet sent: 794624, during cwnd:37
+
+packet sent: 795648, during cwnd:37
+
+packet sent: 796672, during cwnd:37
+
+number_acks_received = 37
+ack_received: 797696, (37, 38)
+
+packet sent: 797696, during cwnd:38
+
+packet sent: 798720, during cwnd:38
+
+packet sent: 799744, during cwnd:38
+
+packet sent: 800768, during cwnd:38
+
+packet sent: 801792, during cwnd:38
+
+packet sent: 802816, during cwnd:38
+
+packet sent: 803840, during cwnd:38
+
+packet sent: 804864, during cwnd:38
+
+packet sent: 805888, during cwnd:38
+
+packet sent: 806912, during cwnd:38
+
+packet sent: 807936, during cwnd:38
+
+packet sent: 808960, during cwnd:38
+
+packet sent: 809984, during cwnd:38
+
+packet sent: 811008, during cwnd:38
+
+packet sent: 812032, during cwnd:38
+
+packet sent: 813056, during cwnd:38
+
+packet sent: 814080, during cwnd:38
+
+packet sent: 815104, during cwnd:38
+
+packet sent: 816128, during cwnd:38
+
+packet sent: 817152, during cwnd:38
+
+packet sent: 818176, during cwnd:38
+
+packet sent: 819200, during cwnd:38
+
+packet sent: 820224, during cwnd:38
+
+packet sent: 821248, during cwnd:38
+
+packet sent: 822272, during cwnd:38
+
+packet sent: 823296, during cwnd:38
+
+packet sent: 824320, during cwnd:38
+
+packet sent: 825344, during cwnd:38
+
+packet sent: 826368, during cwnd:38
+
+packet sent: 827392, during cwnd:38
+
+packet sent: 828416, during cwnd:38
+
+packet sent: 829440, during cwnd:38
+
+packet sent: 830464, during cwnd:38
+
+packet sent: 831488, during cwnd:38
+
+packet sent: 832512, during cwnd:38
+
+packet sent: 833536, during cwnd:38
+
+packet sent: 834560, during cwnd:38
+
+packet sent: 835584, during cwnd:38
+
+number_acks_received = 38
+ack_received: 836608, (38, 39)
+
+packet sent: 836608, during cwnd:39
+
+packet sent: 837632, during cwnd:39
+
+packet sent: 838656, during cwnd:39
+
+packet sent: 839680, during cwnd:39
+
+packet sent: 840704, during cwnd:39
+
+packet sent: 841728, during cwnd:39
+
+packet sent: 842752, during cwnd:39
+
+packet sent: 843776, during cwnd:39
+
+packet sent: 844800, during cwnd:39
+
+packet sent: 845824, during cwnd:39
+
+packet sent: 846848, during cwnd:39
+
+packet sent: 847872, during cwnd:39
+
+packet sent: 848896, during cwnd:39
+
+packet sent: 849920, during cwnd:39
+
+packet sent: 850944, during cwnd:39
+
+packet sent: 851968, during cwnd:39
+
+packet sent: 852992, during cwnd:39
+
+packet sent: 854016, during cwnd:39
+
+packet sent: 855040, during cwnd:39
+
+packet sent: 856064, during cwnd:39
+
+packet sent: 857088, during cwnd:39
+
+packet sent: 858112, during cwnd:39
+
+packet sent: 859136, during cwnd:39
+
+packet sent: 860160, during cwnd:39
+
+packet sent: 861184, during cwnd:39
+
+packet sent: 862208, during cwnd:39
+
+packet sent: 863232, during cwnd:39
+
+packet sent: 864256, during cwnd:39
+
+packet sent: 865280, during cwnd:39
+
+packet sent: 866304, during cwnd:39
+
+packet sent: 867328, during cwnd:39
+
+packet sent: 868352, during cwnd:39
+
+packet sent: 869376, during cwnd:39
+
+packet sent: 870400, during cwnd:39
+
+packet sent: 871424, during cwnd:39
+
+packet sent: 872448, during cwnd:39
+
+packet sent: 873472, during cwnd:39
+
+packet sent: 874496, during cwnd:39
+
+packet sent: 875520, during cwnd:39
+
+number_acks_received = 39
+ack_received: 876544, (39, 40)
+
+packet sent: 876544, during cwnd:40
+
+packet sent: 877568, during cwnd:40
+
+packet sent: 878592, during cwnd:40
+
+packet sent: 879616, during cwnd:40
+
+packet sent: 880640, during cwnd:40
+
+packet sent: 881664, during cwnd:40
+
+packet sent: 882688, during cwnd:40
+
+packet sent: 883712, during cwnd:40
+
+packet sent: 884736, during cwnd:40
+
+packet sent: 885760, during cwnd:40
+
+packet sent: 886784, during cwnd:40
+
+packet sent: 887808, during cwnd:40
+
+packet sent: 888832, during cwnd:40
+
+packet sent: 889856, during cwnd:40
+
+packet sent: 890880, during cwnd:40
+
+packet sent: 891904, during cwnd:40
+
+packet sent: 892928, during cwnd:40
+
+packet sent: 893952, during cwnd:40
+
+packet sent: 894976, during cwnd:40
+
+packet sent: 896000, during cwnd:40
+
+packet sent: 897024, during cwnd:40
+
+packet sent: 898048, during cwnd:40
+
+packet sent: 899072, during cwnd:40
+
+packet sent: 900096, during cwnd:40
+
+packet sent: 901120, during cwnd:40
+
+packet sent: 902144, during cwnd:40
+
+packet sent: 903168, during cwnd:40
+
+packet sent: 904192, during cwnd:40
+
+packet sent: 905216, during cwnd:40
+
+packet sent: 906240, during cwnd:40
+
+packet sent: 907264, during cwnd:40
+
+packet sent: 908288, during cwnd:40
+
+packet sent: 909312, during cwnd:40
+
+packet sent: 910336, during cwnd:40
+
+packet sent: 911360, during cwnd:40
+
+packet sent: 912384, during cwnd:40
+
+packet sent: 913408, during cwnd:40
+
+packet sent: 914432, during cwnd:40
+
+packet sent: 915456, during cwnd:40
+
+packet sent: 916480, during cwnd:40
+
+number_acks_received = 40
+ack_received: 917504, (40, 41)
+
+packet sent: 917504, during cwnd:41
+
+packet sent: 918528, during cwnd:41
+
+packet sent: 919552, during cwnd:41
+
+packet sent: 920576, during cwnd:41
+
+packet sent: 921600, during cwnd:41
+
+packet sent: 922624, during cwnd:41
+
+packet sent: 923648, during cwnd:41
+
+packet sent: 924672, during cwnd:41
+
+packet sent: 925696, during cwnd:41
+
+packet sent: 926720, during cwnd:41
+
+packet sent: 927744, during cwnd:41
+
+packet sent: 928768, during cwnd:41
+
+packet sent: 929792, during cwnd:41
+
+packet sent: 930816, during cwnd:41
+
+packet sent: 931840, during cwnd:41
+
+packet sent: 932864, during cwnd:41
+
+packet sent: 933888, during cwnd:41
+
+packet sent: 934912, during cwnd:41
+
+packet sent: 935936, during cwnd:41
+
+packet sent: 936960, during cwnd:41
+
+packet sent: 937984, during cwnd:41
+
+packet sent: 939008, during cwnd:41
+
+packet sent: 940032, during cwnd:41
+
+packet sent: 941056, during cwnd:41
+
+packet sent: 942080, during cwnd:41
+
+packet sent: 943104, during cwnd:41
+
+packet sent: 944128, during cwnd:41
+
+packet sent: 945152, during cwnd:41
+
+packet sent: 946176, during cwnd:41
+
+packet sent: 947200, during cwnd:41
+
+packet sent: 948224, during cwnd:41
+
+packet sent: 949248, during cwnd:41
+
+packet sent: 950272, during cwnd:41
+
+packet sent: 951296, during cwnd:41
+
+packet sent: 952320, during cwnd:41
+
+packet sent: 953344, during cwnd:41
+
+packet sent: 954368, during cwnd:41
+
+packet sent: 955392, during cwnd:41
+
+packet sent: 956416, during cwnd:41
+
+packet sent: 957440, during cwnd:41
+
+packet sent: 958464, during cwnd:41
+
+number_acks_received = 41
+ack_received: 959488, (41, 42)
+
+packet sent: 959488, during cwnd:42
+
+packet sent: 960512, during cwnd:42
+
+packet sent: 961536, during cwnd:42
+
+packet sent: 962560, during cwnd:42
+
+packet sent: 963584, during cwnd:42
+
+packet sent: 964608, during cwnd:42
+
+packet sent: 965632, during cwnd:42
+
+packet sent: 966656, during cwnd:42
+
+packet sent: 967680, during cwnd:42
+
+packet sent: 968704, during cwnd:42
+
+packet sent: 969728, during cwnd:42
+
+packet sent: 970752, during cwnd:42
+
+packet sent: 971776, during cwnd:42
+
+packet sent: 972800, during cwnd:42
+
+packet sent: 973824, during cwnd:42
+
+packet sent: 974848, during cwnd:42
+
+packet sent: 975872, during cwnd:42
+
+packet sent: 976896, during cwnd:42
+
+packet sent: 977920, during cwnd:42
+
+packet sent: 978944, during cwnd:42
+
+packet sent: 979968, during cwnd:42
+
+packet sent: 980992, during cwnd:42
+
+packet sent: 982016, during cwnd:42
+
+packet sent: 983040, during cwnd:42
+
+packet sent: 984064, during cwnd:42
+
+packet sent: 985088, during cwnd:42
+
+packet sent: 986112, during cwnd:42
+
+packet sent: 987136, during cwnd:42
+
+packet sent: 988160, during cwnd:42
+
+packet sent: 989184, during cwnd:42
+
+packet sent: 990208, during cwnd:42
+
+packet sent: 991232, during cwnd:42
+
+packet sent: 992256, during cwnd:42
+
+packet sent: 993280, during cwnd:42
+
+packet sent: 994304, during cwnd:42
+
+packet sent: 995328, during cwnd:42
+
+packet sent: 996352, during cwnd:42
+
+packet sent: 997376, during cwnd:42
+
+packet sent: 998400, during cwnd:42
+
+packet sent: 999424, during cwnd:42
+
+packet sent: 1000448, during cwnd:42
+
+packet sent: 1001472, during cwnd:42
+
+number_acks_received = 38
+ack_received: 998400, (42, 43)
+
+packet sent: 1002496, during cwnd:43
+
+packet sent: 1003520, during cwnd:43
+
+packet sent: 1004544, during cwnd:43
+
+packet sent: 1005568, during cwnd:43
+
+packet sent: 1006592, during cwnd:43
+
+packet sent: 1007616, during cwnd:43
+
+packet sent: 1008640, during cwnd:43
+
+packet sent: 1009664, during cwnd:43
+
+packet sent: 1010688, during cwnd:43
+
+packet sent: 1011712, during cwnd:43
+
+packet sent: 1012736, during cwnd:43
+
+packet sent: 1013760, during cwnd:43
+
+packet sent: 1014784, during cwnd:43
+
+packet sent: 1015808, during cwnd:43
+
+packet sent: 1016832, during cwnd:43
+
+packet sent: 1017856, during cwnd:43
+
+packet sent: 1018880, during cwnd:43
+
+packet sent: 1019904, during cwnd:43
+
+packet sent: 1020928, during cwnd:43
+
+packet sent: 1021952, during cwnd:43
+
+packet sent: 1022976, during cwnd:43
+
+packet sent: 1024000, during cwnd:43
+
+packet sent: 1025024, during cwnd:43
+
+packet sent: 1026048, during cwnd:43
+
+packet sent: 1027072, during cwnd:43
+
+packet sent: 1028096, during cwnd:43
+
+packet sent: 1029120, during cwnd:43
+
+packet sent: 1030144, during cwnd:43
+
+packet sent: 1031168, during cwnd:43
+
+packet sent: 1032192, during cwnd:43
+
+packet sent: 1033216, during cwnd:43
+
+packet sent: 1034240, during cwnd:43
+
+packet sent: 1035264, during cwnd:43
+
+packet sent: 1036288, during cwnd:43
+
+packet sent: 1037312, during cwnd:43
+
+packet sent: 1038336, during cwnd:43
+
+packet sent: 1039360, during cwnd:43
+
+packet sent: 1040384, during cwnd:43
+
+packet sent: 1041408, during cwnd:43
+
+number_acks_received = 1
+dup: (1, 998400)
+
+packet sent: 998400, during cwnd:43
+
+packet sent: 999424, during cwnd:43
+
+packet sent: 1000448, during cwnd:43
+
+packet sent: 1001472, during cwnd:43
+
+packet sent: 1002496, during cwnd:43
+
+packet sent: 1003520, during cwnd:43
+
+packet sent: 1004544, during cwnd:43
+
+packet sent: 1005568, during cwnd:43
+
+packet sent: 1006592, during cwnd:43
+
+packet sent: 1007616, during cwnd:43
+
+packet sent: 1008640, during cwnd:43
+
+packet sent: 1009664, during cwnd:43
+
+packet sent: 1010688, during cwnd:43
+
+packet sent: 1011712, during cwnd:43
+
+packet sent: 1012736, during cwnd:43
+
+packet sent: 1013760, during cwnd:43
+
+packet sent: 1014784, during cwnd:43
+
+packet sent: 1015808, during cwnd:43
+
+packet sent: 1016832, during cwnd:43
+
+packet sent: 1017856, during cwnd:43
+
+packet sent: 1018880, during cwnd:43
+
+packet sent: 1019904, during cwnd:43
+
+packet sent: 1020928, during cwnd:43
+
+packet sent: 1021952, during cwnd:43
+
+packet sent: 1022976, during cwnd:43
+
+packet sent: 1024000, during cwnd:43
+
+packet sent: 1025024, during cwnd:43
+
+packet sent: 1026048, during cwnd:43
+
+packet sent: 1027072, during cwnd:43
+
+packet sent: 1028096, during cwnd:43
+
+packet sent: 1029120, during cwnd:43
+
+packet sent: 1030144, during cwnd:43
+
+packet sent: 1031168, during cwnd:43
+
+packet sent: 1032192, during cwnd:43
+
+packet sent: 1033216, during cwnd:43
+
+packet sent: 1034240, during cwnd:43
+
+packet sent: 1035264, during cwnd:43
+
+packet sent: 1036288, during cwnd:43
+
+packet sent: 1037312, during cwnd:43
+
+packet sent: 1038336, during cwnd:43
+
+packet sent: 1039360, during cwnd:43
+
+packet sent: 1040384, during cwnd:43
+
+packet sent: 1041408, during cwnd:43
+
+number_acks_received = 43
+ack_received: 1042432, (43, 44)
+
+packet sent: 1042432, during cwnd:44
+
+packet sent: 1043456, during cwnd:44
+
+packet sent: 1044480, during cwnd:44
+
+packet sent: 1045504, during cwnd:44
+
+packet sent: 1046528, during cwnd:44
+
+packet sent: 1047552, during cwnd:44
+
+number_acks_received = 5
+ack_received: 1048575, (44, 45)
+

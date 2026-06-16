@@ -1,0 +1,78 @@
+Client Application:
+
+The client will:
+
+Read a 1MB file (found here Links to an external site.) and divide it into fixed-size 1024-byte chunks.
+Implement TCP-like congestion control mechanisms:
+Slow Start: Start with a congestion window size (cwnd) of 1 packet and increase it by 1 for ever packet that was acknowledged in the previous RTT until a threshold (ssthresh) is reached.
+Congestion Avoidance: After reaching ssthresh, increase cwnd linearly by 1 packet per RTT (or 1/cwnd per ACK).
+Fast Retransmit: If 3 duplicate ACKs are received, retransmit the missing packet immediately without waiting for a timeout.
+Send each chunk over UDP along with a sequence number and checksum in the packet header.
+Handle timeouts: If an ACK is not received within a timeout period, retransmit the unacknowledged packet.
+ 
+
+Server Application:
+
+The server will:
+
+Receive data chunks over UDP.
+Validate the checksum of each packet. If a packet is corrupted, it will be discarded.
+Send ACKs back to the client, containing the next expected sequence number.
+Simulate packet loss with a configurable loss probability (e.g., 10%) to test the client's retransmission logic.
+Write the correctly received data to an output file (e.g., received.txt).
+ 
+
+Packet Format:
+
+Each packet sent by the client should contain:
+
+Sequence Number (4 bytes): The starting byte index of the packet data.
+Checksum (2 bytes): Simple checksum for error detection (e.g., sum of data bytes modulo 65535).
+Data (1024 bytes, or less for the last chunk): A chunk of the original file.
+Each ACK sent by the server should contain:
+
+ACK Number (4 bytes): The next expected sequence number.
+
+
+Graphs and Analysis:
+You are required to generate the following graphs based on your simulations (under different packet loss scenarios):
+
+Congestion Window (cwnd) vs. Time (RTT):
+X-axis: Time (in RTTs)
+Y-axis: Congestion window size (cwnd) in packets
+Purpose: This graph will show the growth of the congestion window during slow start and congestion avoidance phases. It helps you understand how cwnd evolves over time.
+Retransmissions vs. Time:
+X-axis: Time (in seconds or RTTs)
+Y-axis: Number of retransmissions
+Purpose: This graph will help visualize how many retransmissions occur over time, giving insight into packet loss events and how the protocol recovers from them using timeouts or fast retransmit.
+You will generate the above graphs for packet loss percentages of 1%, 10%, and 50% (6 graphs in total).
+
+ 
+
+Simulation Details:
+RTT simulation: 
+Simulate an RTT of 100ms between the client and server.
+
+Packet Loss Simulation:
+The server will randomly drop packets with a configurable loss probability (e.g., 10%) to simulate real-world network conditions. This will allow you to test the client's ability to handle lost packets using timeouts and fast retransmit.
+
+Timeout Handling:
+The client will implement a timeout mechanism. If an ACK is not received within the specified timeout of 500ms, the client will retransmit the packet.
+
+ 
+
+Deliverables:
+Source Code:
+
+tcp_client.py: Client-side implementation
+tcp_server.py: Server-side implementation
+Graphs:
+
+cwnd vs RTT (with 1%, 10%, and 50% packet loss: 3 graphs total)
+Retransmissions vs Time (with 1%, 10%, and 50% packet loss: 3 graphs total)
+Report:
+
+Explain how the congestion control mechanisms were implemented (slow start, congestion avoidance, fast retransmit).
+Describe how timeouts and retransmissions were handled.
+Provide insights from the graphs and discuss any patterns or observations (e.g., how packet loss affected cwnd, RTT variations).
+Discuss any challenges faced and lessons learned during the implementation.

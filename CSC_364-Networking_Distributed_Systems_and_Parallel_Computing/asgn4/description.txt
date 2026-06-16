@@ -1,0 +1,9 @@
+Once the peers are started they send a message to the server that
+includes their name and port. The server stores this information and 
+sends back the table to the peer. The peer will then look at the table and
+send offers to all other peers that are in the table excluding themselves. 
+The other peers will send requests and the primary peer will transfer all the 
+of the files that the other peers requested. Once the other peers receive the files,
+they will send an acknowledgement to the primary peer. The other peers will also send offers 
+to the primary peer for the files that they have and do the whole process again. 
+In the end, all of the peers will have all of the files that each other has. 
