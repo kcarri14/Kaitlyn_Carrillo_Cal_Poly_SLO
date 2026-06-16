@@ -1,0 +1,247 @@
+/**
+ *  Used to assist in efficiently grading your assignment.
+ *  The results of running this file are *not* indicative of
+ *  the final grade you will be assigned for this assignment.
+ *
+ * @author Vanessa Rivera
+ */
+
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.List;
+import java.util.Random;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import static org.junit.jupiter.api.Assertions.fail;
+
+public class AutoGradeTests {
+
+    private static Stream<String> provideTestClassExistsArguments() {
+        return Stream.of(
+                "Student",
+                "StudentUtil"
+        );
+    }
+
+    private static Stream<Arguments> provideTestConstructorExistsArguments() {
+        return Stream.of(
+                Arguments.of(
+                        "Student",
+                        new String[] {"public"},
+                        new Class<?>[] {String.class, double.class}
+                )
+        );
+    }
+
+    private static Stream<Arguments> provideTestFieldExistsArguments() {
+        return Stream.of(
+                Arguments.of(
+                        "Student",
+                        "name",
+                        String.class,
+                        new String[] {"private"},
+                        new String[] {"final"}
+                ),
+                Arguments.of(
+                        "Student",
+                        "grade",
+                        double.class,
+                        new String[] {"private"},
+                        new String[] {"final"}
+                )
+        );
+    }
+
+    private static Stream<Arguments> provideTestMethodExistsArguments() {
+        return Stream.of(
+            Arguments.of(
+                    "Student",
+                    "getName",
+                    new String[] {"public"},
+                    String.class,
+                    new Class<?>[] {}
+            ),
+            Arguments.of(
+                    "Student",
+                    "getGrade",
+                    new String[] {"public"},
+                    double.class,
+                    new Class<?>[] {}
+            ),
+            Arguments.of(
+                    "Student",
+                    "getLetterGrade",
+                    new String[] {"public"},
+                    char.class,
+                    new Class<?>[] {}
+            ),
+                Arguments.of(
+                        "StudentUtil",
+                        "getLetterGrade",
+                        new String[] {"public", "static"},
+                        char.class,
+                        new Class<?>[] {Student.class}
+                )
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideTestClassExistsArguments")
+    public void testClassExists(String className) {
+        AutoGradeUtil.ensureClass(className);
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideTestConstructorExistsArguments")
+    public void testConstructorExists(
+            String className,
+            String[] expectedModifiers,
+            Class<?>[] expectedParameterTypes
+    ) {
+        Class<?> clazz = AutoGradeUtil.ensureClass(className);
+        Constructor<?> constructor = AutoGradeUtil.ensureConstructor(clazz, expectedParameterTypes);
+        AutoGradeUtil.ensureConstructorModifiers(constructor, expectedModifiers);
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideTestFieldExistsArguments")
+    public void testFieldExists(
+            String className,
+            String fieldName,
+            Class<?> expectedType,
+            String[] expectedModifiers,
+            String[] optionalModifiers
+    ) {
+        Class<?> clazz = AutoGradeUtil.ensureClass(className);
+        Field field = AutoGradeUtil.ensureField(clazz, fieldName);
+        AutoGradeUtil.ensureFieldType(field, expectedType);
+        AutoGradeUtil.ensureFieldModifiers(field, expectedModifiers, optionalModifiers);
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideTestMethodExistsArguments")
+    public void testMethodExists(
+            String className,
+            String methodName,
+            String[] expectedModifiers,
+            Class<?> expectedReturnType,
+            Class<?>[] expectedParameterTypes
+    ) {
+        Class<?> clazz = AutoGradeUtil.ensureClass(className);
+        Method method = AutoGradeUtil.ensureMethod(clazz, methodName, expectedParameterTypes);
+        AutoGradeUtil.ensureMethodModifiers(method, expectedModifiers);
+        AutoGradeUtil.ensureMethodReturnType(method, expectedReturnType);
+    }
+
+    @Test
+    public void testToString() {
+        Method method = AutoGradeUtil.ensureMethod(AutoGradeUtil.ensureClass("Student"), "toString", new Class<?>[] {});
+        for (int i = 0; i < 100; i++) {
+            Random random = new Random();
+            Object y = 65 + (new int[]{0, 1, 2, 3, 5})[random.nextInt(5)];
+            Object x = random.ints(10, 0, 3).mapToObj(j -> (new String[]{"abc", "def", "ghi"})[j]).collect(Collectors.toList()).get(0);
+            SpyStudent spy = new SpyStudent((String) x, 91.0 - ((int) y - 65) * 10.0);
+            try {
+                Assertions.assertEquals(x + " (" + (91 - ((int) y - 65) * 10) + ".00)", method.invoke(spy));
+            } catch (InvocationTargetException | IllegalAccessException e) {
+                fail(String.format(
+                        "Error calling method '%s.%s'.",
+                        method.getDeclaringClass().getName(),
+                        method.getName()
+                ));
+            }
+        }
+    }
+
+    @Test
+    public void testEquals() {
+        for (int i = 0; i < 100; i++) {
+            Random random = new Random();
+            Object y = 65 + (new int[]{0, 1, 2, 3, 5})[random.nextInt(5)];
+            List l = random.ints(10, 0, 3).mapToObj(j -> (new String[]{"abc", "def", "ghi"})[j]).collect(Collectors.toList());
+            Object x = l.get(0);
+            SpyStudent spy = new SpyStudent((String) x, 91.0 - ((int) y - 65) * 10.0);
+            Object b = 65 + (new int[]{0, 1, 2, 3, 5})[random.nextInt(5)];
+            Student sa = new Student(null, 91.0 - ((int) b - 65) * 10.0);
+            Student sb = new Student((String) x, 91.0 - ((int) y - 65) * 10.0);
+            Student sc = new Student(null, 91.0 - ((int) b - 65) * 10.0);
+            Assertions.assertEquals(spy, spy);
+            Assertions.assertEquals(spy, sb);
+            Assertions.assertNotEquals(sb, sa);
+            Assertions.assertEquals(sa, sc);
+        }
+    }
+
+
+    @Test
+    public void testHashCode() {
+        for (int i = 0; i < 100; i++) {
+            Random random = new Random();
+            Object y = 65 + (new int[]{0, 1, 2, 3, 5})[random.nextInt(5)];
+            List l = random.ints(10, 0, 3).mapToObj(j -> (new String[]{"abc", "def", "ghi"})[j]).collect(Collectors.toList());
+            Object x = l.get(0);
+            SpyStudent spy = new SpyStudent((String) x, 91.0 - ((int) y - 65) * 10.0);
+            Object b = 65 + (new int[]{0, 1, 2, 3, 5})[random.nextInt(5)];
+            Student sa = new Student(null, 91.0 - ((int) b - 65) * 10.0);
+            Student sb = new Student((String) x, 91.0 - ((int) y - 65) * 10.0);
+            Student sc = new Student(null, 91.0 - ((int) b - 65) * 10.0);
+            Assertions.assertEquals(spy.hashCode(), spy.hashCode());
+            Assertions.assertEquals(spy.hashCode(), sb.hashCode());
+            Assertions.assertNotEquals(sb.hashCode(), sa.hashCode());
+            Assertions.assertEquals(sa.hashCode(), sc.hashCode());
+        }
+    }
+
+    @Test
+    public void testGetLetterGrade() {
+        Method method = AutoGradeUtil.ensureMethod(AutoGradeUtil.ensureClass("Student"), "getLetterGrade", new Class<?>[] {});
+        for (int i = 0; i < 100; i++) {
+            Random random = new Random();
+            Object y = 65 + (new int[]{0, 1, 2, 3, 5})[random.nextInt(5)];
+            Object x = random.ints(10, 0, 3).mapToObj(j -> (new String[]{"abc", "def", "ghi"})[j]).collect(Collectors.toList()).get(0);
+            SpyStudent spy = new SpyStudent((String) x, 91.0 - ((int) y - 65) * 10.0);
+            try {
+                Assertions.assertEquals((char) ((Integer) y).intValue(), method.invoke(spy));
+            } catch (InvocationTargetException | IllegalAccessException e) {
+                fail(String.format(
+                        "Error calling method '%s.%s'.",
+                        method.getDeclaringClass().getName(),
+                        method.getName()
+                ));
+            }
+        }
+    }
+
+    @Test
+    public void testStaticGetLetterGrade() {
+        Method method = AutoGradeUtil.ensureMethod(AutoGradeUtil.ensureClass("StudentUtil"), "getLetterGrade", new Class<?>[] {Student.class});
+        for (int i = 0; i < 100; i++) {
+            Random random = new Random();
+            Object y = 65 + (new int[]{0, 1, 2, 3, 5})[random.nextInt(5)];
+            Object x = random.ints(10, 0, 3).mapToObj(j -> (new String[]{"abc", "def", "ghi"})[j]).collect(Collectors.toList()).get(0);
+            SpyStudent spy = new SpyStudent((String) x, 91.0 - ((int) y - 65) * 10.0);
+            try {
+                Assertions.assertEquals((char) ((Integer) y).intValue(), method.invoke(null, spy), "%f grade".formatted(90.0 - ((int) y - 65) * 10.0));
+            } catch (InvocationTargetException | IllegalAccessException e) {
+                fail(String.format(
+                        "Error calling method '%s.%s'.",
+                        method.getDeclaringClass().getName(),
+                        method.getName()
+                ));
+            }
+            Assertions.assertEquals(spy.getCalls("getLetterGrade"), 0, "Static method should not call instance method.");
+            Assertions.assertTrue(spy.getCalls("getGrade") > 0, "Static method should use getter.");
+        }
+    }
+}

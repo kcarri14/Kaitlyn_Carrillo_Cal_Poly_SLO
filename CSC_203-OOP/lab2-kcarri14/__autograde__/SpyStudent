@@ -1,0 +1,30 @@
+import java.util.HashMap;
+import java.util.Map;
+
+public class SpyStudent extends Student {
+    public Map<String, Integer> calls = new HashMap<>();
+
+    public SpyStudent(String name, double grade) {
+        super(name, grade);
+    }
+
+    public void addCall(String id) {
+        calls.put(id, calls.getOrDefault(id, 0) + 1);
+    }
+
+    public int getCalls(String id) {
+        return calls.getOrDefault(id, 0);
+    }
+
+    @Override
+    public char getLetterGrade() {
+        addCall("getLetterGrade");
+        return super.getLetterGrade();
+    }
+
+    @Override
+    public double getGrade() {
+        addCall("getGrade");
+        return super.getGrade();
+    }
+}
